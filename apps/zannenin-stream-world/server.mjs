@@ -278,9 +278,9 @@ const server = http.createServer((req, res) => {
       try {
         const payload = JSON.parse(body);
         const list = Array.isArray(payload) ? payload : [payload];
-        list.forEach(broadcast);
-        res.writeHead(200, { 'content-type': 'application/json' });
-        res.end(JSON.stringify({ ok: true, count: list.length }));
+        const errors = list.map((m, index) => ({ index, error: broadcast(m) })).filter((r) => r.error);
+        res.writeHead(errors.length ? 400 : 200, { 'content-type': 'application/json; charset=utf-8' });
+        res.end(JSON.stringify({ ok: errors.length === 0, count: list.length - errors.length, errors }));
       } catch (e) {
         res.writeHead(400, { 'content-type': 'application/json' });
         res.end(JSON.stringify({ ok: false, error: String(e.message || e) }));
@@ -312,15 +312,37 @@ async function speakWithTts(msg) {
   }
 }
 
+// 命令の中身を確かめる。問題があれば理由を返す（状態の記録や中継で例外を起こさないため）
+const isStr = (v) => typeof v === 'string';
+function invalid(msg) {
+  if (!msg || typeof msg !== 'object' || !isStr(msg.type)) return 'type がありません';
+  switch (msg.type) {
+    case 'speak': return isStr(msg.text) ? null : 'speak には text が必要です';
+    case 'subtitle': return isStr(msg.text) ? null : 'subtitle には text が必要です';
+    case 'mode': return isStr(msg.mode) ? null : 'mode には mode が必要です';
+    case 'comment': return isStr(msg.text) ? null : 'comment には text が必要です';
+    case 'offering': return Number.isFinite(Number(msg.amount)) ? null : 'offering には amount が必要です';
+    case 'poll-start': return Array.isArray(msg.options) && msg.options.length >= 2 && msg.options.every(isStr) ? null : 'poll-start には2つ以上の options（文字列）が必要です';
+    case 'poll-vote': return Number.isInteger(msg.option) ? null : 'poll-vote には option（番号）が必要です';
+    case 'poll-votes': return Array.isArray(msg.votes) ? null : 'poll-votes には votes が必要です';
+    case 'viewers': return Number.isFinite(msg.count) ? null : 'viewers には count（数値）が必要です';
+    case 'tts-voice': return /^[A-Za-z0-9]{20}$/.test(msg.voiceId || '') ? null : 'tts-voice には20文字の voiceId が必要です';
+    default: return null;
+  }
+}
+
+// 中継する。不正な命令は捨てて理由を返す
 function broadcast(msg, except) {
-  if (!msg || typeof msg.type !== 'string') return;
-  if (msg.type === 'speak' && msg.tts) { speakWithTts(msg); return; }
-  if (msg.type === 'tts-voice') { writeLocalConfig({ voiceId: msg.voiceId }); return; }
+  const error = invalid(msg);
+  if (error) return error;
+  if (msg.type === 'speak' && msg.tts) { speakWithTts(msg); return null; }
+  if (msg.type === 'tts-voice') { writeLocalConfig({ voiceId: msg.voiceId }); return null; }
   remember(msg);
   const data = JSON.stringify(msg);
   for (const client of wss.clients) {
     if (client !== except && client.readyState === 1) client.send(data);
   }
+  return null;
 }
 
 wss.on('connection', (ws) => {
@@ -328,8 +350,13 @@ wss.on('connection', (ws) => {
   ws.on('message', (raw) => {
     let msg;
     try { msg = JSON.parse(raw.toString()); } catch { return; }
-    // 口パク・表情の高頻度メッセージは状態に残さず中継だけ行う
-    broadcast(msg, ws);
+    // 1つの命令の失敗で配信中のサーバーを止めない
+    try {
+      const error = broadcast(msg, ws);
+      if (error) ws.send(JSON.stringify({ type: 'notice', level: 'error', text: `命令を無視しました: ${error}` }));
+    } catch (e) {
+      console.warn('命令の処理に失敗しました', msg?.type, e);
+    }
   });
 });
 

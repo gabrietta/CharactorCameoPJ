@@ -9,6 +9,8 @@ export class AudioEngine {
     this.levels = { master: SOUND.master, bgm: SOUND.bgm.volume, se: SOUND.se, ambience: SOUND.ambience, voice: SOUND.voice };
     this.mode = 'confession';
     this.speaking = 0;
+    // 視聴者ごとの音量（配信側の master とは別。掛け合わせて鳴らす）
+    this.viewerLevel = 1;
   }
 
   get ready() {
@@ -28,7 +30,9 @@ export class AudioEngine {
     this.ctx = ctx;
     this.master = ctx.createGain();
     this.master.gain.value = this.levels.master;
-    this.master.connect(ctx.destination);
+    this.viewer = ctx.createGain();
+    this.viewer.gain.value = this.viewerLevel;
+    this.master.connect(this.viewer).connect(ctx.destination);
 
     // 残響（指数減衰ノイズのインパルス応答）
     this.reverb = ctx.createConvolver();
@@ -332,6 +336,12 @@ export class AudioEngine {
     this.speaking++;
     this.#applyBgmLevel(0.3);
     setTimeout(() => { this.speaking = Math.max(0, this.speaking - 1); this.#applyBgmLevel(1); }, seconds * 1000);
+  }
+
+  // 視聴者の音量・消音（配信側からの sound 命令では変わらない）
+  setViewerVolume(level) {
+    this.viewerLevel = level;
+    if (this.viewer) this.viewer.gain.setTargetAtTime(level, this.ctx.currentTime, 0.05);
   }
 
   // ---------- ミキサー ----------

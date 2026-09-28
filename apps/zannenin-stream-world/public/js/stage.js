@@ -178,12 +178,12 @@ function loop() {
 const VOLUME_KEY = 'zannenin-stream-world:volume';
 const volumeEl = document.getElementById('volume');
 const volSlider = document.getElementById('vol-slider');
-let volumeState = { level: audio.levels.master, muted: false };
+let volumeState = { level: 1, muted: false };
 try { Object.assign(volumeState, JSON.parse(localStorage.getItem(VOLUME_KEY)) || {}); } catch { /* 保存なし */ }
 function applyVolume(save = true) {
   volSlider.value = volumeState.level;
   volumeEl.classList.toggle('muted', volumeState.muted || volumeState.level === 0);
-  audio.set({ master: volumeState.muted ? 0 : volumeState.level });
+  audio.setViewerVolume(volumeState.muted ? 0 : volumeState.level);
   if (save) { try { localStorage.setItem(VOLUME_KEY, JSON.stringify(volumeState)); } catch { /* 保存不可 */ } }
 }
 volSlider.addEventListener('input', () => {
