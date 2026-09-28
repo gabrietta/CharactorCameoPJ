@@ -38,7 +38,7 @@ connect();
 function syncState(state) {
   if (!state) return;
   markMode(state.mode);
-  if (state.viewers) $('viewers').value = state.viewers;
+  if (state.viewers != null) $('viewers').value = state.viewers;
   if (state.demoBadge != null) $('demo-badge').checked = state.demoBadge;
   if (state.stageInfo) $('stage-info').textContent = `ステージ接続済み（表情 ${state.stageInfo.expressions.length}種）`;
 }

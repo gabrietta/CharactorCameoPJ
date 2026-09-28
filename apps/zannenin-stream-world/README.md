@@ -128,6 +128,14 @@ node apps/zannenin-stream-world/tools/vendor-static.mjs
 
 `GET /api/state` で直近の画面状態を取得できます。
 
+### アクセス制限
+
+サーバーは 127.0.0.1 でだけ待ち受け、さらに次を確かめます（ブラウザで開いた別のサイトから命令を送られてTTSのクレジットを消費される、などを防ぐため）。
+
+- Host が `127.0.0.1:{PORT}` か `localhost:{PORT}` であること（DNSリバインディング対策）
+- ブラウザからのリクエスト・WebSocket は、Origin がこのサーバー自身であること。Origin を付けないローカルのスクリプト（AI連携・curl 等）はそのまま使える
+- `POST /api/cmd` は `Content-Type: application/json` だけを受け付ける
+
 ## 配信内容の編集
 
 `public/js/show.js` に、儀の名称、説法スライド、聖歌（見本）の歌詞、見本の懺悔、デモ台本がまとまっています。聖歌の歌詞はオリジナルの仮テキストです。実在の楽曲を使う場合は権利を確認して差し替えてください。

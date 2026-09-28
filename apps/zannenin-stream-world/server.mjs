@@ -194,7 +194,29 @@ function sendFile(req, res, file) {
   });
 }
 
+// ---------- アクセス制限 ----------
+// このサーバーは配信PCの中だけで使う。ブラウザで開いた別のサイトから命令を送り込まれたり
+// （TTSのクレジット消費など）、DNSリバインディングで状態を読まれたりしないよう、
+// Host と Origin がこのサーバー自身のものかを確かめる。
+// Origin を付けないローカルのスクリプト（AI連携・curl 等）はこれまで通り受け付ける。
+const ALLOWED_HOSTS = new Set([`127.0.0.1:${PORT}`, `localhost:${PORT}`]);
+function trusted(req) {
+  const host = String(req.headers.host || '').toLowerCase();
+  if (!ALLOWED_HOSTS.has(host)) return false;
+  const origin = req.headers.origin;
+  if (origin === undefined) return true;
+  return [...ALLOWED_HOSTS].some((h) => origin.toLowerCase() === `http://${h}`);
+}
+
+function reject(res, status, error) {
+  res.writeHead(status, { 'content-type': 'application/json; charset=utf-8' });
+  res.end(JSON.stringify({ ok: false, error }));
+}
+
+const MAX_BODY = 32 * 1024 * 1024;
+
 const server = http.createServer((req, res) => {
+  if (!trusted(req)) return reject(res, 403, 'このサーバーは 127.0.0.1 / localhost の自分のページからだけ操作できます');
   const url = new URL(req.url, `http://${req.headers.host}`);
 
   if (url.pathname === '/model.vrm') return sendFile(req, res, VRM_PATH);
@@ -224,7 +246,12 @@ const server = http.createServer((req, res) => {
   // 開発用: ステージの描画結果をPNGで保存する（目視確認用）
   if (url.pathname === '/api/snap' && req.method === 'POST') {
     const chunks = [];
-    req.on('data', (c) => chunks.push(c));
+    let size = 0;
+    req.on('data', (c) => {
+      size += c.length;
+      if (size > MAX_BODY) req.destroy();
+      else chunks.push(c);
+    });
     req.on('end', () => {
       const dataUrl = Buffer.concat(chunks).toString('utf8');
       const name = (url.searchParams.get('name') || 'snap').replace(/[^\w-]/g, '');
@@ -239,9 +266,14 @@ const server = http.createServer((req, res) => {
   }
 
   if (url.pathname === '/api/cmd' && req.method === 'POST') {
+    // JSON 以外（text/plain 等の「簡易リクエスト」）は受け付けない。ブラウザの他サイトからは送れなくなる
+    if (!/^application\/json\s*(;|$)/i.test(req.headers['content-type'] || '')) return reject(res, 415, 'Content-Type: application/json で送ってください');
     let body = '';
     req.setEncoding('utf8');
-    req.on('data', (c) => { body += c; });
+    req.on('data', (c) => {
+      body += c;
+      if (body.length > MAX_BODY) req.destroy();
+    });
     req.on('end', () => {
       try {
         const payload = JSON.parse(body);
@@ -265,7 +297,8 @@ const server = http.createServer((req, res) => {
   sendFile(req, res, file);
 });
 
-const wss = new WebSocketServer({ server, path: '/ws' });
+// WebSocket もブラウザの他サイトからの接続を拒否する（Origin なしのローカルスクリプトは可）
+const wss = new WebSocketServer({ server, path: '/ws', verifyClient: ({ req }) => trusted(req) });
 
 // tts:true の発話は、音声を作ってから audioUrl 付きで配る。失敗時は文字口パクで話し、コントロールへエラーを返す
 async function speakWithTts(msg) {

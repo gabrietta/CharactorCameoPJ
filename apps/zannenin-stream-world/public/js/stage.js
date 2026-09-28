@@ -420,7 +420,7 @@ let initialState = null;
 function applyState(state) {
   if (!state) return;
   if (state.mode && state.mode !== currentMode) applyMode(state.mode);
-  if (state.viewers) overlay.setViewers(state.viewers);
+  if (state.viewers != null) overlay.setViewers(state.viewers);
   if (state.demoBadge != null) overlay.setDemoBadge(state.demoBadge);
   if (state.ticker) overlay.setTicker(state.ticker.text);
   if (state.program) overlay.setProgram(state.program);
