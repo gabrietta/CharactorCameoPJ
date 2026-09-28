@@ -10,6 +10,7 @@ import { Overlay } from './overlay.js';
 import { DemoGame } from './game.js';
 import { AudioEngine } from './audio.js';
 import { MODES, SHOW, DEMO_SCRIPT, DEMO_COMMENTS, DEMO_NAMES } from './show.js';
+import { DEMO_VOICE } from './demo-voice.js';
 
 const params = new URLSearchParams(location.search);
 // 公式サイトの公開版（サーバーなし）。ビルド時に window.STREAM_WORLD_STATIC を埋め込む
@@ -172,6 +173,40 @@ function loop() {
   requestAnimationFrame(loop);
 }
 
+// ---------- 視聴者用の音量 ----------
+// 音量は見ている人のブラウザだけに保存する（使えない環境では毎回既定値）
+const VOLUME_KEY = 'zannenin-stream-world:volume';
+const volumeEl = document.getElementById('volume');
+const volSlider = document.getElementById('vol-slider');
+let volumeState = { level: audio.levels.master, muted: false };
+try { Object.assign(volumeState, JSON.parse(localStorage.getItem(VOLUME_KEY)) || {}); } catch { /* 保存なし */ }
+function applyVolume(save = true) {
+  volSlider.value = volumeState.level;
+  volumeEl.classList.toggle('muted', volumeState.muted || volumeState.level === 0);
+  audio.set({ master: volumeState.muted ? 0 : volumeState.level });
+  if (save) { try { localStorage.setItem(VOLUME_KEY, JSON.stringify(volumeState)); } catch { /* 保存不可 */ } }
+}
+volSlider.addEventListener('input', () => {
+  if (!audio.ready) audio.unlock();
+  volumeState.level = Number(volSlider.value);
+  volumeState.muted = false;
+  applyVolume();
+});
+document.getElementById('vol-mute').addEventListener('click', async () => {
+  if (!audio.ready) await audio.unlock();
+  volumeState.muted = !volumeState.muted;
+  applyVolume();
+});
+let volumeHide;
+function showVolume() {
+  volumeEl.classList.add('show');
+  clearTimeout(volumeHide);
+  volumeHide = setTimeout(() => volumeEl.classList.remove('show'), 2500);
+}
+addEventListener('pointermove', showVolume);
+addEventListener('pointerdown', showVolume);
+applyVolume(false);
+
 // ---------- 音の許可 ----------
 // ブラウザは操作なしに音を鳴らせないため、必要なときだけ「入堂」ボタンを出す（OBSでは自動で鳴る）
 async function soundGate() {
@@ -221,7 +256,8 @@ async function speak(msg) {
   const speaker = msg.speaker || SHOW.speaker;
   if (msg.expression) avatar.setExpression(msg.expression, msg.hold ?? 0);
   if (msg.gesture) avatar.playGesture(msg.gesture);
-  if (msg.audioUrl && !muted) {
+  // 音が許可されていない（音なしで見る・プレビュー）ときは文字口パクで話す
+  if (msg.audioUrl && !muted && audio.ready) {
     const analyser = audio.playVoice(msg.audioUrl, {
       onStart: (d) => overlay.showSubtitle(msg.text || '', { speaker, duration: d * 0.9, hold: msg.holdSubtitle ?? 2.5 }),
       onEnd: () => { avatar.detachAudio(); if (msg.expression && !msg.hold) avatar.setExpression('neutral'); },
@@ -243,7 +279,11 @@ let ambientTimer = null;
 function startDemo(loopDemo = false) {
   stopDemo();
   const total = DEMO_SCRIPT[DEMO_SCRIPT.length - 1][0] + 4;
-  for (const [time, cmd] of DEMO_SCRIPT) demoTimers.push(setTimeout(() => handle(cmd), time * 1000));
+  for (const [time, cmd] of DEMO_SCRIPT) {
+    // デモのセリフは事前生成した声で話す
+    const voiced = cmd.type === 'speak' && !cmd.audioUrl && DEMO_VOICE[cmd.text] ? { ...cmd, audioUrl: DEMO_VOICE[cmd.text].src } : cmd;
+    demoTimers.push(setTimeout(() => handle(voiced), time * 1000));
+  }
   if (loopDemo) demoTimers.push(setTimeout(() => startDemo(true), total * 1000));
   else demoTimers.push(setTimeout(() => clearTimeout(ambientTimer), total * 1000));
   const ambient = () => {

@@ -112,6 +112,7 @@ export const DEMO_COMMENTS = {
 };
 
 // デモ自動再生の台本（秒, 命令）。control.html の「デモ再生」や stage.html?demo=1 で使う
+// speak のセリフを変えたら tools/generate-demo-voice.mjs で声を作り直す（事前生成した声で話す）
 export const DEMO_SCRIPT = [
   [0.0, { type: 'intro' }],
   [4.2, { type: 'speak', text: 'ようこそ、満足教大聖堂の懺悔室へ。', expression: 'relaxed', gesture: 'bow' }],
@@ -123,10 +124,10 @@ export const DEMO_SCRIPT = [
   [19.5, { type: 'demo-votes', votes: [9, 5, 3], duration: 3.5 }],
   [23.5, { type: 'poll-end', winner: 0 }],
   [24.2, { type: 'speak', text: '神託が下りました。説法の儀へ移ります。', expression: 'relaxed', gesture: 'tilt' }],
-  [27.5, { type: 'mode', mode: 'sermon' }],
-  [31.0, { type: 'speak', text: '本日の説法です。まずは懺悔室のごあんないから。' }],
-  [35.5, { type: 'slide', index: 1 }],
-  [36.0, { type: 'speak', text: '懺悔はコメントで。お布施は手鈴でお迎えします。' }],
+  [28.2, { type: 'mode', mode: 'sermon' }],
+  [32.0, { type: 'speak', text: '本日の説法です。まずは懺悔室のごあんないから。' }],
+  [36.2, { type: 'slide', index: 1 }],
+  [36.6, { type: 'speak', text: '懺悔はコメントで。お布施は手鈴でお迎えします。' }],
   [40.5, { type: 'slide', index: 2 }],
   [41.0, { type: 'speak', text: 'では、聖歌の時間でございます。', expression: 'happy' }],
   [44.0, { type: 'mode', mode: 'hymn' }],

@@ -42,6 +42,8 @@ export async function buildStreamWorld(outDir, { pageUrl, imageUrl } = {}) {
     if (name.endsWith('.js') && !PRIVATE_SCRIPTS.has(name)) await cp(path.join(pub, 'js', name), path.join(outDir, 'js', name));
   }
   await cp(path.join(pub, 'assets/emblem.png'), path.join(outDir, 'assets/emblem.png'));
+  // デモ台本のセリフを事前生成した声（tools/generate-demo-voice.mjs）
+  await cp(path.join(pub, 'voice'), path.join(outDir, 'voice'), { recursive: true });
   await cp(path.join(appDir, 'static/og.png'), path.join(outDir, 'og.png'));
   await cp(path.join(appDir, 'static-vendor'), path.join(outDir, 'vendor'), { recursive: true });
   await cp(path.join(repoRoot, 'content/characters/zannenin/assets/manzokukyo/satisfaction-bgm.m4a'), path.join(outDir, 'assets/satisfaction-bgm.m4a'));

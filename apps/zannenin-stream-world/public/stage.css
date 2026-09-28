@@ -453,3 +453,21 @@ body.obs #hole canvas, body.obs #hole .hole-label { display: none; }
 /* 配信UIを隠してワールドだけ映す（?clean=1） */
 #stage.clean #brand, #stage.clean #chips, #stage.clean #program, #stage.clean #ticker,
 #stage.clean #demo-badge, #stage.clean #chat, #stage.clean #subtitle { display: none; }
+
+/* ---------- 視聴者用の音量 ---------- */
+#volume {
+  position: absolute; left: 26px; bottom: 26px; z-index: 25;
+  display: flex; align-items: center; gap: 12px; padding: 10px 18px 10px 12px; border-radius: 30px;
+  background: rgba(11,8,9,.88); border: 2px solid var(--gold);
+  box-shadow: 0 0 0 1px #000, 0 8px 22px rgba(0,0,0,.5);
+  opacity: 0; pointer-events: none; transition: opacity 400ms;
+}
+#volume.show, #volume:hover, #volume:focus-within { opacity: 1; pointer-events: auto; }
+body.obs #volume { display: none; }
+#vol-mute { width: 48px; height: 48px; border-radius: 50%; border: 0; background: var(--crimson); cursor: pointer; display: grid; place-items: center; }
+#vol-mute svg { width: 30px; height: 30px; fill: none; stroke: var(--pale); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+#vol-mute .spk { fill: var(--pale); }
+#vol-mute .cross { display: none; }
+#volume.muted #vol-mute .wave { display: none; }
+#volume.muted #vol-mute .cross { display: inline; }
+#vol-slider { width: 220px; accent-color: var(--gold); height: 24px; cursor: pointer; }

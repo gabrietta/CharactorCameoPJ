@@ -71,6 +71,7 @@ URLパラメータ:
 - **効果音**: 扉の開閉、儀の札、お布施の手鈴、懺悔の投函、神託の開始・決定、スライドのめくり。Web Audioでその場で合成するので外部素材は使っていない。
 - **環境音**: 低い室内の響きと、ろうそくの爆ぜる音（合成）。
 - **声（TTS）**: ElevenLabs。既定の声は「ざんねん落ち着き」（`JY9PPeXLA7hJHX7kOFT3`、`apps/elevenlabs-tts` と同じ）。コントロールの「声（TTS）」で別の声に変えられる。「話す」を声で読み上げるをオンにすると音声で話す。APIキーは他のTTSツール（`docs/elevenlabs-tts.md`）と同じくWindowsの環境変数 `elevenlabstoken` から**サーバー側だけ**で読む（`ELEVENLABS_API_KEY`、リポジトリ直下の `tts-config.json` も可）。生成した音声は `.cache/tts/` に保存し、同じ文・同じ声は再生成しない。生成のたびにクレジットを消費する。
+- **デモの声**: デモ台本のセリフは「ざんねん落ち着き」で事前に生成した音声（`public/voice/demo-XX.mp3`、対応表は `public/js/demo-voice.js`）を流す。公開版にも同梱する。セリフを変えたら `node apps/zannenin-stream-world/tools/generate-demo-voice.mjs` で作り直す（変わった文だけ生成、クレジットを消費）。音が許可されていないときは文字口パクになる。
 - 音量はコントロールの「音」で調整。OBSのブラウザソースは操作なしで音が鳴る。普通のブラウザでは最初に「懺悔室へ入る」ボタンが出る。
 - `?mute=1` とコントロール内のプレビューは無音。
 
@@ -85,7 +86,7 @@ URLパラメータ:
 
 `npm run build`（リポジトリのルート）で `dist/zannenin/stream-world/` に公開版を書き出し、GitHub Pagesの `https://zanneninsan.github.io/CharactorCameoPJ/zannenin/stream-world/` で公開する。
 
-- サーバーなしで動く閲覧用ページ。デモ台本をループ再生する。操作パネル・顔トラッキング・TTS・WebSocketは含まない。
+- サーバーなしで動く閲覧用ページ。デモ台本を事前生成の声つきでループ再生する。操作パネル・顔トラッキング・TTS生成・WebSocketは含まない。
 - モデルは公開用に軽量化したVRM `content/characters/zannenin/assets/models/zannenin-stream-world.vrm`（約12MB）。VRM形式のまま、表情・口パク・髪揺れは使える。原本（約33MB）はリポジトリに入れない。閲覧者はこのVRMを保存できる状態になる。
 - three / three-vrm は、CIで app の `npm install` をしないため、必要なファイルだけを `static-vendor/` に入れてコミットしている。
 

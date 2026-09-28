@@ -63,6 +63,8 @@ export class Avatar {
     this.vrm = vrm;
     if (vrm.lookAt) vrm.lookAt.target = this.lookTarget;
     this.expressionMap = this.#resolveExpressions();
+    // VRM0 は正規化ボーンの前後（X軸）と左右傾き（Z軸）の回転が逆向きになる。お辞儀などの向きをそろえる
+    this.ax = vrm.meta?.metaVersion === '0' ? -1 : 1;
     const head = vrm.humanoid.getNormalizedBoneNode('head');
     vrm.scene.updateMatrixWorld(true);
     this.headHeight = head ? head.getWorldPosition(new THREE.Vector3()).y : 1.3;
@@ -152,7 +154,7 @@ export class Avatar {
     if (tracking && tracking.head) {
       // 鏡写し（既定）: 本人が右を向くとアバターも自分の右を向く＝画面上は鏡像になる
       const m = this.trackingOptions.mirror ? 1 : -1;
-      headEuler = new THREE.Euler(tracking.head.x, tracking.head.y * m, tracking.head.z * m);
+      headEuler = new THREE.Euler(tracking.head.x * this.ax, tracking.head.y * m, tracking.head.z * m * this.ax);
     }
     const neck = bone('neck');
     const head = bone('head');
@@ -183,7 +185,7 @@ export class Avatar {
     if (this.gesture) {
       const p = (t - this.gesture.start) / this.gesture.duration;
       if (p >= 1) this.gesture = null;
-      else this.gesture.fn(p, bone, t);
+      else this.gesture.fn(p, bone, t, this.ax);
     }
 
     // VMC の骨回転（届いた骨だけ上書き）
@@ -347,8 +349,8 @@ const GESTURES = {
   // 恭しく一礼
   bow: {
     duration: 2.2,
-    fn(p, bone) {
-      const e = envelope(p, 0.3, 0.35) * 0.45;
+    fn(p, bone, t, ax) {
+      const e = envelope(p, 0.3, 0.35) * 0.45 * ax;
       const spine = bone('spine');
       const chest = bone('chest');
       const head = bone('head');
@@ -360,9 +362,10 @@ const GESTURES = {
   // 頷き
   nod: {
     duration: 0.9,
-    fn(p, bone) {
+    fn(p, bone, t, ax) {
       const head = bone('head');
-      if (head) head.rotation.x += Math.sin(p * Math.PI * 2) * 0.16 * (1 - p);
+      // 最初に下へ頷く
+      if (head) head.rotation.x += Math.sin(p * Math.PI * 2) * 0.16 * (1 - p) * ax;
     },
   },
   // いたずらっぽく首をかしげる
@@ -387,7 +390,7 @@ const GESTURES = {
   // 胸の前で両手を合わせる（聖歌・締めの挨拶）
   pray: {
     duration: 3.0,
-    fn(p, bone) {
+    fn(p, bone, t, ax) {
       const e = envelope(p, 0.25, 0.25);
       for (const [side, s] of [['left', 1], ['right', -1]]) {
         const ua = bone(`${side}UpperArm`);
@@ -396,7 +399,7 @@ const GESTURES = {
         if (la) la.rotation.set(la.rotation.x, la.rotation.y * (1 - e) + e * s * -1.85, 0);
       }
       const head = bone('head');
-      if (head) head.rotation.x += e * 0.12;
+      if (head) head.rotation.x += e * 0.12 * ax;
     },
   },
 };
