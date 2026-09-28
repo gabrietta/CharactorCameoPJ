@@ -8,6 +8,7 @@ import { fileURLToPath } from "node:url";
 import sharp from "sharp";
 import { buildAnimeTeaserCute } from "./build-anime-teaser-cute.mjs";
 import { buildManzokukyoPreview } from "./build-manzokukyo-preview.mjs";
+import { buildStreamWorld } from "../apps/zannenin-stream-world/tools/build-static.mjs";
 import { teaserFaviconLinks } from "./build-teaser-favicons.mjs";
 import { resolveCharacterPageOverride } from "./page-overrides/index.mjs";
 
@@ -121,6 +122,10 @@ async function build() {
           await writeFile(path.join(manzokukyoRedHouseDir, "index.html"), archiveManzokukyoPage(renderManzokukyoRedHouse(character), "truth/red-house"), "utf8");
           await writeFile(path.join(manzokukyoArchiveDir, "index.html"), archiveManzokukyoPage(renderManzokukyoArchiveNovel(character), "truth/red-house/archive"), "utf8");
           await copyStaticSite(character, characterDir, "desktopchillko");
+          await buildStreamWorld(path.join(characterDir, "stream-world"), {
+            pageUrl: absoluteUrl(`${character.id}/stream-world/`),
+            imageUrl: absoluteUrl(`${character.id}/stream-world/og.png`)
+          });
         }
         for (const page of hiddenPages(character)) {
           await writeFile(path.join(characterDir, `${page.slug}.html`), renderHiddenPage(character, page), "utf8");
@@ -10279,6 +10284,7 @@ function renderSitemap(characters) {
         { loc: absoluteUrl(`${character.id}/manzokukyo/truth/red-house/`), priority: "0.4" },
         { loc: absoluteUrl(`${character.id}/manzokukyo/truth/red-house/archive/`), priority: "0.4" },
         { loc: absoluteUrl(`${character.id}/desktopchillko/`), priority: "0.7" },
+        { loc: absoluteUrl(`${character.id}/stream-world/`), priority: "0.6" },
       ] : []),
       ...(character.fanworkGuidelines ? [{ loc: absoluteUrl(`${character.id}/fanworks.html`), priority: "0.7" }] : [])
     ])

@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>懺悔室 コントロール</title>
+  <link rel="stylesheet" href="control.css">
+</head>
+<body>
+  <header class="top">
+    <img src="assets/emblem.png" alt="">
+    <h1>満足教大聖堂・懺悔室 <span>コントロール</span></h1>
+    <span id="conn" class="conn off">未接続</span>
+    <span id="stage-info" class="muted"></span>
+    <a href="stage.html" target="_blank" class="link">ステージを開く ↗</a>
+  </header>
+
+  <main>
+    <!-- 左列 -->
+    <section class="col">
+      <div class="card">
+        <h2>儀（配信の企画）</h2>
+        <div class="grid4" id="modes">
+          <button data-mode="confession"><b>第一の儀</b>告解<small>ざつだん</small></button>
+          <button data-mode="sermon"><b>第二の儀</b>説法<small>スライド</small></button>
+          <button data-mode="hymn"><b>第三の儀</b>聖歌<small>うた</small></button>
+          <button data-mode="trial"><b>第四の儀</b>試練<small>ゲーム</small></button>
+        </div>
+        <label class="inline"><input type="checkbox" id="mode-instant"> 扉演出なしで切り替える</label>
+      </div>
+
+      <div class="card">
+        <h2>カメラ</h2>
+        <div class="row wrap" id="cams">
+          <button data-cam="main">正面</button>
+          <button data-cam="close">寄り</button>
+          <button data-cam="wide">引き</button>
+          <button data-cam="lattice">格子越し</button>
+          <button data-cam="low">あおり</button>
+          <button data-cam="side">斜め</button>
+          <button data-cam="hymn">周回</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>表情・身振り</h2>
+        <div class="row wrap" id="exprs">
+          <button data-expr="neutral">通常</button>
+          <button data-expr="happy">笑顔</button>
+          <button data-expr="relaxed">穏やか</button>
+          <button data-expr="surprised">驚き</button>
+          <button data-expr="angry">怒り</button>
+          <button data-expr="sad">悲しみ</button>
+        </div>
+        <div class="row wrap" id="gestures">
+          <button data-gesture="wave">手を振る</button>
+          <button data-gesture="bow">一礼</button>
+          <button data-gesture="nod">頷く</button>
+          <button data-gesture="tilt">首かしげ</button>
+          <button data-gesture="shake">首を振る</button>
+          <button data-gesture="pray">手を合わせる</button>
+        </div>
+        <label class="inline">表情の保持 <input type="number" id="expr-hold" value="0" min="0" step="0.5" class="num"> 秒（0=戻さない）</label>
+      </div>
+
+      <div class="card">
+        <h2>発話（字幕＋口パク）</h2>
+        <textarea id="speak-text" rows="3" placeholder="セリフを入力（Ctrl+Enterで話す）"></textarea>
+        <div class="row">
+          <select id="speak-expr">
+            <option value="">表情そのまま</option>
+            <option value="happy">笑顔</option>
+            <option value="relaxed">穏やか</option>
+            <option value="surprised">驚き</option>
+            <option value="angry">怒り</option>
+            <option value="sad">悲しみ</option>
+          </select>
+          <select id="speak-gesture">
+            <option value="">身振りなし</option>
+            <option value="nod">頷く</option>
+            <option value="tilt">首かしげ</option>
+            <option value="bow">一礼</option>
+            <option value="wave">手を振る</option>
+          </select>
+          <input id="speak-audio" placeholder="音声URL（任意・TTS）" class="grow">
+        </div>
+        <div class="row">
+          <button id="speak" class="primary">話す</button>
+          <button id="subtitle-only">字幕だけ出す</button>
+          <button id="subtitle-clear">字幕を消す</button>
+        </div>
+        <div class="row wrap" id="phrases"></div>
+      </div>
+    </section>
+
+    <!-- 中央列 -->
+    <section class="col">
+      <div class="card">
+        <h2>懺悔・お布施（手動投入）</h2>
+        <div class="row"><input id="c-name" placeholder="お名前" value="迷える子羊"><input id="c-text" class="grow" placeholder="懺悔の内容"></div>
+        <div class="row"><button id="comment">懺悔を投函</button><button id="demo-comment">見本の懺悔</button></div>
+        <div class="row"><input id="o-amount" type="number" value="500" class="num"> 円 <input id="o-text" class="grow" placeholder="お布施のひとこと"></div>
+        <div class="row"><button id="offering" class="gold">お布施を受け取る</button></div>
+      </div>
+
+      <div class="card">
+        <h2>神託（投票）</h2>
+        <input id="p-q" value="神託：次の儀は？">
+        <input id="p-opts" value="説法, 聖歌, 試練" placeholder="選択肢をカンマ区切り">
+        <div class="row"><button id="poll-start">神託を始める</button><button id="poll-end">締め切る</button></div>
+        <div class="row wrap" id="poll-votes"></div>
+      </div>
+
+      <div class="card">
+        <h2>説法スライド・聖歌</h2>
+        <div class="row"><button id="slide-prev">◀ 前へ</button><span id="slide-no" class="muted">1</span><button id="slide-next">次へ ▶</button></div>
+        <div class="row"><button id="lyrics-start">聖歌の歌詞を流す</button><button id="lyrics-stop">止める</button></div>
+      </div>
+
+      <div class="card">
+        <h2>画面の文言</h2>
+        <div class="row"><input id="ticker" class="grow" value="ようこそ、満足教大聖堂の懺悔室へ"><button id="ticker-set">堂内放送</button></div>
+        <div class="row"><input id="program" class="grow" value="本日の式次第" placeholder="式次第の見出し"><button id="program-set">見出し</button>
+          <select id="program-style"><option value="candles">式次第：燭台</option><option value="scroll">式次第：巻物</option></select></div>
+        <div class="row"><input id="viewers" type="number" value="96" class="num"> 名 <button id="viewers-set">参拝者数</button>
+          <label class="inline"><input type="checkbox" id="demo-badge" checked> デモ表記</label></div>
+      </div>
+
+      <div class="card">
+        <h2>デモ再生</h2>
+        <div class="row"><button id="demo-start">デモを再生</button><button id="demo-loop">ループ再生</button><button id="demo-stop">停止</button></div>
+      </div>
+    </section>
+
+    <!-- 右列 -->
+    <section class="col">
+      <div class="card">
+        <h2>音</h2>
+        <div class="mix">
+          <label>全体</label><input type="range" data-level="master" min="0" max="1" step="0.05" value="0.9"><span></span>
+          <label><input type="checkbox" data-on="bgm" checked> BGM</label><input type="range" data-level="bgm" min="0" max="1" step="0.05" value="0.8"><span></span>
+          <label><input type="checkbox" data-on="se" checked> 効果音</label><input type="range" data-level="se" min="0" max="1" step="0.05" value="0.8"><span></span>
+          <label><input type="checkbox" data-on="ambience" checked> 環境音</label><input type="range" data-level="ambience" min="0" max="1" step="0.05" value="0.35"><span></span>
+          <label><input type="checkbox" data-on="voice" checked> 声</label><input type="range" data-level="voice" min="0" max="1" step="0.05" value="1"><span></span>
+        </div>
+        <div class="row wrap">
+          <button data-sfx="bell">手鈴</button><button data-sfx="door-close">扉</button><button data-sfx="oracle-end">神託の鐘</button><button data-sfx="slip">投函</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>声（TTS・ElevenLabs）</h2>
+        <p class="note">APIキーはサーバー側だけで使います。生成のたびにクレジットを消費します（同じ文と声はキャッシュを再利用）。</p>
+        <div class="row"><select id="voice" class="grow"><option value="">声を選んでください</option></select><button id="voice-reload">一覧を取得</button></div>
+        <div class="row"><input id="voice-id" class="grow" placeholder="または声のID（20文字）を直接入力"></div>
+        <div class="row"><button id="voice-save">この声を残念院さんに使う</button><span id="voice-saved" class="muted"></span></div>
+        <label class="inline"><input type="checkbox" id="use-tts"> 「話す」を声で読み上げる</label>
+        <div id="notice" class="note"></div>
+      </div>
+
+      <div class="card">
+        <h2>マイク口パク</h2>
+        <div class="row"><select id="mic-device" class="grow"><option value="">既定のマイク</option></select></div>
+        <div class="row"><button id="mic-start">開始</button><button id="mic-stop">停止</button>
+          <label class="inline">感度 <input type="range" id="mic-gain" min="1" max="20" value="7"></label></div>
+        <div class="meter"><i id="mic-meter"></i></div>
+      </div>
+
+      <div class="card">
+        <h2>顔トラッキング（Webカメラ）</h2>
+        <p class="note">MediaPipeで頭の向き・まばたき・口を送ります。初回は認識モデル（約4MB）をGoogleのCDNから読み込みます（<code>public/assets/face_landmarker.task</code> があればそちらを優先）。</p>
+        <div class="row"><select id="cam-device" class="grow"><option value="">既定のカメラ</option></select></div>
+        <div class="row"><button id="face-start">開始</button><button id="face-stop">停止</button>
+          <label class="inline"><input type="checkbox" id="mirror" checked> 鏡写し</label></div>
+        <div class="facebox"><video id="face-video" playsinline muted></video><span id="face-status" class="muted">停止中</span></div>
+      </div>
+
+      <div class="card">
+        <h2>VMC受信（外部トラッカー）</h2>
+        <p class="note">VSeeFace等の「VMCプロトコル送信」を <code>127.0.0.1:39539</code> へ向けると受信します。</p>
+        <div class="row"><span id="vmc-status" class="conn off">未受信</span></div>
+        <div class="row">
+          <label class="inline">受ける範囲
+            <select id="vmc-bones"><option value="head">頭と胴のみ</option><option value="upper">上半身（腕・指を含む）</option><option value="all">全身</option></select></label>
+        </div>
+        <div class="row">
+          <label class="inline">軸変換
+            <select id="vmc-flip"><option value="vrm0">VRM0向け（既定）</option><option value="vrm1">VRM1向け</option></select></label>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>プレビュー</h2>
+        <label class="inline"><input type="checkbox" id="preview-on"> ステージをここに表示（GPU負荷が増えます）</label>
+        <div class="preview" id="preview"></div>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="js/control.js"></script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>満足教大聖堂 懺悔室 — Stage</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="stage.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "./vendor/three/build/three.module.js",
+        "three/addons/": "./vendor/three/examples/jsm/",
+        "@pixiv/three-vrm": "./vendor/three-vrm/three-vrm.module.js"
+      }
+    }
+  </script>
+</head>
+<body>
+  <div id="stage" data-mode="confession" data-layout="full">
+    <!-- ゲーム/スライド時の背景（ゲーム枠の内側は透過にできる） -->
+    <div id="backdrop"><div id="hole"><canvas id="game"></canvas><div class="hole-label">ゲーム画面をここに重ねます（OBSでは ?obs=1 で透過）</div></div></div>
+
+    <div id="view"><canvas id="three"></canvas></div>
+    <div id="pip-frame"><span class="plate">教祖 残念院さん</span></div>
+    <div id="vignette"></div>
+    <div id="float-layer"></div>
+
+    <!-- 左上: 大聖堂の銘板 -->
+    <header id="brand">
+      <div class="medal"><img src="assets/emblem.png" alt=""></div>
+      <div class="brand-main">
+        <div class="brand-title"><span class="name">満足教大聖堂</span><span class="room">懺悔室</span></div>
+        <div class="brand-status"><i class="live"></i><span id="status-text">告解受付中</span><span id="clock">--:--</span></div>
+      </div>
+    </header>
+    <div id="chips">
+      <span class="chip is-rite" id="chip-rite">第一の儀　告解</span>
+      <span class="chip" id="chip-viewers">参拝者 96名</span>
+    </div>
+
+    <!-- 左: 式次第（儀の進行） -->
+    <section id="program" data-style="candles"></section>
+
+    <!-- 上中央: 堂内放送 -->
+    <div id="ticker"><span class="t-icon">♪ 堂内放送</span><span id="ticker-text">ようこそ、満足教大聖堂の懺悔室へ</span></div>
+
+    <!-- 右上: デモ表記 -->
+    <div id="demo-badge"><b id="demo-title">デモ映像（見本）</b><span id="demo-note">懺悔・お布施・神託・聖歌はすべて見本です</span></div>
+
+    <!-- 右: 懺悔箱（チャット） -->
+    <aside id="chat">
+      <div class="chat-head"><span class="jp">懺悔箱</span><span class="en">CONFESSIONS</span><img src="assets/emblem.png" alt=""></div>
+      <div class="chat-rule"></div>
+      <ol id="chat-list"></ol>
+    </aside>
+
+    <!-- 説法スライド -->
+    <section id="slides">
+      <div class="slide-head">
+        <img src="assets/emblem.png" alt="">
+        <span class="slide-title" id="slide-title">本日の説法</span>
+        <span class="slide-sub" id="slide-sub"></span>
+        <span class="slide-count" id="slide-count">1 / 3</span>
+      </div>
+      <div class="slide-body" id="slide-body"></div>
+    </section>
+
+    <!-- 聖歌の歌詞 -->
+    <section id="lyrics">
+      <div class="lyr-label" id="lyrics-label">聖歌（見本）</div>
+      <div class="lyr-line" id="lyrics-line"><span class="lyr-fill"></span><span class="lyr-text"></span></div>
+      <div class="lyr-next" id="lyrics-next"></div>
+    </section>
+
+    <!-- 神託（投票） -->
+    <section id="poll">
+      <div class="poll-head"><span class="jp">神託</span><span class="en">ORACLE</span></div>
+      <div class="poll-q" id="poll-q"></div>
+      <div id="poll-options"></div>
+      <div class="poll-foot" id="poll-foot">懺悔箱に番号を投函して神託を</div>
+    </section>
+
+    <!-- お布施 -->
+    <div id="offering">
+      <div class="off-bell"><img src="assets/emblem.png" alt=""></div>
+      <div class="off-body">
+        <div class="off-top"><span class="off-label">お布施</span><span id="off-amount">¥500</span></div>
+        <div class="off-name" id="off-name"></div>
+        <div class="off-text" id="off-text"></div>
+      </div>
+    </div>
+
+    <!-- 字幕 -->
+    <div id="subtitle">
+      <div class="plate" id="sub-speaker">教祖 残念院さん</div>
+      <div class="sub-text" id="sub-text"></div>
+    </div>
+
+    <!-- 儀の切り替え扉 -->
+    <div id="doors">
+      <div class="door left"><div class="door-arch"></div></div>
+      <div class="door right"><div class="door-arch"></div></div>
+      <div class="door-seal"><img src="assets/emblem.png" alt=""></div>
+      <div class="rite-card" id="rite-card">
+        <div class="rc-rite" id="rc-rite">第二の儀</div>
+        <div class="rc-name" id="rc-name">説法</div>
+        <div class="rc-tag" id="rc-tag">スライド解説</div>
+        <div class="rc-foot" id="rc-foot">の儀へ　うつります</div>
+      </div>
+    </div>
+
+    <div id="loading"><img src="assets/emblem.png" alt=""><div id="loading-text">懺悔室の扉をひらいています…</div><div class="bar"><i id="loading-bar"></i></div>
+      <div id="sound-gate" hidden><button class="enter">懺悔室へ入る</button><button class="silent">音なしで見る</button><p>BGM・効果音・声が流れます</p></div>
+    </div>
+  </div>
+
+  <script type="module" src="js/stage.js"></script>
+</body>
+</html>
