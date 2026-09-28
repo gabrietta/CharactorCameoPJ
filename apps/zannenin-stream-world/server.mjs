@@ -74,25 +74,36 @@ async function listVoices() {
   return (body.voices ?? []).map(({ voice_id, name, category }) => ({ voiceId: voice_id, name, category }));
 }
 
-// 同じ文・同じ声は再生成せずキャッシュを返す（APIの消費を抑える）
+// 同じ文・同じ声は再生成せずキャッシュを返す（APIの消費を抑える）。
+// 生成中に同じ依頼が重なったとき（ダブルクリック等）も、1回の生成を共有して二重に課金しない
+const ttsInFlight = new Map();
 async function synthesize(text, voiceId) {
   const key = elevenLabsKey();
   if (!key) throw new Error('ElevenLabs のAPIキーが見つかりません');
   if (!/^[A-Za-z0-9]{20}$/.test(voiceId || '')) throw new Error('声が選ばれていません。コントロールの「声（TTS）」で選んでください');
   const model = readLocalConfig().ttsModel || 'eleven_v3';
   const hash = crypto.createHash('sha1').update(`${voiceId}|${model}|${text}`).digest('hex').slice(0, 20);
+  const url = `/tts-cache/${hash}.mp3`;
   const file = path.join(TTS_DIR, `${hash}.mp3`);
-  if (!fs.existsSync(file)) {
-    const r = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}?output_format=mp3_44100_128`, {
-      method: 'POST',
-      headers: { 'xi-api-key': key, 'content-type': 'application/json', accept: 'audio/mpeg' },
-      body: JSON.stringify({ text, model_id: model }),
-    });
-    if (!r.ok) throw new Error(`音声生成に失敗しました (${r.status}) ${(await r.text()).slice(0, 200)}`);
-    fs.mkdirSync(TTS_DIR, { recursive: true });
-    fs.writeFileSync(file, Buffer.from(await r.arrayBuffer()));
+  if (fs.existsSync(file)) return url;
+  if (!ttsInFlight.has(hash)) {
+    const job = (async () => {
+      const r = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}?output_format=mp3_44100_128`, {
+        method: 'POST',
+        headers: { 'xi-api-key': key, 'content-type': 'application/json', accept: 'audio/mpeg' },
+        body: JSON.stringify({ text, model_id: model }),
+      });
+      if (!r.ok) throw new Error(`音声生成に失敗しました (${r.status}) ${(await r.text()).slice(0, 200)}`);
+      fs.mkdirSync(TTS_DIR, { recursive: true });
+      // 書きかけのファイルを配信しないよう、一時ファイルに書いてから置き換える
+      const tmp = `${file}.${process.pid}.tmp`;
+      fs.writeFileSync(tmp, Buffer.from(await r.arrayBuffer()));
+      fs.renameSync(tmp, file);
+    })().finally(() => ttsInFlight.delete(hash));
+    ttsInFlight.set(hash, job);
   }
-  return `/tts-cache/${hash}.mp3`;
+  await ttsInFlight.get(hash);
+  return url;
 }
 
 const routes = [
@@ -159,6 +170,9 @@ function remember(msg) {
     case 'poll-vote':
       if (state.poll && state.poll.votes[msg.option] != null) state.poll.votes[msg.option] += msg.count || 1;
       break;
+    case 'poll-votes':
+      if (state.poll) state.poll.votes = state.poll.options.map((_, i) => msg.votes[i] ?? 0);
+      break;
     case 'poll-end': state.poll = null; break;
     case 'stage-info': state.stageInfo = msg; break;
     case 'sound': state.sound = { ...state.sound, ...msg, enabled: { ...state.sound?.enabled, ...msg.enabled } }; break;
@@ -169,7 +183,8 @@ function remember(msg) {
 function resolveFile(urlPath) {
   for (const [prefix, dir] of routes) {
     if (!urlPath.startsWith(prefix)) continue;
-    const rel = decodeURIComponent(urlPath.slice(prefix.length)) || 'index.html';
+    let rel;
+    try { rel = decodeURIComponent(urlPath.slice(prefix.length)) || 'index.html'; } catch { return null; }
     const file = path.resolve(dir, rel);
     if (!file.startsWith(path.resolve(dir))) return null;
     return file;
@@ -216,6 +231,17 @@ function reject(res, status, error) {
 const MAX_BODY = 32 * 1024 * 1024;
 
 const server = http.createServer((req, res) => {
+  // 1つのリクエストの失敗で配信中のサーバーを止めない
+  try {
+    handleRequest(req, res);
+  } catch (e) {
+    console.warn('リクエストの処理に失敗しました', req.url, e);
+    if (!res.headersSent) reject(res, 500, '内部エラー');
+    else res.end();
+  }
+});
+
+function handleRequest(req, res) {
   if (!trusted(req)) return reject(res, 403, 'このサーバーは 127.0.0.1 / localhost の自分のページからだけ操作できます');
   const url = new URL(req.url, `http://${req.headers.host}`);
 
@@ -256,9 +282,13 @@ const server = http.createServer((req, res) => {
       const dataUrl = Buffer.concat(chunks).toString('utf8');
       const name = (url.searchParams.get('name') || 'snap').replace(/[^\w-]/g, '');
       const ext = (url.searchParams.get('ext') || 'png').replace(/[^a-z0-9]/g, '');
-      const out = path.join(SNAP_DIR, `${name}.${ext}`);
-      fs.mkdirSync(SNAP_DIR, { recursive: true });
-      fs.writeFileSync(out, Buffer.from(dataUrl.replace(/^data:[^;]+;base64,/, ''), 'base64'));
+      const out = path.join(SNAP_DIR, `${name || 'snap'}.${ext || 'png'}`);
+      try {
+        fs.mkdirSync(SNAP_DIR, { recursive: true });
+        fs.writeFileSync(out, Buffer.from(dataUrl.replace(/^data:[^;]+;base64,/, ''), 'base64'));
+      } catch (e) {
+        return reject(res, 500, `保存できませんでした: ${e.message}`);
+      }
       res.writeHead(200, { 'content-type': 'application/json' });
       res.end(JSON.stringify({ ok: true, file: out }));
     });
@@ -290,12 +320,9 @@ const server = http.createServer((req, res) => {
   }
 
   const file = resolveFile(url.pathname === '/' ? '/index.html' : url.pathname);
-  if (!file) {
-    res.writeHead(403);
-    return res.end();
-  }
+  if (!file) return reject(res, 400, 'URL を解釈できません');
   sendFile(req, res, file);
-});
+}
 
 // WebSocket もブラウザの他サイトからの接続を拒否する（Origin なしのローカルスクリプトは可）
 const wss = new WebSocketServer({ server, path: '/ws', verifyClient: ({ req }) => trusted(req) });
@@ -314,17 +341,19 @@ async function speakWithTts(msg) {
 
 // 命令の中身を確かめる。問題があれば理由を返す（状態の記録や中継で例外を起こさないため）
 const isStr = (v) => typeof v === 'string';
+// 儀（public/js/show.js の MODES と同じ）
+const MODE_NAMES = new Set(['confession', 'sermon', 'hymn', 'trial']);
 function invalid(msg) {
   if (!msg || typeof msg !== 'object' || !isStr(msg.type)) return 'type がありません';
   switch (msg.type) {
     case 'speak': return isStr(msg.text) ? null : 'speak には text が必要です';
     case 'subtitle': return isStr(msg.text) ? null : 'subtitle には text が必要です';
-    case 'mode': return isStr(msg.mode) ? null : 'mode には mode が必要です';
+    case 'mode': return MODE_NAMES.has(msg.mode) ? null : `mode は ${[...MODE_NAMES].join(' / ')} のいずれかです`;
     case 'comment': return isStr(msg.text) ? null : 'comment には text が必要です';
     case 'offering': return Number.isFinite(Number(msg.amount)) ? null : 'offering には amount が必要です';
     case 'poll-start': return Array.isArray(msg.options) && msg.options.length >= 2 && msg.options.every(isStr) ? null : 'poll-start には2つ以上の options（文字列）が必要です';
     case 'poll-vote': return Number.isInteger(msg.option) ? null : 'poll-vote には option（番号）が必要です';
-    case 'poll-votes': return Array.isArray(msg.votes) ? null : 'poll-votes には votes が必要です';
+    case 'poll-votes': return Array.isArray(msg.votes) && msg.votes.every((v) => Number.isFinite(v) && v >= 0) ? null : 'poll-votes には0以上の数値の votes が必要です';
     case 'viewers': return Number.isFinite(msg.count) ? null : 'viewers には count（数値）が必要です';
     case 'tts-voice': return /^[A-Za-z0-9]{20}$/.test(msg.voiceId || '') ? null : 'tts-voice には20文字の voiceId が必要です';
     default: return null;
