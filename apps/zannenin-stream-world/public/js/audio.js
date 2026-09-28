@@ -20,7 +20,11 @@ export class AudioEngine {
   // ユーザー操作（クリック）か、自動再生が許可された環境（OBS）で呼ぶ
   async unlock() {
     if (!this.ctx) this.#build();
-    if (this.ctx.state === 'suspended') await this.ctx.resume().catch(() => {});
+    if (this.ctx.state === 'suspended') {
+      // クリック前のブラウザでは resume() の返事がクリックまで保留されるので、待ち続けない
+      // （待ち続けると「懺悔室へ入る」ボタンが出る前にローディングで止まる）
+      await Promise.race([this.ctx.resume().catch(() => {}), new Promise((r) => setTimeout(r, 300))]);
+    }
     if (this.ready) this.#startLoops();
     return this.ready;
   }

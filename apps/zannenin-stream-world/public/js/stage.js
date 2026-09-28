@@ -137,7 +137,7 @@ async function boot() {
   const vrmUrl = params.get('vrm') || 'model.vrm';
   try {
     await avatar.load(vrmUrl, (e) => {
-      if (e.total) overlay.setLoading(0.15 + (e.loaded / e.total) * 0.8);
+      if (e.total) overlay.setLoading(0.15 + Math.min(1, e.loaded / e.total) * 0.8);
     });
     rig.face = avatar.headHeight + 0.05;
   } catch (err) {
@@ -618,4 +618,8 @@ function encodeWav(buf) {
 }
 
 window.__stage = { handle, avatar, rig, set: () => set, scene, camera, renderer, snap, audio, renderMusic };
-boot();
+boot().catch((err) => {
+  console.error(err);
+  overlay.loadingError(`起動できませんでした。再読み込みしても直らない場合は、この画面を添えてお知らせください。
+${err?.message || err}`);
+});
