@@ -5,6 +5,8 @@ export const SHOW = {
   title: '満足教大聖堂',
   subtitle: '懺悔室',
   speaker: '教祖 残念院さん',
+  // デモ開始時の参拝者数
+  viewers: 96,
   // 左上の式次第の見た目: 'scroll'（羊皮紙の巻物）または 'candles'（儀ごとの燭台）。?program=candles でも切替可
   programStyle: 'scroll',
   programTitle: '本日の式次第',

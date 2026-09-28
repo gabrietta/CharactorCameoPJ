@@ -313,6 +313,9 @@ let demoTimers = [];
 let ambientTimer = null;
 function startDemo(loopDemo = false) {
   stopDemo();
+  stopHymn();
+  overlay.resetForDemo();
+  overlay.setViewers(SHOW.viewers ?? 96);
   const total = DEMO_SCRIPT[DEMO_SCRIPT.length - 1][0] + 4;
   for (const [time, cmd] of DEMO_SCRIPT) {
     // デモのセリフは事前生成した声で話す

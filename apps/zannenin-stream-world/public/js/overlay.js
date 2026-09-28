@@ -164,6 +164,22 @@ export class Overlay {
     if (hold > 0) this.subTimer = setTimeout(() => box.classList.remove('show'), (duration + hold) * 1000);
   }
 
+  // 画面の一時的な表示をすべて片付ける（デモを毎回まっさらな状態から始めるため）
+  resetForDemo() {
+    this.clearSubtitle();
+    this.stopLyrics();
+    clearTimeout(this.offTimer);
+    $('offering').classList.remove('show');
+    $('poll').classList.remove('show');
+    this.stage.classList.remove('polling');
+    this.poll = null;
+    $('chat-list').innerHTML = '';
+    $('float-layer').innerHTML = '';
+    this.visited = new Set();
+    this.slot = -1;
+    this.renderSlide(0, false);
+  }
+
   clearSubtitle() {
     clearTimeout(this.subTimer);
     clearInterval(this.typeTimer);
