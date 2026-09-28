@@ -150,6 +150,15 @@
       "description": "カルトでダークな満足教サイト"
     },
     {
+      "label": "満足教大聖堂・懺悔室",
+      "url": "./stream-world/",
+      "canonicalUrl": "zannenin/stream-world/",
+      "type": "app",
+      "icon": "assets/links/stream-world-icon.webp",
+      "displayUrl": "配信ワールド（デモ）",
+      "description": "教祖が懺悔室からお送りする3D配信ワールドの見本"
+    },
+    {
       "label": "アニメティザー",
       "url": "../anime/manzokukyo-zannenin-cute/",
       "canonicalUrl": "anime/manzokukyo-zannenin-cute/",

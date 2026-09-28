@@ -11,6 +11,7 @@ import crypto from 'node:crypto';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import dgram from 'node:dgram';
+import { execFileSync } from 'node:child_process';
 import { WebSocketServer } from 'ws';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
@@ -26,11 +27,26 @@ const BGM_PATH = path.join(repoRoot, 'content/characters/zannenin/assets/manzoku
 const TTS_DIR = path.join(here, '.cache/tts');
 const LOCAL_CONFIG = path.join(here, 'local-config.json');
 
-// ElevenLabs のAPIキーはサーバー内だけで使い、ブラウザへは渡さない
+// Windows のユーザー／システム環境変数（サーバー起動後に登録した値も読めるよう、レジストリを直接見る）
+function persistentWindowsEnv(name) {
+  if (process.platform !== 'win32') return null;
+  for (const key of ['HKCU\\Environment', 'HKLM\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Environment']) {
+    try {
+      const out = execFileSync('reg', ['query', key, '/v', name], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
+      const m = out.match(new RegExp(`${name}\\s+REG_(?:EXPAND_)?SZ\\s+(.+)`, 'i'));
+      if (m) return m[1].trim();
+    } catch { /* 未登録 */ }
+  }
+  return null;
+}
+
+// ElevenLabs のAPIキーはサーバー内だけで使い、ブラウザへは渡さない。
+// 他のTTSツール（scripts/elevenlabs-tts.mjs）と同じく、環境変数 elevenlabstoken を優先する
 function elevenLabsKey() {
-  if (process.env.ELEVENLABS_API_KEY) return process.env.ELEVENLABS_API_KEY;
+  const fromEnv = process.env.ELEVENLABS_API_KEY || persistentWindowsEnv('elevenlabstoken') || process.env.elevenlabstoken;
+  if (fromEnv?.trim()) return fromEnv.trim();
   try {
-    return JSON.parse(fs.readFileSync(path.join(repoRoot, 'tts-config.json'), 'utf8')).elevenLabsApiKey || null;
+    return JSON.parse(fs.readFileSync(path.join(repoRoot, 'tts-config.json'), 'utf8')).elevenLabsApiKey?.trim() || null;
   } catch {
     return null;
   }
@@ -49,7 +65,7 @@ function writeLocalConfig(patch) {
 
 async function listVoices() {
   const key = elevenLabsKey();
-  if (!key) throw new Error('ElevenLabs のAPIキーが見つかりません（ELEVENLABS_API_KEY またはリポジトリ直下の tts-config.json）');
+  if (!key) throw new Error('ElevenLabs のAPIキーが見つかりません（環境変数 elevenlabstoken）');
   const r = await fetch('https://api.elevenlabs.io/v2/voices?page_size=100', { headers: { 'xi-api-key': key } });
   if (!r.ok) throw new Error(`ボイス一覧の取得に失敗しました (${r.status})`);
   const body = await r.json();

@@ -18,7 +18,7 @@ export class Overlay {
     this.visited = new Set();
     this.currentMode = 'confession';
     this.programTitle = SHOW.programTitle || '本日の式次第';
-    this.programStyle = new URLSearchParams(location.search).get('program') || SHOW.programStyle || 'candles';
+    this.programStyle = new URLSearchParams(location.search).get('program') || SHOW.programStyle || 'scroll';
     $('sub-speaker').textContent = SHOW.speaker;
     $('demo-title').textContent = SHOW.demoBadge.title;
     $('demo-note').textContent = SHOW.demoBadge.note;
@@ -47,7 +47,7 @@ export class Overlay {
 
   // 左上の式次第。style: candles（儀ごとの燭台）/ scroll（羊皮紙の巻物）
   setProgramStyle(style) {
-    this.programStyle = style === 'scroll' ? 'scroll' : 'candles';
+    this.programStyle = style === 'candles' ? 'candles' : 'scroll';
     this.renderProgram();
   }
 
