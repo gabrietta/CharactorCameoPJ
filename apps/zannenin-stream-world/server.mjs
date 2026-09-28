@@ -26,6 +26,8 @@ const SNAP_DIR = process.env.SNAP_DIR || path.join(os.tmpdir(), 'zannenin-stream
 const BGM_PATH = path.join(repoRoot, 'content/characters/zannenin/assets/manzokukyo/satisfaction-bgm.m4a');
 const TTS_DIR = path.join(here, '.cache/tts');
 const LOCAL_CONFIG = path.join(here, 'local-config.json');
+// 残念院さんの既定の声（ElevenLabs「ざんねん落ち着き」。apps/elevenlabs-tts と同じ）。コントロールで変更すると local-config.json に保存される
+const DEFAULT_VOICE_ID = process.env.ELEVENLABS_VOICE_ID || 'JY9PPeXLA7hJHX7kOFT3';
 
 // Windows のユーザー／システム環境変数（サーバー起動後に登録した値も読めるよう、レジストリを直接見る）
 function persistentWindowsEnv(name) {
@@ -206,7 +208,7 @@ const server = http.createServer((req, res) => {
   if (url.pathname === '/api/voices') {
     listVoices().then((voices) => {
       res.writeHead(200, { 'content-type': 'application/json; charset=utf-8' });
-      res.end(JSON.stringify({ ok: true, voices, selected: readLocalConfig().voiceId || null }));
+      res.end(JSON.stringify({ ok: true, voices, selected: readLocalConfig().voiceId || DEFAULT_VOICE_ID }));
     }).catch((e) => {
       res.writeHead(200, { 'content-type': 'application/json; charset=utf-8' });
       res.end(JSON.stringify({ ok: false, error: e.message }));
@@ -268,7 +270,7 @@ const wss = new WebSocketServer({ server, path: '/ws' });
 async function speakWithTts(msg) {
   const { tts, voiceId, ...rest } = msg;
   try {
-    const audioUrl = await synthesize(msg.text || '', voiceId || readLocalConfig().voiceId);
+    const audioUrl = await synthesize(msg.text || '', voiceId || readLocalConfig().voiceId || DEFAULT_VOICE_ID);
     broadcast({ ...rest, audioUrl });
   } catch (e) {
     broadcast(rest);

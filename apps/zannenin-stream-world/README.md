@@ -70,7 +70,7 @@ URLパラメータ:
 - **BGM**: 満足教ティザー用の既存曲 `content/characters/zannenin/assets/manzokukyo/satisfaction-bgm.m4a`。元の音量が小さいため約+12dB持ち上げ、末尾の無音を除いてループする。儀ごとに音量が変わり、話している間は下がる。
 - **効果音**: 扉の開閉、儀の札、お布施の手鈴、懺悔の投函、神託の開始・決定、スライドのめくり。Web Audioでその場で合成するので外部素材は使っていない。
 - **環境音**: 低い室内の響きと、ろうそくの爆ぜる音（合成）。
-- **声（TTS）**: ElevenLabs。コントロールの「声（TTS）」で声を選んで保存し、「話す」を声で読み上げるをオンにする。APIキーは他のTTSツール（`docs/elevenlabs-tts.md`）と同じくWindowsの環境変数 `elevenlabstoken` から**サーバー側だけ**で読む（`ELEVENLABS_API_KEY`、リポジトリ直下の `tts-config.json` も可）。生成した音声は `.cache/tts/` に保存し、同じ文・同じ声は再生成しない。生成のたびにクレジットを消費する。
+- **声（TTS）**: ElevenLabs。既定の声は「ざんねん落ち着き」（`JY9PPeXLA7hJHX7kOFT3`、`apps/elevenlabs-tts` と同じ）。コントロールの「声（TTS）」で別の声に変えられる。「話す」を声で読み上げるをオンにすると音声で話す。APIキーは他のTTSツール（`docs/elevenlabs-tts.md`）と同じくWindowsの環境変数 `elevenlabstoken` から**サーバー側だけ**で読む（`ELEVENLABS_API_KEY`、リポジトリ直下の `tts-config.json` も可）。生成した音声は `.cache/tts/` に保存し、同じ文・同じ声は再生成しない。生成のたびにクレジットを消費する。
 - 音量はコントロールの「音」で調整。OBSのブラウザソースは操作なしで音が鳴る。普通のブラウザでは最初に「懺悔室へ入る」ボタンが出る。
 - `?mute=1` とコントロール内のプレビューは無音。
 
