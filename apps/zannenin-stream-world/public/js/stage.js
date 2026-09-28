@@ -373,6 +373,17 @@ function stopDemo() {
   clearTimeout(ambientTimer);
 }
 
+// 操作パネルの「停止」: 予約だけでなく、流れている聖歌・セリフ・口パク・字幕も止める
+function haltDemo() {
+  stopDemo();
+  stopHymn();
+  speechSeq++;
+  audio.stopVoice();
+  avatar.stopSpeaking();
+  avatar.detachAudio();
+  overlay.clearSubtitle();
+}
+
 function demoComment() {
   const list = DEMO_COMMENTS[currentMode] || DEMO_COMMENTS.confession;
   return { name: DEMO_NAMES[Math.floor(Math.random() * DEMO_NAMES.length)], text: list[Math.floor(Math.random() * list.length)] };
@@ -393,7 +404,7 @@ async function handle(msg) {
     case 'gesture': avatar.playGesture(msg.name); break;
     case 'mouth': avatar.setMouthLevel(msg.level, msg.vowel); break;
     case 'track': avatar.setTracking(msg); break;
-    case 'tracking-options': Object.assign(avatar.trackingOptions, msg.options || {}); break;
+    case 'tracking-options': applyTrackingOptions(msg.options); break;
     case 'comment': overlay.addComment(msg); break;
     case 'offering':
       overlay.showOffering(msg);
@@ -419,7 +430,7 @@ async function handle(msg) {
       if (typeof msg.bone === 'string' && Array.isArray(msg.rot) && msg.rot.length === 3 && msg.rot.every(Number.isFinite)) avatar.pose[msg.bone] = msg.rot;
       break;
     case 'demo-start': startDemo(!!msg.loop); break;
-    case 'demo-stop': stopDemo(); break;
+    case 'demo-stop': haltDemo(); break;
     case 'demo-comments':
       for (let i = 0; i < (msg.count || 1); i++) later(() => overlay.addComment(demoComment()), i * 900);
       break;
@@ -459,6 +470,14 @@ async function handle(msg) {
   }
 }
 
+// トラッキングの向きの設定は決まった値だけ受け付ける
+function applyTrackingOptions(o) {
+  if (!o || typeof o !== 'object') return;
+  if (typeof o.mirror === 'boolean') avatar.trackingOptions.mirror = o.mirror;
+  if (['head', 'upper', 'all'].includes(o.vmcBones)) avatar.trackingOptions.vmcBones = o.vmcBones;
+  if (['vrm0', 'vrm1'].includes(o.vmcFlip)) avatar.trackingOptions.vmcFlip = o.vmcFlip;
+}
+
 let initialState = null;
 let ready = false;
 // 読み込み中に届いた命令（口パク・トラッキングのような高頻度のものは捨てる）
@@ -488,6 +507,7 @@ function applyState(state) {
   if (state.camera) setCamera(state.camera);
   for (const c of state.comments || []) overlay.addComment(c, { float: false, silent: true });
   if (state.sound) audio.set(state.sound);
+  if (state.trackingOptions) applyTrackingOptions(state.trackingOptions);
   if (state.poll) { overlay.startPoll(state.poll, { silent: true }); overlay.setVotes(state.poll.votes); }
 }
 

@@ -70,6 +70,8 @@ export class GenerativeMusic {
 
   // 指定時刻までの音符を予約する（試聴用の書き出しでも使う）
   scheduleUntil(ahead) {
+    // タブが長く止まっていた後は、止まっていた間の音符を一気に鳴らさず、今から続きを演奏する
+    if (this.ctx instanceof AudioContext && this.nextTime < this.ctx.currentTime - 0.2) this.nextTime = this.ctx.currentTime + 0.05;
     while (this.nextTime < ahead) {
       if (this.step % 16 === 0 && this.pendingMode) {
         this.mode = this.pendingMode;

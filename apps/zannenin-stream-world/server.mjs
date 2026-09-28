@@ -153,6 +153,7 @@ const state = {
   poll: null,
   stageInfo: null,
   sound: null,
+  trackingOptions: null,
 };
 
 function remember(msg) {
@@ -187,6 +188,7 @@ function remember(msg) {
       break;
     case 'poll-end': state.poll = null; break;
     case 'stage-info': state.stageInfo = msg; break;
+    case 'tracking-options': state.trackingOptions = { ...state.trackingOptions, ...msg.options }; break;
     case 'sound': state.sound = { ...state.sound, ...msg, enabled: { ...state.sound?.enabled, ...msg.enabled } }; break;
     default: break;
   }
@@ -395,6 +397,11 @@ function invalid(msg) {
     case 'expression': case 'gesture': return isStr(msg.name) ? null : `${msg.type} には name が必要です`;
     case 'mouth': return isNum(msg.level) ? null : 'mouth には数値の level が必要です';
     case 'sound': return ['master', 'bgm', 'se', 'ambience', 'voice'].every((k) => isOptNum(msg[k])) ? null : 'sound の音量は数値です';
+    case 'tracking-options': {
+      const o = msg.options;
+      const okKeys = { mirror: (v) => typeof v === 'boolean', vmcBones: (v) => ['head', 'upper', 'all'].includes(v), vmcFlip: (v) => ['vrm0', 'vrm1'].includes(v) };
+      return o && typeof o === 'object' && Object.entries(o).every(([k, v]) => okKeys[k]?.(v)) ? null : 'tracking-options の値が不正です';
+    }
     case 'slides-set': return Array.isArray(msg.slides) && msg.slides.length > 0 ? null : 'slides-set には1枚以上の slides が必要です';
     case 'pose': return isStr(msg.bone) && Array.isArray(msg.rot) && msg.rot.length === 3 && msg.rot.every(isNum) ? null : 'pose には bone と3つの数値の rot が必要です';
     case 'poll-votes': return Array.isArray(msg.votes) && msg.votes.every((v) => Number.isFinite(v) && v >= 0) ? null : 'poll-votes には0以上の数値の votes が必要です';
@@ -441,13 +448,16 @@ function readOscString(buf, off) {
   return [str, (end + 4) & ~3];
 }
 
-function parseOsc(buf, out) {
+function parseOsc(buf, out, depth = 0) {
   if (buf.length >= 8 && buf.toString('ascii', 0, 7) === '#bundle') {
+    if (depth > 8) throw new Error('OSC bundle の入れ子が深すぎます');
     let off = 16;
     while (off + 4 <= buf.length) {
       const size = buf.readInt32BE(off);
       off += 4;
-      parseOsc(buf.subarray(off, off + size), out);
+      // 要素サイズは正で、残りの長さに収まらなければならない（負のサイズで同じ要素を読み続けて止まらないように）
+      if (size <= 0 || off + size > buf.length) throw new Error('OSC bundle の要素サイズが不正です');
+      parseOsc(buf.subarray(off, off + size), out, depth + 1);
       off += size;
     }
     return;

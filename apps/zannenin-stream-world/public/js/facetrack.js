@@ -15,7 +15,19 @@ export class FaceTracker {
     this.smooth = null;
   }
 
-  async start(deviceId) {
+  // 開始は1回ずつ。準備中にもう一度押しても同じ開始処理を待つだけにする
+  start(deviceId) {
+    if (this.running) return Promise.resolve();
+    if (this.starting) return this.starting;
+    const p = this.#start(deviceId).finally(() => { if (this.starting === p) this.starting = null; });
+    this.starting = p;
+    return p;
+  }
+
+  async #start(deviceId) {
+    const run = (this.run = (this.run || 0) + 1);
+    // 準備中に停止されたら、以降の処理をやめる
+    const cancelled = () => run !== this.run;
     this.onStatus('準備中…');
     if (!this.landmarker) {
       const fileset = await FilesetResolver.forVisionTasks('/vendor/mediapipe/wasm');
@@ -29,22 +41,38 @@ export class FaceTracker {
         outputFacialTransformationMatrixes: true,
       });
     }
-    this.stream = await navigator.mediaDevices.getUserMedia({
+    if (cancelled()) return;
+    const stream = await navigator.mediaDevices.getUserMedia({
       video: { deviceId: deviceId ? { exact: deviceId } : undefined, width: 640, height: 480, frameRate: 30 },
     });
-    this.video.srcObject = this.stream;
-    await this.video.play();
+    if (cancelled()) { stream.getTracks().forEach((t) => t.stop()); return; }
+    this.stream = stream;
+    try {
+      this.video.srcObject = stream;
+      await this.video.play();
+    } catch (err) {
+      // 再生できなければカメラを開いたままにしない
+      this.stop();
+      throw err;
+    }
+    if (cancelled()) return;
     this.running = true;
     this.lastVideoTime = -1;
+    this.faceLost = false;
     this.onStatus('トラッキング中');
     const loop = () => {
-      if (!this.running) return;
+      if (!this.running || cancelled()) return;
       if (this.video.currentTime !== this.lastVideoTime) {
         this.lastVideoTime = this.video.currentTime;
         const r = this.landmarker.detectForVideo(this.video, performance.now());
         const frame = this.#toFrame(r);
-        if (frame) this.onFrame(frame);
-        else this.onStatus('顔が見つかりません');
+        if (frame) {
+          if (this.faceLost) { this.faceLost = false; this.onStatus('トラッキング中'); }
+          this.onFrame(frame);
+        } else if (!this.faceLost) {
+          this.faceLost = true;
+          this.onStatus('顔が見つかりません');
+        }
       }
       this.raf = requestAnimationFrame(loop);
     };
@@ -52,10 +80,14 @@ export class FaceTracker {
   }
 
   stop() {
+    // 準備中の開始処理は取り消し、次の開始で新しく始められるようにする
+    this.run = (this.run || 0) + 1;
+    this.starting = null;
     this.running = false;
     cancelAnimationFrame(this.raf);
     if (this.stream) this.stream.getTracks().forEach((t) => t.stop());
     this.stream = null;
+    this.video.srcObject = null;
     this.onStatus('停止中');
   }
 

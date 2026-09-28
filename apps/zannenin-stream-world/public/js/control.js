@@ -12,6 +12,7 @@ const PHRASES = [
 
 // ---------- 通信 ----------
 let ws;
+let slideNo = 0;
 function connect() {
   ws = new WebSocket(`${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}/ws`);
   ws.onopen = () => setConn(true);
@@ -21,13 +22,23 @@ function connect() {
     try { msg = JSON.parse(e.data); } catch { return; }
     if (msg.type === 'hello') syncState(msg.state);
     if (msg.type === 'mode') markMode(msg.mode);
-    if (msg.type === 'stage-info') $('stage-info').textContent = `ステージ接続済み（表情 ${msg.expressions.length}種）`;
+    if (msg.type === 'stage-info') showStageInfo(msg);
+    // 別のコントロール画面で動かした音量・トラッキング設定も表示にそろえる
+    if (msg.type === 'sound') syncMixer(msg);
+    if (msg.type === 'tracking-options') syncTrackingOptions(msg.options);
     if (msg.type === 'track' && msg.source === 'vmc') markVmc();
     if (msg.type === 'notice') { $('notice').textContent = msg.text; $('notice').className = `note ${msg.level || ''}`; }
   };
 }
 function send(msg) {
-  if (ws && ws.readyState === 1) ws.send(JSON.stringify(msg));
+  if (ws && ws.readyState === 1) {
+    ws.send(JSON.stringify(msg));
+    return true;
+  }
+  // 未接続のまま押しても黙って捨てない
+  $('notice').textContent = 'サーバーに接続していないため送れませんでした。サーバーが起動しているか確認してください';
+  $('notice').className = 'note error';
+  return false;
 }
 function setConn(on) {
   $('conn').textContent = on ? '接続中' : '未接続';
@@ -35,12 +46,44 @@ function setConn(on) {
 }
 connect();
 
+function showStageInfo(info) {
+  const n = Array.isArray(info?.expressions) ? info.expressions.length : 0;
+  $('stage-info').textContent = `ステージ接続済み（表情 ${n}種）`;
+}
+
+// 再読み込みしても、サーバーが覚えている状態を画面の操作部品へ戻す（古い初期値のまま送り直さないように）
 function syncState(state) {
   if (!state) return;
   markMode(state.mode);
   if (state.viewers != null) $('viewers').value = state.viewers;
   if (state.demoBadge != null) $('demo-badge').checked = state.demoBadge;
-  if (state.stageInfo) $('stage-info').textContent = `ステージ接続済み（表情 ${state.stageInfo.expressions.length}種）`;
+  if (state.stageInfo) showStageInfo(state.stageInfo);
+  if (state.ticker?.text != null) $('ticker').value = state.ticker.text;
+  if (state.program?.title != null) $('program').value = state.program.title;
+  if (state.program?.style) $('program-style').value = state.program.style;
+  if (Number.isInteger(state.slideIndex)) { slideNo = state.slideIndex; $('slide-no').textContent = slideNo + 1; }
+  if (state.poll) showVoteButtons(state.poll.options);
+  if (state.sound) syncMixer(state.sound);
+  if (state.trackingOptions) syncTrackingOptions(state.trackingOptions);
+}
+
+function syncMixer(sound) {
+  document.querySelectorAll('[data-level]').forEach((el) => {
+    const v = sound[el.dataset.level];
+    if (Number.isFinite(v)) el.value = v;
+    el.nextElementSibling.textContent = Math.round(el.value * 100);
+  });
+  document.querySelectorAll('[data-on]').forEach((el) => {
+    const v = sound.enabled?.[el.dataset.on];
+    if (typeof v === 'boolean') el.checked = v;
+  });
+}
+
+function syncTrackingOptions(o) {
+  if (!o) return;
+  if (typeof o.mirror === 'boolean') $('mirror').checked = o.mirror;
+  if (o.vmcBones) $('vmc-bones').value = o.vmcBones;
+  if (o.vmcFlip) $('vmc-flip').value = o.vmcFlip;
 }
 function markMode(mode) {
   document.querySelectorAll('#modes button').forEach((b) => b.classList.toggle('active', b.dataset.mode === mode));
@@ -106,7 +149,9 @@ $('offering').onclick = () => send({ type: 'offering', name: $('c-name').value.t
 $('poll-start').onclick = () => {
   const options = $('p-opts').value.split(/[,、，]/).map((s) => s.trim()).filter(Boolean);
   if (options.length < 2) return;
-  send({ type: 'poll-start', question: $('p-q').value.trim(), options });
+  if (send({ type: 'poll-start', question: $('p-q').value.trim(), options })) showVoteButtons(options);
+};
+function showVoteButtons(options) {
   $('poll-votes').innerHTML = '';
   options.forEach((o, i) => {
     const b = document.createElement('button');
@@ -114,11 +159,10 @@ $('poll-start').onclick = () => {
     b.onclick = () => send({ type: 'poll-vote', option: i, count: 1 });
     $('poll-votes').appendChild(b);
   });
-};
+}
 $('poll-end').onclick = () => { send({ type: 'poll-end' }); $('poll-votes').innerHTML = ''; };
 
 // ---------- スライド・聖歌 ----------
-let slideNo = 0;
 $('slide-prev').onclick = () => { slideNo = Math.max(0, slideNo - 1); send({ type: 'slide', index: slideNo }); $('slide-no').textContent = slideNo + 1; };
 $('slide-next').onclick = () => { slideNo = Math.min(SLIDES.length - 1, slideNo + 1); send({ type: 'slide', index: slideNo }); $('slide-no').textContent = slideNo + 1; };
 $('lyrics-start').onclick = () => send({ type: 'lyrics-start', voice: $('hymn-voice').checked });
@@ -155,10 +199,21 @@ listDevices();
 
 // ---------- マイク口パク ----------
 let mic = null;
+let micStarting = false;
 $('mic-start').onclick = async () => {
-  if (mic) return;
+  if (mic || micStarting) return;
+  micStarting = true;
   const deviceId = $('mic-device').value;
-  const stream = await navigator.mediaDevices.getUserMedia({ audio: { deviceId: deviceId ? { exact: deviceId } : undefined, echoCancellation: false, noiseSuppression: true } });
+  let stream;
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({ audio: { deviceId: deviceId ? { exact: deviceId } : undefined, echoCancellation: false, noiseSuppression: true } });
+  } catch (err) {
+    $('notice').textContent = `マイクを開けませんでした: ${err.message || err}`;
+    $('notice').className = 'note error';
+    return;
+  } finally {
+    micStarting = false;
+  }
   const ctx = new AudioContext();
   const src = ctx.createMediaStreamSource(stream);
   const analyser = ctx.createAnalyser();
@@ -190,6 +245,8 @@ $('mic-stop').onclick = () => {
 let tracker = null;
 let lastSent = 0;
 $('face-start').onclick = async () => {
+  if ($('face-start').disabled) return;
+  $('face-start').disabled = true;
   try {
     const { FaceTracker } = await import('./facetrack.js');
     tracker ||= new FaceTracker($('face-video'), (frame) => {
@@ -203,6 +260,8 @@ $('face-start').onclick = async () => {
   } catch (err) {
     console.error(err);
     $('face-status').textContent = `開始できませんでした: ${err.message || err}`;
+  } finally {
+    $('face-start').disabled = false;
   }
 };
 $('face-stop').onclick = () => tracker && tracker.stop();
@@ -215,8 +274,11 @@ $('vmc-bones').onchange = sendTrackingOptions;
 $('vmc-flip').onchange = sendTrackingOptions;
 
 // ---------- プレビュー ----------
+let previewObserver = null;
 $('preview-on').onchange = () => {
   const box = $('preview');
+  previewObserver?.disconnect();
+  previewObserver = null;
   box.innerHTML = '';
   box.classList.toggle('on', $('preview-on').checked);
   if (!$('preview-on').checked) return;
@@ -225,7 +287,8 @@ $('preview-on').onchange = () => {
   box.appendChild(iframe);
   const fitPreview = () => { iframe.style.transform = `scale(${box.clientWidth / 1920})`; };
   fitPreview();
-  new ResizeObserver(fitPreview).observe(box);
+  previewObserver = new ResizeObserver(fitPreview);
+  previewObserver.observe(box);
 };
 
 // ---------- 音 ----------
@@ -258,6 +321,5 @@ $('voice-reload').onclick = loadVoices;
 $('voice-save').onclick = () => {
   const voiceId = $('voice-id').value.trim() || $('voice').value;
   if (!/^[A-Za-z0-9]{20}$/.test(voiceId)) { $('voice-saved').textContent = '声を選ぶか、20文字のIDを入力してください'; return; }
-  send({ type: 'tts-voice', voiceId });
-  $('voice-saved').textContent = '保存しました';
+  if (send({ type: 'tts-voice', voiceId })) $('voice-saved').textContent = '保存しました';
 };
