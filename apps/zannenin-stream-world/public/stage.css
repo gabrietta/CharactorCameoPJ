@@ -270,7 +270,7 @@ body.obs #hole canvas, body.obs #hole .hole-label { display: none; }
 /* ---------- 浮遊する懺悔の札 ---------- */
 #float-layer { position: absolute; inset: 0; z-index: 4; pointer-events: none; }
 .float-slip {
-  position: absolute; padding: 8px 16px 9px; border-radius: 6px; max-width: 330px;
+  position: absolute; padding: 8px 16px 9px; border-radius: 6px; max-width: 270px;
   background: rgba(244,234,210,.9); color: var(--text); border: 1.5px solid var(--gold);
   box-shadow: 0 6px 18px rgba(0,0,0,.5);
   font: 500 19px var(--sans); line-height: 1.35;

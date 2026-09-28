@@ -110,6 +110,12 @@ export const DEMO_NAMES = [
   '風吹けば懺悔', '名無しの子羊', '満足民', '古参信者', '燭台ニキ', 'お布施ネキ', '懺悔ガチ勢', 'ワイ、信者',
 ];
 
+// 開始・終わりの挨拶の弾幕（配信演出。公式設定ではない）
+export const GREETINGS = {
+  open: ['＼満足／＼満足／＼満足／', 'こん念院', '＼満足／＼満足／＼満足／', 'こん念院〜', 'こん念院！', '＼満足／＼満足／＼満足／'],
+  close: ['おつ念院', 'おつ念院〜', 'おつ念院！', 'おつ念院', '＼満足／＼満足／＼満足／'],
+};
+
 export const DEMO_COMMENTS = {
   confession: [
     'こんばんは！', '今日の懺悔しにきました', '格子の扉がきれい', 'ざんちこんばんは', '雰囲気すごい', 'お布施箱かわいい',
@@ -124,6 +130,7 @@ export const DEMO_COMMENTS = {
 // speak のセリフを変えたら tools/generate-demo-voice.mjs で声を作り直す（事前生成した声で話す）
 export const DEMO_SCRIPT = [
   [0.0, { type: 'intro' }],
+  [2.6, { type: 'barrage', kind: 'open', count: 18, interval: 0.16 }],
   [4.2, { type: 'speak', text: 'ようこそ、満足教大聖堂の懺悔室へ。', expression: 'relaxed', gesture: 'bow' }],
   [8.4, { type: 'speak', text: '今宵もわたくしが、皆さまの懺悔をお聞きいたします。', expression: 'happy' }],
   [11.5, { type: 'demo-comments', count: 3 }],
@@ -148,5 +155,6 @@ export const DEMO_SCRIPT = [
   [72.5, { type: 'demo-comments', count: 2 }],
   [78.0, { type: 'mode', mode: 'confession' }],
   [81.5, { type: 'speak', text: '本日の懺悔室は、ここまで。皆さま、満足してお休みくださいませ。', expression: 'happy', gesture: 'wave' }],
+  [85.0, { type: 'barrage', kind: 'close', count: 16, interval: 0.18 }],
   [88.0, { type: 'outro' }],
 ];

@@ -9,7 +9,7 @@ import { Avatar } from './avatar.js';
 import { Overlay } from './overlay.js';
 import { DemoGame } from './game.js';
 import { AudioEngine } from './audio.js';
-import { MODES, SHOW, DEMO_SCRIPT, DEMO_COMMENTS, DEMO_NAMES, HYMN } from './show.js';
+import { MODES, SHOW, DEMO_SCRIPT, DEMO_COMMENTS, DEMO_NAMES, HYMN, GREETINGS } from './show.js';
 import { DEMO_VOICE } from './demo-voice.js';
 
 const params = new URLSearchParams(location.search);
@@ -382,6 +382,18 @@ async function handle(msg) {
     case 'demo-comments':
       for (let i = 0; i < (msg.count || 1); i++) setTimeout(() => overlay.addComment(demoComment()), i * 900);
       break;
+    case 'barrage': {
+      // 挨拶の弾幕: 懺悔箱へ一気に流し込み、ときどき浮かぶ札にもする（投函音は間引く）
+      const texts = msg.texts || GREETINGS[msg.kind] || GREETINGS.open;
+      const count = msg.count || 16;
+      for (let i = 0; i < count; i++) {
+        setTimeout(() => {
+          const name = DEMO_NAMES[Math.floor(Math.random() * DEMO_NAMES.length)];
+          overlay.addComment({ name, text: texts[i % texts.length] }, { float: i % 4 === 1, silent: i % 5 !== 0 });
+        }, i * (msg.interval || 0.18) * 1000);
+      }
+      break;
+    }
     case 'demo-votes': {
       const steps = 10;
       for (let s = 1; s <= steps; s++) {

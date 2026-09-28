@@ -135,6 +135,8 @@ $('demo-badge').onchange = () => send({ type: 'demo-badge', visible: $('demo-bad
 $('demo-start').onclick = () => send({ type: 'demo-start' });
 $('demo-loop').onclick = () => send({ type: 'demo-start', loop: true });
 $('demo-stop').onclick = () => send({ type: 'demo-stop' });
+$('barrage-open').onclick = () => send({ type: 'barrage', kind: 'open', count: 18, interval: 0.16 });
+$('barrage-close').onclick = () => send({ type: 'barrage', kind: 'close', count: 16, interval: 0.18 });
 
 // ---------- デバイス一覧 ----------
 async function listDevices() {
