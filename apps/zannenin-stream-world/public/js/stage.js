@@ -151,9 +151,11 @@ async function boot() {
   rig.set('wide', { cut: true });
   await soundGate();
   overlay.loadingDone();
-  send({ type: 'stage-info', expressions: avatar.availableExpressions, headHeight: avatar.headHeight });
+  sendStageInfo();
   requestAnimationFrame(loop);
   if (initialState) applyState(initialState);
+  ready = true;
+  for (const msg of pendingMessages.splice(0)) dispatch(msg);
   if (params.has('demo') || staticMode) setTimeout(() => startDemo(staticMode || params.get('demo') === 'loop'), 600);
   else setTimeout(() => rig.set(MODES[currentMode].camera === 'pip' ? 'pip' : MODES[currentMode].camera, { speed: 1.2 }), 400);
 }
@@ -236,14 +238,20 @@ function applyMode(mode) {
   if (mode === 'sermon') overlay.renderSlide(0, false);
 }
 
+// 扉の演出中に届いた儀の指示は、最新のものだけ覚えておき、演出が終わってから反映する
+let pendingMode = null;
 async function setMode(mode, { instant = false } = {}) {
-  if (!MODES[mode] || modeBusy) return;
+  if (!MODES[mode]) return;
+  if (modeBusy) { pendingMode = { mode, instant }; return; }
   if (instant || mode === currentMode) { applyMode(mode); return; }
   modeBusy = true;
   try {
     await overlay.transition(mode, async () => applyMode(mode));
   } finally {
     modeBusy = false;
+    const next = pendingMode;
+    pendingMode = null;
+    if (next && next.mode !== currentMode) setMode(next.mode, { instant: next.instant });
   }
 }
 
@@ -253,15 +261,22 @@ function setCamera(preset) {
 }
 
 // ---------- 発話 ----------
+let speechSeq = 0;
 async function speak(msg) {
+  const seq = ++speechSeq;
   const speaker = msg.speaker || SHOW.speaker;
+  const resetExpression = () => { if (seq === speechSeq && msg.expression && !msg.hold) avatar.setExpression('neutral'); };
+  // 声は1本だけ。聖歌の途中で話したら歌は止める（止めないと次の行が重なる）
+  if (hymnActive) stopHymn();
   if (msg.expression) avatar.setExpression(msg.expression, msg.hold ?? 0);
   if (msg.gesture) avatar.playGesture(msg.gesture);
   // 音が許可されていない（音なしで見る・プレビュー）ときは文字口パクで話す
   if (msg.audioUrl && !muted && audio.ready) {
     const analyser = audio.playVoice(msg.audioUrl, {
-      onStart: (d) => overlay.showSubtitle(msg.text || '', { speaker, duration: d * 0.9, hold: msg.holdSubtitle ?? 2.5 }),
-      onEnd: () => { avatar.detachAudio(); if (msg.expression && !msg.hold) avatar.setExpression('neutral'); },
+      onStart: (d) => { if (seq === speechSeq) overlay.showSubtitle(msg.text || '', { speaker, duration: d * 0.9, hold: msg.holdSubtitle ?? 2.5 }); },
+      onEnd: () => { if (seq === speechSeq) avatar.detachAudio(); resetExpression(); },
+      // 音声が読めなかったら、そのセリフは文字口パクで話す
+      onError: () => { if (seq === speechSeq) speak({ ...msg, audioUrl: undefined }); },
     });
     avatar.stopSpeaking();
     avatar.attachAudio(analyser);
@@ -271,30 +286,45 @@ async function speak(msg) {
   const dur = msg.duration || avatar.speakText(msg.text || '');
   audio.duckFor(dur);
   overlay.showSubtitle(msg.text || '', { speaker, duration: dur, hold: msg.holdSubtitle ?? 2.5 });
-  if (msg.expression && !msg.hold) setTimeout(() => avatar.setExpression('neutral'), (dur + 1.5) * 1000);
+  setTimeout(resetExpression, (dur + 1.5) * 1000);
 }
 
 // ---------- 聖歌 ----------
 // 録音済みの歌声（tools/generate-demo-voice.mjs で生成）があれば1行ずつ歌い、歌詞と口パクを歌声に合わせる。
 // voice:false、音が許可されていない、歌声が未生成のときは、歌詞を時間で送り文字口パクで歌う
 let hymnRun = 0;
+let hymnActive = false;
 function singHymn({ lines = HYMN.lines, secondsPerLine = HYMN.secondsPerLine, voice = true } = {}) {
   stopHymn();
   const run = ++hymnRun;
+  hymnActive = true;
   const urls = (HYMN.sing || []).map((t) => DEMO_VOICE[t]?.src);
   const voiced = voice && !muted && audio.ready && lines === HYMN.lines && urls.length === lines.length && urls.every(Boolean);
   if (!voiced) {
     overlay.startLyrics(lines, secondsPerLine, (i, line, sec) => avatar.speakText(line, { rate: Math.max(3, [...line].length / (sec * 0.85)) }));
+    hymnActive = false;
     return;
   }
   overlay.openLyrics();
   const next = (i) => {
     if (run !== hymnRun) return;
-    if (i >= lines.length) { overlay.stopLyrics(); return; }
+    if (i >= lines.length) { overlay.stopLyrics(); hymnActive = false; return; }
+    let failed = false;
     const analyser = audio.playVoice(urls[i], {
       singing: true,
       onStart: (d) => { if (run === hymnRun) overlay.showLyricLine(lines, i, d); },
-      onEnd: () => { avatar.detachAudio(); setTimeout(() => next(i + 1), 550); },
+      onEnd: () => {
+        if (run !== hymnRun || failed) return;
+        avatar.detachAudio();
+        setTimeout(() => next(i + 1), 550);
+      },
+      onError: () => {
+        if (run !== hymnRun) return;
+        failed = true;
+        overlay.showLyricLine(lines, i, secondsPerLine * 0.92);
+        avatar.speakText(lines[i], { rate: Math.max(3, [...lines[i]].length / (secondsPerLine * 0.85)) });
+        setTimeout(() => next(i + 1), secondsPerLine * 1000);
+      },
     });
     avatar.stopSpeaking();
     avatar.attachAudio(analyser);
@@ -304,6 +334,7 @@ function singHymn({ lines = HYMN.lines, secondsPerLine = HYMN.secondsPerLine, vo
 
 function stopHymn() {
   hymnRun++;
+  hymnActive = false;
   overlay.stopLyrics();
   if (audio.singing) audio.stopVoice();
 }
@@ -311,6 +342,11 @@ function stopHymn() {
 // ---------- デモ ----------
 let demoTimers = [];
 let ambientTimer = null;
+// デモや弾幕の予約（止めたときにまとめて取り消す）
+function later(fn, ms) {
+  const id = setTimeout(() => { demoTimers = demoTimers.filter((x) => x !== id); fn(); }, ms);
+  demoTimers.push(id);
+}
 function startDemo(loopDemo = false) {
   stopDemo();
   stopHymn();
@@ -320,7 +356,7 @@ function startDemo(loopDemo = false) {
   for (const [time, cmd] of DEMO_SCRIPT) {
     // デモのセリフは事前生成した声で話す
     const voiced = cmd.type === 'speak' && !cmd.audioUrl && DEMO_VOICE[cmd.text] ? { ...cmd, audioUrl: DEMO_VOICE[cmd.text].src } : cmd;
-    demoTimers.push(setTimeout(() => handle(voiced), time * 1000));
+    demoTimers.push(setTimeout(() => dispatch(voiced), time * 1000));
   }
   if (loopDemo) demoTimers.push(setTimeout(() => startDemo(true), total * 1000));
   else demoTimers.push(setTimeout(() => clearTimeout(ambientTimer), total * 1000));
@@ -379,18 +415,22 @@ async function handle(msg) {
     case 'program-style': overlay.setProgramStyle(msg.style); break;
     case 'viewers': overlay.setViewers(msg.count); break;
     case 'demo-badge': overlay.setDemoBadge(msg.visible); break;
-    case 'pose': if (msg.bone && msg.rot) avatar.pose[msg.bone] = msg.rot; break;
+    case 'pose':
+      if (typeof msg.bone === 'string' && Array.isArray(msg.rot) && msg.rot.length === 3 && msg.rot.every(Number.isFinite)) avatar.pose[msg.bone] = msg.rot;
+      break;
     case 'demo-start': startDemo(!!msg.loop); break;
     case 'demo-stop': stopDemo(); break;
     case 'demo-comments':
-      for (let i = 0; i < (msg.count || 1); i++) setTimeout(() => overlay.addComment(demoComment()), i * 900);
+      for (let i = 0; i < (msg.count || 1); i++) later(() => overlay.addComment(demoComment()), i * 900);
       break;
     case 'barrage': {
       // 挨拶の弾幕: 懺悔箱へ一気に流し込み、ときどき浮かぶ札にもする（投函音は間引く）
       const texts = msg.texts || GREETINGS[msg.kind] || GREETINGS.open;
+      // 締めの弾幕のあとに雑談の見本コメントが混ざらないよう、見本の懺悔はここで止める
+      if (msg.kind === 'close') clearTimeout(ambientTimer);
       const count = msg.count || 16;
       for (let i = 0; i < count; i++) {
-        setTimeout(() => {
+        later(() => {
           const name = DEMO_NAMES[Math.floor(Math.random() * DEMO_NAMES.length)];
           overlay.addComment({ name, text: texts[i % texts.length] }, { float: i % 4 === 1, silent: i % 5 !== 0 });
         }, i * (msg.interval || 0.18) * 1000);
@@ -400,7 +440,7 @@ async function handle(msg) {
     case 'demo-votes': {
       const steps = 10;
       for (let s = 1; s <= steps; s++) {
-        setTimeout(() => overlay.setVotes(msg.votes.map((v) => Math.round((v * s) / steps))), (msg.duration * 1000 * s) / steps);
+        later(() => overlay.setVotes(msg.votes.map((v) => Math.round((v * s) / steps))), (msg.duration * 1000 * s) / steps);
       }
       break;
     }
@@ -420,18 +460,35 @@ async function handle(msg) {
 }
 
 let initialState = null;
+let ready = false;
+// 読み込み中に届いた命令（口パク・トラッキングのような高頻度のものは捨てる）
+const pendingMessages = [];
+function dispatch(msg) {
+  if (!msg || typeof msg.type !== 'string') return;
+  if (msg.type !== 'hello' && !ready) {
+    if (msg.type !== 'mouth' && msg.type !== 'track' && pendingMessages.length < 200) pendingMessages.push(msg);
+    return;
+  }
+  Promise.resolve().then(() => handle(msg)).catch((err) => console.error('命令の処理に失敗しました', msg.type, err));
+}
+
 function applyState(state) {
   if (!state) return;
   if (MODES[state.mode] && state.mode !== currentMode) applyMode(state.mode);
   if (state.viewers != null) overlay.setViewers(state.viewers);
   if (state.demoBadge != null) overlay.setDemoBadge(state.demoBadge);
   if (state.ticker) overlay.setTicker(state.ticker.text);
+  // 明示的に出した字幕を復元する（時間切れのものはサーバー側で除かれている）
+  if (state.subtitle?.text) {
+    const remaining = state.subtitle.until ? Math.max(0.5, (state.subtitle.until - Date.now()) / 1000) : 0;
+    overlay.showSubtitle(state.subtitle.text, { speaker: state.subtitle.speaker, hold: remaining });
+  }
   if (state.program) overlay.setProgram(state.program);
   if (state.slideIndex) overlay.renderSlide(state.slideIndex, false);
   if (state.camera) setCamera(state.camera);
   for (const c of state.comments || []) overlay.addComment(c, { float: false, silent: true });
   if (state.sound) audio.set(state.sound);
-  if (state.poll) { overlay.startPoll(state.poll); overlay.setVotes(state.poll.votes); }
+  if (state.poll) { overlay.startPoll(state.poll, { silent: true }); overlay.setVotes(state.poll.votes); }
 }
 
 // ---------- 通信 ----------
@@ -439,8 +496,17 @@ let ws;
 function connect() {
   if (location.protocol === 'file:' || staticMode) return;
   ws = new WebSocket(`${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}/ws`);
-  ws.onmessage = (e) => { try { handle(JSON.parse(e.data)); } catch (err) { console.error(err); } };
+  ws.onmessage = (e) => {
+    let msg;
+    try { msg = JSON.parse(e.data); } catch { return; }
+    dispatch(msg);
+  };
+  // 再接続したらステージの情報を送り直す（コントロールの表示用）
+  ws.onopen = () => { if (ready) sendStageInfo(); };
   ws.onclose = () => setTimeout(connect, 1500);
+}
+function sendStageInfo() {
+  send({ type: 'stage-info', expressions: avatar.availableExpressions, headHeight: avatar.headHeight });
 }
 function send(msg) {
   if (ws && ws.readyState === 1) ws.send(JSON.stringify(msg));

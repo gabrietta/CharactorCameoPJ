@@ -99,16 +99,19 @@ export class Overlay {
     $('rc-foot').textContent = `${m.name}の儀へ　うつります`;
     doors.classList.add('closed');
     this.sfx('door-close');
-    await sleep(800);
-    doors.classList.add('card');
-    this.sfx('rite');
-    await applyFn();
-    await sleep(1700);
-    doors.classList.remove('card');
-    await sleep(250);
-    doors.classList.remove('closed');
-    this.sfx('door-open');
-    await sleep(750);
+    try {
+      await sleep(800);
+      doors.classList.add('card');
+      this.sfx('rite');
+      await applyFn();
+      await sleep(1700);
+    } finally {
+      doors.classList.remove('card');
+      await sleep(250);
+      doors.classList.remove('closed');
+      this.sfx('door-open');
+      await sleep(750);
+    }
   }
 
   async openingDoors() {
@@ -216,6 +219,7 @@ export class Overlay {
   }
 
   async showOffering({ name, amount, text }) {
+    name = name || '名無しの子羊';
     this.addComment({ name, text, amount }, { float: false });
     this.sfx('bell');
     const box = $('offering');
@@ -227,26 +231,26 @@ export class Overlay {
     this.offTimer = setTimeout(() => box.classList.remove('show'), 5200);
   }
 
-  startPoll({ question, options }) {
+  startPoll({ question, options }, { silent = false } = {}) {
     this.poll = { question, options, votes: options.map(() => 0) };
     $('poll-q').textContent = question;
     $('poll-options').innerHTML = options.map((o, i) => `
       <div class="poll-opt" data-i="${i}"><div class="bar"></div><span class="l">${i + 1}. ${esc(o)}</span><span class="p">0%</span></div>`).join('');
     $('poll-foot').textContent = '懺悔箱に番号を投函して神託を';
     $('poll').classList.add('show');
-    this.sfx('oracle-start');
+    if (!silent) this.sfx('oracle-start');
     this.stage.classList.add('polling');
   }
 
   vote(option, count = 1) {
     if (!this.poll || this.poll.votes[option] == null) return;
-    this.poll.votes[option] += count;
+    this.poll.votes[option] += Math.max(0, Number(count) || 0);
     this.#renderPoll();
   }
 
   setVotes(votes) {
-    if (!this.poll) return;
-    this.poll.votes = votes.slice();
+    if (!this.poll || !Array.isArray(votes)) return;
+    this.poll.votes = this.poll.options.map((_, i) => Math.max(0, Number(votes[i]) || 0));
     this.#renderPoll();
   }
 
@@ -261,13 +265,16 @@ export class Overlay {
 
   async endPoll(winner) {
     if (!this.poll) return null;
+    const ended = this.poll;
     const votes = this.poll.votes;
-    const w = winner ?? votes.indexOf(Math.max(...votes));
+    const w = Number.isInteger(winner) && winner >= 0 && winner < this.poll.options.length ? winner : votes.indexOf(Math.max(...votes));
     document.querySelectorAll('#poll-options .poll-opt').forEach((el, i) => el.classList.toggle('win', i === w));
     $('poll-foot').textContent = `神託が下りました：${this.poll.options[w]}`;
     this.sfx('oracle-end');
     const result = this.poll.options[w];
     await sleep(3200);
+    // 結果表示中に次の神託が始まっていたら、そちらは閉じない
+    if (this.poll !== ended) return result;
     $('poll').classList.remove('show');
     this.stage.classList.remove('polling');
     this.poll = null;
@@ -292,6 +299,7 @@ export class Overlay {
   }
 
   setSlides(slides) {
+    if (!Array.isArray(slides) || slides.length === 0) return;
     this.slides = slides;
     this.renderSlide(0, false);
   }

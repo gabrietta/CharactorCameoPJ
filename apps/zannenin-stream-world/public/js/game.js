@@ -24,8 +24,9 @@ export class DemoGame {
     if (this.running) return;
     this.running = true;
     this.last = performance.now();
+    const run = (this.run = (this.run || 0) + 1);
     const loop = (now) => {
-      if (!this.running) return;
+      if (!this.running || run !== this.run) return;
       const dt = Math.min(0.05, (now - this.last) / 1000);
       this.last = now;
       this.update(dt, now / 1000);

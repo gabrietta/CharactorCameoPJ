@@ -44,7 +44,14 @@ function persistentWindowsEnv(name) {
 
 // ElevenLabs のAPIキーはサーバー内だけで使い、ブラウザへは渡さない。
 // 他のTTSツール（scripts/elevenlabs-tts.mjs）と同じく、環境変数 elevenlabstoken を優先する
+let keyCache = { value: null, at: 0 };
 function elevenLabsKey() {
+  if (Date.now() - keyCache.at < 30000) return keyCache.value;
+  keyCache = { value: readElevenLabsKey(), at: Date.now() };
+  return keyCache.value;
+}
+
+function readElevenLabsKey() {
   const fromEnv = process.env.ELEVENLABS_API_KEY || persistentWindowsEnv('elevenlabstoken') || process.env.elevenlabstoken;
   if (fromEnv?.trim()) return fromEnv.trim();
   try {
@@ -152,8 +159,13 @@ function remember(msg) {
   switch (msg.type) {
     case 'mode': state.mode = msg.mode; state.camera = null; break;
     case 'camera': state.camera = msg.preset; break;
-    case 'subtitle': state.subtitle = msg; break;
-    case 'speak': state.subtitle = { type: 'subtitle', speaker: msg.speaker, text: msg.text }; break;
+    // 字幕: hold>0 は表示の終わる時刻を覚える。発話の字幕は一時的なので残さない
+    case 'subtitle': {
+      const hold = Number(msg.hold) || 0;
+      state.subtitle = { ...msg, until: hold > 0 ? Date.now() + ((Number(msg.duration) || 0) + hold) * 1000 : null };
+      break;
+    }
+    case 'speak': state.subtitle = null; break;
     case 'subtitle-clear': state.subtitle = null; break;
     case 'ticker': state.ticker = msg; break;
     case 'program': state.program = { ...state.program, ...msg }; break;
@@ -180,13 +192,20 @@ function remember(msg) {
   }
 }
 
+// 配る直前の状態（表示時間の過ぎた字幕は除く）
+function currentState() {
+  const sub = state.subtitle;
+  return { ...state, subtitle: sub && (!sub.until || sub.until > Date.now()) ? sub : null };
+}
+
 function resolveFile(urlPath) {
   for (const [prefix, dir] of routes) {
     if (!urlPath.startsWith(prefix)) continue;
     let rel;
     try { rel = decodeURIComponent(urlPath.slice(prefix.length)) || 'index.html'; } catch { return null; }
-    const file = path.resolve(dir, rel);
-    if (!file.startsWith(path.resolve(dir))) return null;
+    const base = path.resolve(dir);
+    const file = path.resolve(base, rel);
+    if (file !== base && !file.startsWith(base + path.sep)) return null;
     return file;
   }
   return null;
@@ -205,7 +224,12 @@ function sendFile(req, res, file) {
       'cache-control': 'no-cache',
     });
     if (req.method === 'HEAD') return res.end();
-    fs.createReadStream(file).pipe(res);
+    fs.createReadStream(file)
+      .on('error', (e) => {
+        console.warn('ファイルを送れませんでした', file, e.message);
+        res.destroy();
+      })
+      .pipe(res);
   });
 }
 
@@ -266,7 +290,7 @@ function handleRequest(req, res) {
 
   if (url.pathname === '/api/state') {
     res.writeHead(200, { 'content-type': 'application/json; charset=utf-8' });
-    return res.end(JSON.stringify(state));
+    return res.end(JSON.stringify(currentState()));
   }
 
   // 開発用: ステージの描画結果をPNGで保存する（目視確認用）
@@ -325,22 +349,35 @@ function handleRequest(req, res) {
 }
 
 // WebSocket もブラウザの他サイトからの接続を拒否する（Origin なしのローカルスクリプトは可）
-const wss = new WebSocketServer({ server, path: '/ws', verifyClient: ({ req }) => trusted(req) });
+const wss = new WebSocketServer({ server, path: '/ws', maxPayload: 4 * 1024 * 1024, verifyClient: ({ req }) => trusted(req) });
+// 起動失敗（ポート使用中など）は下の server.on('error') で知らせるので、ここでは受け止めるだけ
+wss.on('error', () => {});
 
 // tts:true の発話は、音声を作ってから audioUrl 付きで配る。失敗時は文字口パクで話し、コントロールへエラーを返す
-async function speakWithTts(msg) {
+// 生成は並行して進め、配る順番は受け付けた順にそろえる（後のセリフが先に流れないように）
+let ttsQueue = Promise.resolve();
+function speakWithTts(msg) {
   const { tts, voiceId, ...rest } = msg;
-  try {
-    const audioUrl = await synthesize(msg.text || '', voiceId || readLocalConfig().voiceId || DEFAULT_VOICE_ID);
-    broadcast({ ...rest, audioUrl });
-  } catch (e) {
-    broadcast(rest);
-    broadcast({ type: 'notice', level: 'error', text: e.message });
-  }
+  const job = synthesize(msg.text || '', voiceId || readLocalConfig().voiceId || DEFAULT_VOICE_ID)
+    .then((audioUrl) => ({ ok: true, audioUrl }), (error) => ({ ok: false, error }));
+  ttsQueue = ttsQueue.then(async () => {
+    const r = await job;
+    try {
+      if (r.ok) broadcast({ ...rest, audioUrl: r.audioUrl });
+      else {
+        broadcast(rest);
+        broadcast({ type: 'notice', level: 'error', text: r.error.message });
+      }
+    } catch (e) {
+      console.warn('音声つき発話の配信に失敗しました', e);
+    }
+  });
 }
 
 // 命令の中身を確かめる。問題があれば理由を返す（状態の記録や中継で例外を起こさないため）
 const isStr = (v) => typeof v === 'string';
+const isNum = (v) => typeof v === 'number' && Number.isFinite(v);
+const isOptNum = (v) => v === undefined || isNum(v);
 // 儀（public/js/show.js の MODES と同じ）
 const MODE_NAMES = new Set(['confession', 'sermon', 'hymn', 'trial']);
 function invalid(msg) {
@@ -352,7 +389,14 @@ function invalid(msg) {
     case 'comment': return isStr(msg.text) ? null : 'comment には text が必要です';
     case 'offering': return Number.isFinite(Number(msg.amount)) ? null : 'offering には amount が必要です';
     case 'poll-start': return Array.isArray(msg.options) && msg.options.length >= 2 && msg.options.every(isStr) ? null : 'poll-start には2つ以上の options（文字列）が必要です';
-    case 'poll-vote': return Number.isInteger(msg.option) ? null : 'poll-vote には option（番号）が必要です';
+    case 'poll-vote': return Number.isInteger(msg.option) && (msg.count === undefined || (Number.isInteger(msg.count) && msg.count > 0)) ? null : 'poll-vote には option（番号）と、1以上の count が必要です';
+    case 'poll-end': return msg.winner === undefined || Number.isInteger(msg.winner) ? null : 'poll-end の winner は番号です';
+    case 'camera': return isStr(msg.preset) ? null : 'camera には preset が必要です';
+    case 'expression': case 'gesture': return isStr(msg.name) ? null : `${msg.type} には name が必要です`;
+    case 'mouth': return isNum(msg.level) ? null : 'mouth には数値の level が必要です';
+    case 'sound': return ['master', 'bgm', 'se', 'ambience', 'voice'].every((k) => isOptNum(msg[k])) ? null : 'sound の音量は数値です';
+    case 'slides-set': return Array.isArray(msg.slides) && msg.slides.length > 0 ? null : 'slides-set には1枚以上の slides が必要です';
+    case 'pose': return isStr(msg.bone) && Array.isArray(msg.rot) && msg.rot.length === 3 && msg.rot.every(isNum) ? null : 'pose には bone と3つの数値の rot が必要です';
     case 'poll-votes': return Array.isArray(msg.votes) && msg.votes.every((v) => Number.isFinite(v) && v >= 0) ? null : 'poll-votes には0以上の数値の votes が必要です';
     case 'viewers': return Number.isFinite(msg.count) ? null : 'viewers には count（数値）が必要です';
     case 'tts-voice': return /^[A-Za-z0-9]{20}$/.test(msg.voiceId || '') ? null : 'tts-voice には20文字の voiceId が必要です';
@@ -375,7 +419,7 @@ function broadcast(msg, except) {
 }
 
 wss.on('connection', (ws) => {
-  ws.send(JSON.stringify({ type: 'hello', state }));
+  ws.send(JSON.stringify({ type: 'hello', state: currentState() }));
   ws.on('message', (raw) => {
     let msg;
     try { msg = JSON.parse(raw.toString()); } catch { return; }
@@ -451,10 +495,10 @@ if (VMC_PORT > 0) {
     try { parseOsc(buf, out); } catch { return; }
     vmc.packets++;
     for (const [address, args] of out) {
-      if (address === '/VMC/Ext/Bone/Pos' && args.length >= 8) {
+      if (address === '/VMC/Ext/Bone/Pos' && args.length >= 8 && isStr(args[0]) && args.slice(4, 8).every(isNum)) {
         const name = args[0].charAt(0).toLowerCase() + args[0].slice(1);
         vmc.bones[name] = [args[4], args[5], args[6], args[7]];
-      } else if (address === '/VMC/Ext/Blend/Val' && args.length >= 2) {
+      } else if (address === '/VMC/Ext/Blend/Val' && args.length >= 2 && isStr(args[0]) && isNum(args[1])) {
         vmc.blend[args[0]] = args[1];
       } else if (address === '/VMC/Ext/Blend/Apply') {
         flushVmc();
@@ -465,6 +509,13 @@ if (VMC_PORT > 0) {
   udp.on('error', (e) => console.warn(`VMC受信を開始できませんでした (UDP ${VMC_PORT}): ${e.message}`));
   udp.bind(VMC_PORT, VMC_HOST);
 }
+
+server.on('error', (e) => {
+  console.error(e.code === 'EADDRINUSE'
+    ? `ポート ${PORT} は使用中です。起動済みのサーバーを止めるか、PORT を変えてください（例: $env:PORT=4720）`
+    : `サーバーを起動できませんでした: ${e.message}`);
+  process.exit(1);
+});
 
 server.listen(PORT, '127.0.0.1', () => {
   const vrmOk = fs.existsSync(VRM_PATH);

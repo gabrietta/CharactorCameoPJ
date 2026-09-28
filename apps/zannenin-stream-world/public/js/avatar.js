@@ -102,7 +102,8 @@ export class Avatar {
 
   // 外部（マイク音量・TTS）からの口の開き
   setMouthLevel(level, vowel = null) {
-    this.externalMouth = { level: Math.max(0, Math.min(1, level)), until: this.t + 0.25, vowel };
+    if (!Number.isFinite(level)) return;
+    this.externalMouth = { level: Math.max(0, Math.min(1, level)), until: this.t + 0.25, vowel: VOWELS.includes(vowel) ? vowel : null };
   }
 
   attachAudio(analyser) {
@@ -120,8 +121,27 @@ export class Avatar {
     this.gesture = { name, start: this.t, duration: g.duration, fn: g.fn };
   }
 
+  // 数値でない値は捨てる（NaN が骨や髪揺れの計算に入ると、トラッキングが止まっても戻らないため）
   setTracking(data) {
-    this.tracking = { ...data, time: this.t };
+    const num = (v) => (Number.isFinite(v) ? v : undefined);
+    const nums = (o) => (o && typeof o === 'object' ? Object.fromEntries(Object.entries(o).filter(([, v]) => Number.isFinite(v))) : undefined);
+    const head = data.head && ['x', 'y', 'z'].every((k) => Number.isFinite(data.head[k])) ? data.head : undefined;
+    const bones = data.bones && typeof data.bones === 'object'
+      ? Object.fromEntries(Object.entries(data.bones).filter(([, q]) => Array.isArray(q) && q.length === 4 && q.every(Number.isFinite)))
+      : undefined;
+    this.tracking = {
+      source: data.source,
+      head,
+      bones,
+      eyes: data.eyes && Number.isFinite(data.eyes.x) && Number.isFinite(data.eyes.y) ? data.eyes : undefined,
+      blinkL: num(data.blinkL),
+      blinkR: num(data.blinkR),
+      mouth: num(data.mouth),
+      smile: num(data.smile),
+      vowels: nums(data.vowels),
+      expressions: nums(data.expressions),
+      time: this.t,
+    };
   }
 
   update(dt, camera) {
@@ -213,8 +233,9 @@ export class Avatar {
           if (tracking.smile != null && key === 'happy') target = tracking.smile * 0.8;
           if (tracking.expressions && tracking.expressions[key] != null) target = tracking.expressions[key];
         }
+        if (!Number.isFinite(target)) target = 0;
         const cur = this.expressionWeights[key] || 0;
-        const next = cur + (target - cur) * k;
+        const next = cur + (Math.max(0, Math.min(1, target)) - cur) * k;
         this.expressionWeights[key] = next;
         const real = this.expressionMap[key];
         if (real) em.setValue(real, next);
@@ -222,11 +243,13 @@ export class Avatar {
 
       // まばたき
       let blinkL = 0, blinkR = 0;
-      if (tracking && tracking.blinkL != null) {
-        // VMC は送信側で左右が確定しているので反転しない
+      if (tracking && (tracking.blinkL != null || tracking.blinkR != null)) {
+        // VMC は送信側で左右が確定しているので反転しない。片目の値しかなければ両目に使う
         const m = tracking.source !== 'vmc' && !this.trackingOptions.mirror;
-        blinkL = m ? tracking.blinkR : tracking.blinkL;
-        blinkR = m ? tracking.blinkL : tracking.blinkR;
+        const l = tracking.blinkL ?? tracking.blinkR;
+        const r = tracking.blinkR ?? tracking.blinkL;
+        blinkL = m ? r : l;
+        blinkR = m ? l : r;
       } else {
         if (this.blink.phase < 0 && t > this.blink.next) this.blink.phase = 0;
         if (this.blink.phase >= 0) {
@@ -279,7 +302,9 @@ export class Avatar {
 
       const mk = 1 - Math.exp(-dt * 22);
       for (const v of VOWELS) {
-        this.mouth[v] += (this.mouthTarget[v] - this.mouth[v]) * mk;
+        const target = Number.isFinite(this.mouthTarget[v]) ? Math.max(0, Math.min(1, this.mouthTarget[v])) : 0;
+        this.mouth[v] += (target - this.mouth[v]) * mk;
+        if (!Number.isFinite(this.mouth[v])) this.mouth[v] = 0;
         if (this.expressionMap[v]) em.setValue(v, this.mouth[v]);
       }
     }

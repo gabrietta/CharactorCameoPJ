@@ -294,7 +294,7 @@ export class AudioEngine {
 
   // ---------- 声 ----------
   // TTS音声を再生し、口パク用の AnalyserNode を返す
-  playVoice(url, { onStart, onEnd, singing = false } = {}) {
+  playVoice(url, { onStart, onEnd, onError, singing = false } = {}) {
     if (!this.ctx) this.#build();
     this.stopVoice();
     const el = new Audio(url);
@@ -308,18 +308,22 @@ export class AudioEngine {
     this.singing = singing;
     this.speaking++;
     this.#applyBgmLevel(0.3);
-    const finish = () => {
+    const finish = (failed = false) => {
       if (this.voiceEl !== el) return;
       this.voiceEl = null;
       this.singing = false;
       this.speaking = Math.max(0, this.speaking - 1);
       this.#applyBgmLevel(1);
-      onEnd?.();
+      // 再生のたびに作る部品を外しておく（長時間の配信で溜まらないように）
+      try { src.disconnect(); analyser.disconnect(); } catch { /* 既に外れている */ }
+      if (failed) onError ? onError() : onEnd?.();
+      else onEnd?.();
     };
-    el.addEventListener('loadedmetadata', () => onStart?.(el.duration), { once: true });
-    el.addEventListener('ended', finish, { once: true });
-    el.addEventListener('error', finish, { once: true });
-    el.play().catch((e) => { console.warn('voice', e); finish(); });
+    // 長さが取れない音声でも字幕の文字送りが壊れないよう、仮の長さを渡す
+    el.addEventListener('loadedmetadata', () => onStart?.(Number.isFinite(el.duration) && el.duration > 0 ? el.duration : 3), { once: true });
+    el.addEventListener('ended', () => finish(false), { once: true });
+    el.addEventListener('error', () => finish(true), { once: true });
+    el.play().catch((e) => { console.warn('voice', e); finish(true); });
     return analyser;
   }
 
@@ -346,11 +350,12 @@ export class AudioEngine {
 
   // ---------- ミキサー ----------
   set({ master, bgm, se, ambience, voice, enabled } = {}) {
-    if (master != null) this.levels.master = master;
-    if (bgm != null) this.levels.bgm = bgm;
-    if (se != null) this.levels.se = se;
-    if (ambience != null) this.levels.ambience = ambience;
-    if (voice != null) this.levels.voice = voice;
+    const vol = (v) => Math.max(0, Math.min(2, v));
+    if (Number.isFinite(master)) this.levels.master = vol(master);
+    if (Number.isFinite(bgm)) this.levels.bgm = vol(bgm);
+    if (Number.isFinite(se)) this.levels.se = vol(se);
+    if (Number.isFinite(ambience)) this.levels.ambience = vol(ambience);
+    if (Number.isFinite(voice)) this.levels.voice = vol(voice);
     if (enabled) Object.assign(this.enabled, enabled);
     if (!this.ctx) return;
     const t = this.ctx.currentTime;
