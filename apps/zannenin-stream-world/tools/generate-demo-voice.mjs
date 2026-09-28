@@ -33,8 +33,11 @@ if (!apiKey) {
   process.exit(1);
 }
 
-const { DEMO_SCRIPT } = await import(pathToFileURL(path.join(appDir, 'public/js/show.js')).href);
-const lines = [...new Set(DEMO_SCRIPT.filter(([, c]) => c.type === 'speak' && c.text).map(([, c]) => c.text))];
+const { DEMO_SCRIPT, HYMN } = await import(pathToFileURL(path.join(appDir, 'public/js/show.js')).href);
+const spoken = [...new Set(DEMO_SCRIPT.filter(([, c]) => c.type === 'speak' && c.text).map(([, c]) => c.text))];
+// 聖歌は歌唱タグ付きの歌詞を1行ずつ
+const sung = HYMN.sing || [];
+const jobs = [...spoken.map((text, i) => ({ text, name: `demo-${String(i + 1).padStart(2, '0')}.mp3` })), ...sung.map((text, i) => ({ text, name: `hymn-${String(i + 1).padStart(2, '0')}.mp3` }))];
 
 let previous = {};
 try {
@@ -44,8 +47,7 @@ try {
 
 fs.mkdirSync(voiceDir, { recursive: true });
 const manifest = {};
-for (const [i, text] of lines.entries()) {
-  const name = `demo-${String(i + 1).padStart(2, '0')}.mp3`;
+for (const { text, name } of jobs) {
   const file = path.join(voiceDir, name);
   const prev = previous[text];
   if (!force && prev && prev.voiceId === VOICE_ID && prev.model === MODEL_ID && fs.existsSync(path.join(appDir, 'public', prev.src))) {
@@ -69,7 +71,7 @@ for (const [i, text] of lines.entries()) {
 
 // 使わなくなった音声を片付ける
 const used = new Set(Object.values(manifest).map((v) => path.basename(v.src)));
-for (const f of fs.readdirSync(voiceDir)) if (/^demo-\d+\.mp3$/.test(f) && !used.has(f)) fs.rmSync(path.join(voiceDir, f));
+for (const f of fs.readdirSync(voiceDir)) if (/^(demo|hymn)-\d+\.mp3$/.test(f) && !used.has(f)) fs.rmSync(path.join(voiceDir, f));
 
 fs.writeFileSync(manifestPath, `// tools/generate-demo-voice.mjs が生成するファイル。手で編集しない
 // デモ台本のセリフ → 事前生成した音声（ElevenLabs「ざんねん落ち着き」）

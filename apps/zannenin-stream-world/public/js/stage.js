@@ -9,7 +9,7 @@ import { Avatar } from './avatar.js';
 import { Overlay } from './overlay.js';
 import { DemoGame } from './game.js';
 import { AudioEngine } from './audio.js';
-import { MODES, SHOW, DEMO_SCRIPT, DEMO_COMMENTS, DEMO_NAMES } from './show.js';
+import { MODES, SHOW, DEMO_SCRIPT, DEMO_COMMENTS, DEMO_NAMES, HYMN } from './show.js';
 import { DEMO_VOICE } from './demo-voice.js';
 
 const params = new URLSearchParams(location.search);
@@ -225,6 +225,7 @@ async function soundGate() {
 function applyMode(mode) {
   const m = MODES[mode];
   currentMode = mode;
+  if (mode !== 'hymn') stopHymn();
   overlay.applyMode(mode);
   audio.setMode(mode);
   set.setLook(mode);
@@ -271,6 +272,40 @@ async function speak(msg) {
   audio.duckFor(dur);
   overlay.showSubtitle(msg.text || '', { speaker, duration: dur, hold: msg.holdSubtitle ?? 2.5 });
   if (msg.expression && !msg.hold) setTimeout(() => avatar.setExpression('neutral'), (dur + 1.5) * 1000);
+}
+
+// ---------- 聖歌 ----------
+// 録音済みの歌声（tools/generate-demo-voice.mjs で生成）があれば1行ずつ歌い、歌詞と口パクを歌声に合わせる。
+// voice:false、音が許可されていない、歌声が未生成のときは、歌詞を時間で送り文字口パクで歌う
+let hymnRun = 0;
+function singHymn({ lines = HYMN.lines, secondsPerLine = HYMN.secondsPerLine, voice = true } = {}) {
+  stopHymn();
+  const run = ++hymnRun;
+  const urls = (HYMN.sing || []).map((t) => DEMO_VOICE[t]?.src);
+  const voiced = voice && !muted && audio.ready && lines === HYMN.lines && urls.length === lines.length && urls.every(Boolean);
+  if (!voiced) {
+    overlay.startLyrics(lines, secondsPerLine, (i, line, sec) => avatar.speakText(line, { rate: Math.max(3, [...line].length / (sec * 0.85)) }));
+    return;
+  }
+  overlay.openLyrics();
+  const next = (i) => {
+    if (run !== hymnRun) return;
+    if (i >= lines.length) { overlay.stopLyrics(); return; }
+    const analyser = audio.playVoice(urls[i], {
+      singing: true,
+      onStart: (d) => { if (run === hymnRun) overlay.showLyricLine(lines, i, d); },
+      onEnd: () => { avatar.detachAudio(); setTimeout(() => next(i + 1), 550); },
+    });
+    avatar.stopSpeaking();
+    avatar.attachAudio(analyser);
+  };
+  next(0);
+}
+
+function stopHymn() {
+  hymnRun++;
+  overlay.stopLyrics();
+  if (audio.singing) audio.stopVoice();
 }
 
 // ---------- デモ ----------
@@ -334,8 +369,8 @@ async function handle(msg) {
     case 'slide-next': overlay.renderSlide(overlay.slideIndex + 1); break;
     case 'slide-prev': overlay.renderSlide(overlay.slideIndex - 1); break;
     case 'slides-set': overlay.setSlides(msg.slides); break;
-    case 'lyrics-start': overlay.startLyrics(msg.lines, msg.secondsPerLine); break;
-    case 'lyrics-stop': overlay.stopLyrics(); break;
+    case 'lyrics-start': singHymn(msg); break;
+    case 'lyrics-stop': stopHymn(); break;
     case 'ticker': overlay.setTicker(msg.text); break;
     case 'program': overlay.setProgram(msg); break;
     case 'program-style': overlay.setProgramStyle(msg.style); break;
@@ -425,5 +460,56 @@ async function snap(name = 'snap', rect = [0, 0, 1920, 1080], advance = 0) {
   return r.json();
 }
 
-window.__stage = { handle, avatar, rig, set: () => set, scene, camera, renderer, snap, audio };
+// 開発用: BGMを儀ごとにオフラインで書き出して試聴ファイルにする（__stage.renderMusic(['confession', ...], 16)）
+async function renderMusic(modes = ['confession', 'sermon', 'hymn', 'trial'], seconds = 16, name = 'bgm-preview') {
+  if (staticMode) return null;
+  const { GenerativeMusic } = await import('./music.js');
+  const sr = 44100;
+  const total = modes.length * seconds;
+  const off = new OfflineAudioContext(2, sr * total, sr);
+  const reverb = off.createConvolver();
+  const len = sr * 3;
+  const ir = off.createBuffer(2, len, sr);
+  for (let c = 0; c < 2; c++) { const d = ir.getChannelData(c); for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / len) ** 2.6; }
+  reverb.buffer = ir;
+  const wet = off.createGain();
+  wet.gain.value = 0.55;
+  reverb.connect(wet).connect(off.destination);
+  const master = off.createGain();
+  master.gain.value = 0.9 * 0.8;
+  master.connect(off.destination);
+  modes.forEach((mode, k) => {
+    const g = off.createGain();
+    g.gain.value = SOUND_LEVEL(mode);
+    g.connect(master);
+    const m = new GenerativeMusic(off, g, reverb);
+    m.useMode(mode);
+    m.out.gain.value = 0;
+    m.out.gain.setValueAtTime(0, k * seconds);
+    m.out.gain.linearRampToValueAtTime(1, k * seconds + 0.5);
+    m.out.gain.setValueAtTime(1, (k + 1) * seconds - 0.8);
+    m.out.gain.linearRampToValueAtTime(0, (k + 1) * seconds);
+    m.nextTime = k * seconds;
+    m.scheduleUntil((k + 1) * seconds - 0.8);
+  });
+  const buf = await off.startRendering();
+  const wav = encodeWav(buf);
+  const dataUrl = await new Promise((r) => { const fr = new FileReader(); fr.onload = () => r(fr.result); fr.readAsDataURL(new Blob([wav], { type: 'audio/wav' })); });
+  return fetch(`/api/snap?name=${encodeURIComponent(name)}&ext=wav`, { method: 'POST', body: dataUrl }).then((r) => r.json());
+}
+const SOUND_LEVEL = (mode) => ({ confession: 0.8, sermon: 0.65, hymn: 0.9, trial: 0.7 }[mode] ?? 0.8);
+function encodeWav(buf) {
+  const ch = buf.numberOfChannels, n = buf.length, sr = buf.sampleRate;
+  const out = new DataView(new ArrayBuffer(44 + n * ch * 2));
+  const w = (o, s) => [...s].forEach((c, i) => out.setUint8(o + i, c.charCodeAt(0)));
+  w(0, 'RIFF'); out.setUint32(4, 36 + n * ch * 2, true); w(8, 'WAVE'); w(12, 'fmt ');
+  out.setUint32(16, 16, true); out.setUint16(20, 1, true); out.setUint16(22, ch, true); out.setUint32(24, sr, true);
+  out.setUint32(28, sr * ch * 2, true); out.setUint16(32, ch * 2, true); out.setUint16(34, 16, true); w(36, 'data'); out.setUint32(40, n * ch * 2, true);
+  const data = [...Array(ch)].map((_, c) => buf.getChannelData(c));
+  let o = 44;
+  for (let i = 0; i < n; i++) for (let c = 0; c < ch; c++) { out.setInt16(o, Math.max(-1, Math.min(1, data[c][i])) * 0x7fff, true); o += 2; }
+  return out.buffer;
+}
+
+window.__stage = { handle, avatar, rig, set: () => set, scene, camera, renderer, snap, audio, renderMusic };
 boot();

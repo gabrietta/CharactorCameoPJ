@@ -228,9 +228,10 @@ const server = http.createServer((req, res) => {
     req.on('end', () => {
       const dataUrl = Buffer.concat(chunks).toString('utf8');
       const name = (url.searchParams.get('name') || 'snap').replace(/[^\w-]/g, '');
-      const out = path.join(SNAP_DIR, `${name}.png`);
+      const ext = (url.searchParams.get('ext') || 'png').replace(/[^a-z0-9]/g, '');
+      const out = path.join(SNAP_DIR, `${name}.${ext}`);
       fs.mkdirSync(SNAP_DIR, { recursive: true });
-      fs.writeFileSync(out, Buffer.from(dataUrl.replace(/^data:image\/png;base64,/, ''), 'base64'));
+      fs.writeFileSync(out, Buffer.from(dataUrl.replace(/^data:[^;]+;base64,/, ''), 'base64'));
       res.writeHead(200, { 'content-type': 'application/json' });
       res.end(JSON.stringify({ ok: true, file: out }));
     });

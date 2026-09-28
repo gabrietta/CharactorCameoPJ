@@ -121,7 +121,7 @@ $('poll-end').onclick = () => { send({ type: 'poll-end' }); $('poll-votes').inne
 let slideNo = 0;
 $('slide-prev').onclick = () => { slideNo = Math.max(0, slideNo - 1); send({ type: 'slide', index: slideNo }); $('slide-no').textContent = slideNo + 1; };
 $('slide-next').onclick = () => { slideNo = Math.min(SLIDES.length - 1, slideNo + 1); send({ type: 'slide', index: slideNo }); $('slide-no').textContent = slideNo + 1; };
-$('lyrics-start').onclick = () => send({ type: 'lyrics-start' });
+$('lyrics-start').onclick = () => send({ type: 'lyrics-start', voice: $('hymn-voice').checked });
 $('lyrics-stop').onclick = () => send({ type: 'lyrics-stop' });
 
 // ---------- 画面の文言 ----------

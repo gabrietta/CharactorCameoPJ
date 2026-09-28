@@ -78,22 +78,33 @@ export class AudioEngine {
 
   // ---------- BGM ----------
   async #startBgm() {
-    if (!SOUND.bgm.src) return;
+    this.bgmGain = this.ctx.createGain();
+    this.bgmGain.gain.value = 0;
+    this.bgmGain.connect(this.bus.bgm);
+    if (SOUND.bgm.type === 'file') await this.#startFileBgm();
+    else {
+      const { GenerativeMusic } = await import('./music.js');
+      this.music = new GenerativeMusic(this.ctx, this.bgmGain, this.reverb);
+      this.music.setMode(this.mode);
+      this.music.start();
+    }
+    this.#applyBgmLevel(2.5);
+  }
+
+  async #startFileBgm() {
+    const f = SOUND.bgm.file;
     try {
       // 末尾の無音で途切れないよう、デコードして鳴っている区間だけをループする
-      const data = await fetch(SOUND.bgm.src).then((r) => r.arrayBuffer());
+      const data = await fetch(f.src).then((r) => r.arrayBuffer());
       const buffer = await this.ctx.decodeAudioData(data);
       const src = this.ctx.createBufferSource();
       src.buffer = buffer;
       src.loop = true;
-      src.loopStart = SOUND.bgm.loopStart || 0;
-      src.loopEnd = Math.min(buffer.duration, SOUND.bgm.loopEnd || buffer.duration);
-      this.bgmGain = this.ctx.createGain();
-      this.bgmGain.gain.value = 0;
-      src.connect(this.bgmGain).connect(this.bus.bgm);
+      src.loopStart = f.loopStart || 0;
+      src.loopEnd = Math.min(buffer.duration, f.loopEnd || buffer.duration);
+      src.connect(this.bgmGain);
       src.start();
       this.bgmSource = src;
-      this.#applyBgmLevel(2.5);
     } catch (e) {
       console.warn('BGM', e);
     }
@@ -101,8 +112,9 @@ export class AudioEngine {
 
   #applyBgmLevel(fade = 1.2) {
     if (!this.bgmGain) return;
-    const base = (SOUND.bgm.modes[this.mode] ?? 0.4) * (SOUND.bgm.gain || 1);
-    const duck = this.speaking > 0 ? SOUND.bgm.duck : 1;
+    const cfg = SOUND.bgm.type === 'file' ? SOUND.bgm.file : SOUND.bgm;
+    const base = (cfg.modes[this.mode] ?? 0.4) * (cfg.gain || 1);
+    const duck = this.speaking > 0 ? (this.singing ? SOUND.bgm.duckSinging : SOUND.bgm.duck) : 1;
     const t = this.ctx.currentTime;
     this.bgmGain.gain.cancelScheduledValues(t);
     this.bgmGain.gain.setTargetAtTime(base * duck, t, fade / 3);
@@ -110,6 +122,7 @@ export class AudioEngine {
 
   setMode(mode) {
     this.mode = mode;
+    this.music?.setMode(mode);
     if (this.ctx) this.#applyBgmLevel();
     if (this.ambienceTone) {
       const hymn = mode === 'hymn';
@@ -277,7 +290,7 @@ export class AudioEngine {
 
   // ---------- 声 ----------
   // TTS音声を再生し、口パク用の AnalyserNode を返す
-  playVoice(url, { onStart, onEnd } = {}) {
+  playVoice(url, { onStart, onEnd, singing = false } = {}) {
     if (!this.ctx) this.#build();
     this.stopVoice();
     const el = new Audio(url);
@@ -288,11 +301,13 @@ export class AudioEngine {
     src.connect(analyser);
     analyser.connect(this.bus.voice);
     this.voiceEl = el;
+    this.singing = singing;
     this.speaking++;
     this.#applyBgmLevel(0.3);
     const finish = () => {
       if (this.voiceEl !== el) return;
       this.voiceEl = null;
+      this.singing = false;
       this.speaking = Math.max(0, this.speaking - 1);
       this.#applyBgmLevel(1);
       onEnd?.();

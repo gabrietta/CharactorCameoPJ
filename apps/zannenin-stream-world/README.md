@@ -67,10 +67,12 @@ URLパラメータ:
 
 ## 音
 
-- **BGM**: 満足教ティザー用の既存曲 `content/characters/zannenin/assets/manzokukyo/satisfaction-bgm.m4a`。元の音量が小さいため約+12dB持ち上げ、末尾の無音を除いてループする。儀ごとに音量が変わり、話している間は下がる。
+- **BGM**: ブラウザ内で自動演奏する（`public/js/music.js`、外部の音源ファイルなし）。告解＝オルガンの持続音とチェレスタ、説法＝チェンバロの分散和音と歩くベース、聖歌＝フルオルガンと合唱と鐘、試練＝速いベースの繰り返しとチェンバロ。儀ごとに曲調が切り替わり、話している間は音量が下がる。`show.js` の `SOUND.bgm.type` を `'file'` にすると旧BGM（満足教ティザー用の曲）に戻せる。
 - **効果音**: 扉の開閉、儀の札、お布施の手鈴、懺悔の投函、神託の開始・決定、スライドのめくり。Web Audioでその場で合成するので外部素材は使っていない。
 - **環境音**: 低い室内の響きと、ろうそくの爆ぜる音（合成）。
 - **声（TTS）**: ElevenLabs。既定の声は「ざんねん落ち着き」（`JY9PPeXLA7hJHX7kOFT3`、`apps/elevenlabs-tts` と同じ）。コントロールの「声（TTS）」で別の声に変えられる。「話す」を声で読み上げるをオンにすると音声で話す。APIキーは他のTTSツール（`docs/elevenlabs-tts.md`）と同じくWindowsの環境変数 `elevenlabstoken` から**サーバー側だけ**で読む（`ELEVENLABS_API_KEY`、リポジトリ直下の `tts-config.json` も可）。生成した音声は `.cache/tts/` に保存し、同じ文・同じ声は再生成しない。生成のたびにクレジットを消費する。
+- **聖歌**: デモの聖歌は「ざんねん落ち着き」に歌唱タグ（`[sings]`）を付けて1行ずつ生成した歌声（`public/voice/hymn-XX.mp3`、歌詞は `HYMN.sing`）を流し、歌詞表示と口パクを歌声に合わせる。試験的な方法で、音程のある歌というより「歌うような読み上げ」に近い。コントロールの「録音済みの歌声で歌う」を外すと歌詞だけを流す（本人が歌う配信向け）。
+- **視聴者の音量**: ステージでマウスを動かすと左下に音量つまみと消音ボタンが出る（公開版も同じ）。設定は見ている人のブラウザにだけ保存する。`?obs=1` では表示しない。
 - **デモの声**: デモ台本のセリフは「ざんねん落ち着き」で事前に生成した音声（`public/voice/demo-XX.mp3`、対応表は `public/js/demo-voice.js`）を流す。公開版にも同梱する。セリフを変えたら `node apps/zannenin-stream-world/tools/generate-demo-voice.mjs` で作り直す（変わった文だけ生成、クレジットを消費）。音が許可されていないときは文字口パクになる。
 - 音量はコントロールの「音」で調整。OBSのブラウザソースは操作なしで音が鳴る。普通のブラウザでは最初に「懺悔室へ入る」ボタンが出る。
 - `?mute=1` とコントロール内のプレビューは無音。
@@ -142,6 +144,9 @@ public/js/avatar.js     VRM制御（待機モーション・表情・口パク�
 public/js/overlay.js    配信UI
 public/js/game.js       試練の儀の見本ゲーム
 public/js/facetrack.js  MediaPipe 顔トラッキング
+public/js/audio.js      音響（効果音・環境音・声・BGMの切り替え）
+public/js/music.js      BGMの自動演奏
+public/js/demo-voice.js デモの声の対応表（tools/generate-demo-voice.mjs が生成）
 public/js/show.js       配信内容の設定
 ```
 

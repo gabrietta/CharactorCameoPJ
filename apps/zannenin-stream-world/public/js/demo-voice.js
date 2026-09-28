@@ -45,5 +45,25 @@ export const DEMO_VOICE = {
     "src": "voice/demo-09.mp3",
     "voiceId": "JY9PPeXLA7hJHX7kOFT3",
     "model": "eleven_v3"
+  },
+  "[sings] ともしび　ひとつ　ともしたら〜": {
+    "src": "voice/hymn-01.mp3",
+    "voiceId": "JY9PPeXLA7hJHX7kOFT3",
+    "model": "eleven_v3"
+  },
+  "[sings] きょうの　まんぞく　かぞえましょう〜": {
+    "src": "voice/hymn-02.mp3",
+    "voiceId": "JY9PPeXLA7hJHX7kOFT3",
+    "model": "eleven_v3"
+  },
+  "[sings] こうしの　むこうに　かねが　なる〜": {
+    "src": "voice/hymn-03.mp3",
+    "voiceId": "JY9PPeXLA7hJHX7kOFT3",
+    "model": "eleven_v3"
+  },
+  "[sings] おやすみなさいと　かねが　なる〜": {
+    "src": "voice/hymn-04.mp3",
+    "voiceId": "JY9PPeXLA7hJHX7kOFT3",
+    "model": "eleven_v3"
   }
 };

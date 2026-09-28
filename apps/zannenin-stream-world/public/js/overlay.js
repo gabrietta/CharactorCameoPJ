@@ -280,26 +280,37 @@ export class Overlay {
     this.renderSlide(0, false);
   }
 
-  startLyrics(lines = HYMN.lines, secondsPerLine = HYMN.secondsPerLine) {
-    this.stopLyrics();
-    const box = $('lyrics');
+  // 歌詞を1行ずつ表示する。歌声に合わせる場合は showLyricLine を外から呼ぶ
+  openLyrics() {
+    clearTimeout(this.lyrics);
     $('lyrics-label').textContent = HYMN.title;
-    box.classList.add('show');
+    $('lyrics').classList.add('show');
     this.stage.classList.add('singing');
-    let i = 0;
+  }
+
+  showLyricLine(lines, i, seconds) {
     const lineEl = $('lyrics-line');
     const fill = lineEl.querySelector('.lyr-fill');
     const text = lineEl.querySelector('.lyr-text');
+    text.textContent = `♪ ${lines[i]}`;
+    fill.textContent = `♪ ${lines[i]}`;
+    $('lyrics-next').textContent = lines[i + 1] || '';
+    fill.style.transition = 'none';
+    fill.style.width = '0';
+    void fill.offsetWidth;
+    fill.style.transition = `width ${seconds}s linear`;
+    fill.style.width = `${text.offsetWidth}px`;
+  }
+
+  // 時間で歌詞を送る（録音済みの歌声を使わないとき）。onLine(i, line, seconds) で口パク等を合わせる
+  startLyrics(lines = HYMN.lines, secondsPerLine = HYMN.secondsPerLine, onLine) {
+    this.stopLyrics();
+    this.openLyrics();
+    let i = 0;
     const show = () => {
       if (i >= lines.length) { this.stopLyrics(); return; }
-      text.textContent = `♪ ${lines[i]}`;
-      fill.textContent = `♪ ${lines[i]}`;
-      $('lyrics-next').textContent = lines[i + 1] ? lines[i + 1] : '';
-      fill.style.transition = 'none';
-      fill.style.width = '0';
-      void fill.offsetWidth;
-      fill.style.transition = `width ${secondsPerLine * 0.92}s linear`;
-      fill.style.width = `${text.offsetWidth}px`;
+      this.showLyricLine(lines, i, secondsPerLine * 0.92);
+      onLine?.(i, lines[i], secondsPerLine);
       i++;
       this.lyrics = setTimeout(show, secondsPerLine * 1000);
     };
