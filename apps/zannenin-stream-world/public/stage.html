@@ -125,6 +125,29 @@
     </div>
   </div>
 
-  <script type="module" src="js/stage.js"></script>
+  <script>
+    // 読み込み中に起きた失敗を画面に出す（何も表示されずにローディングのまま止まらないように）
+    (function () {
+      function show(msg, lead) {
+        var loading = document.getElementById('loading');
+        if (!loading || loading.classList.contains('done')) return;
+        loading.classList.add('error');
+        document.getElementById('loading-text').textContent = (lead || '起動できませんでした。再読み込みしても直らない場合は、この画面を添えてお知らせください。') + '\n' + msg;
+      }
+      window.__showBootError = show;
+      window.addEventListener('error', function (e) { show(e.message || '読み込みエラー'); });
+      window.addEventListener('unhandledrejection', function (e) { show(String(e.reason && e.reason.message || e.reason)); });
+      // 90秒たっても始まらなければ、止まっている段階を表示する
+      setTimeout(function () {
+        var loading = document.getElementById('loading');
+        var gate = document.getElementById('sound-gate');
+        if (loading && !loading.classList.contains('done') && !loading.classList.contains('error') && gate && gate.hidden) {
+          // 回線が遅いだけなら、このあと読み込みが終われば自動で始まる
+          show('止まっている段階: ' + document.getElementById('loading-text').textContent + ' / ' + document.getElementById('loading-bar').style.width, 'まだ始まりません。回線が遅い場合はもう少しお待ちください。長く変わらなければ、この画面を添えてお知らせください。');
+        }
+      }, 90000);
+    })();
+  </script>
+  <script type="module" src="js/stage.js" onerror="window.__showBootError && window.__showBootError('プログラムを読み込めませんでした（js/stage.js）')"></script>
 </body>
 </html>
