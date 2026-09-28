@@ -1,0 +1,16 @@
+{
+  "name": "zannenin-stream-world",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "満足教大聖堂・懺悔室の配信用デジタルワールド（three.js + VRM）",
+  "scripts": {
+    "start": "node server.mjs"
+  },
+  "dependencies": {
+    "@mediapipe/tasks-vision": "^0.10.14",
+    "@pixiv/three-vrm": "^3.4.0",
+    "three": "^0.170.0",
+    "ws": "^8.18.0"
+  }
+}
