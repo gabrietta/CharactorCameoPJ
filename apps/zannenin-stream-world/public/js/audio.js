@@ -320,7 +320,10 @@ export class AudioEngine {
       else onEnd?.();
     };
     // 長さが取れない音声でも字幕の文字送りが壊れないよう、仮の長さを渡す
-    el.addEventListener('loadedmetadata', () => onStart?.(Number.isFinite(el.duration) && el.duration > 0 ? el.duration : 3), { once: true });
+    el.addEventListener('loadedmetadata', () => {
+      if (this.voiceEl !== el) return; // もう次の音声に替わっている
+      onStart?.(Number.isFinite(el.duration) && el.duration > 0 ? el.duration : 3);
+    }, { once: true });
     el.addEventListener('ended', () => finish(false), { once: true });
     el.addEventListener('error', () => finish(true), { once: true });
     el.play().catch((e) => { console.warn('voice', e); finish(true); });

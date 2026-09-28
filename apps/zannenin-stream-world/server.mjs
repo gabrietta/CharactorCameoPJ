@@ -156,6 +156,7 @@ const state = {
   trackingOptions: null,
 };
 
+let commentSeq = 0;
 function remember(msg) {
   switch (msg.type) {
     case 'mode': state.mode = msg.mode; state.camera = null; break;
@@ -176,6 +177,7 @@ function remember(msg) {
     case 'slide': state.slideIndex = msg.index; break;
     case 'comment':
     case 'offering':
+      msg.id = ++commentSeq;
       state.comments.push(msg);
       state.comments = state.comments.slice(-12);
       break;
@@ -355,24 +357,27 @@ const wss = new WebSocketServer({ server, path: '/ws', maxPayload: 4 * 1024 * 10
 // 起動失敗（ポート使用中など）は下の server.on('error') で知らせるので、ここでは受け止めるだけ
 wss.on('error', () => {});
 
-// tts:true の発話は、音声を作ってから audioUrl 付きで配る。失敗時は文字口パクで話し、コントロールへエラーを返す
-// 生成は並行して進め、配る順番は受け付けた順にそろえる（後のセリフが先に流れないように）
-let ttsQueue = Promise.resolve();
+// tts:true の発話は、音声を作ってから audioUrl 付きで配る。失敗時は文字口パクで話し、コントロールへエラーを返す。
+// 生成は並行して進めるが、セリフと字幕は受け付けた順に配る（TTSを待っている間に、後から来たセリフが先に流れないように）
+const SPEECH_TYPES = new Set(['speak', 'subtitle', 'subtitle-clear']);
+let speechQueue = Promise.resolve();
+function enqueueSpeech(produce) {
+  speechQueue = speechQueue.then(async () => {
+    try {
+      for (const m of await produce()) relay(m);
+    } catch (e) {
+      console.warn('セリフの配信に失敗しました', e);
+    }
+  });
+}
+
 function speakWithTts(msg) {
   const { tts, voiceId, ...rest } = msg;
   const job = synthesize(msg.text || '', voiceId || readLocalConfig().voiceId || DEFAULT_VOICE_ID)
     .then((audioUrl) => ({ ok: true, audioUrl }), (error) => ({ ok: false, error }));
-  ttsQueue = ttsQueue.then(async () => {
+  enqueueSpeech(async () => {
     const r = await job;
-    try {
-      if (r.ok) broadcast({ ...rest, audioUrl: r.audioUrl });
-      else {
-        broadcast(rest);
-        broadcast({ type: 'notice', level: 'error', text: r.error.message });
-      }
-    } catch (e) {
-      console.warn('音声つき発話の配信に失敗しました', e);
-    }
+    return r.ok ? [{ ...rest, audioUrl: r.audioUrl }] : [rest, { type: 'notice', level: 'error', text: r.error.message }];
   });
 }
 
@@ -417,12 +422,19 @@ function broadcast(msg, except) {
   if (error) return error;
   if (msg.type === 'speak' && msg.tts) { speakWithTts(msg); return null; }
   if (msg.type === 'tts-voice') { writeLocalConfig({ voiceId: msg.voiceId }); return null; }
+  if (SPEECH_TYPES.has(msg.type)) { enqueueSpeech(() => [msg]); return null; }
+  relay(msg, except);
+  return null;
+}
+
+// 状態に記録して、接続中の画面へ配る
+function relay(msg, except) {
+  if (!msg || typeof msg.type !== 'string') return;
   remember(msg);
   const data = JSON.stringify(msg);
   for (const client of wss.clients) {
     if (client !== except && client.readyState === 1) client.send(data);
   }
-  return null;
 }
 
 wss.on('connection', (ws) => {

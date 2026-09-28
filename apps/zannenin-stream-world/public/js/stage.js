@@ -396,7 +396,7 @@ async function handle(msg) {
     case 'mode': await setMode(msg.mode, { instant: msg.instant }); break;
     case 'camera': setCamera(msg.preset); break;
     case 'speak': speak(msg); break;
-    case 'subtitle': overlay.showSubtitle(msg.text, { speaker: msg.speaker, duration: msg.duration || 0, hold: msg.hold ?? 0 }); break;
+    case 'subtitle': overlay.showSubtitle(msg.text, { speaker: msg.speaker, duration: msg.duration || 0, hold: msg.hold ?? 0, kind: 'explicit' }); break;
     case 'subtitle-clear': overlay.clearSubtitle(); avatar.stopSpeaking(); audio.stopVoice(); break;
     case 'sound': audio.set(msg); break;
     case 'sfx': audio.play(msg.name); break;
@@ -497,18 +497,23 @@ function applyState(state) {
   if (state.viewers != null) overlay.setViewers(state.viewers);
   if (state.demoBadge != null) overlay.setDemoBadge(state.demoBadge);
   if (state.ticker) overlay.setTicker(state.ticker.text);
-  // 明示的に出した字幕を復元する（時間切れのものはサーバー側で除かれている）
+  // サーバーの状態を正とする。無いもの（切断中に消された字幕・締め切られた神託）はこちらでも片付ける
+  // 明示的に出した字幕を復元する（時間切れのものはサーバー側で除かれている）。セリフの字幕は消さない
   if (state.subtitle?.text) {
     const remaining = state.subtitle.until ? Math.max(0.5, (state.subtitle.until - Date.now()) / 1000) : 0;
-    overlay.showSubtitle(state.subtitle.text, { speaker: state.subtitle.speaker, hold: remaining });
+    overlay.showSubtitle(state.subtitle.text, { speaker: state.subtitle.speaker, hold: remaining, kind: 'explicit' });
+  } else if (overlay.subtitleKind === 'explicit') {
+    overlay.clearSubtitle();
   }
   if (state.program) overlay.setProgram(state.program);
-  if (state.slideIndex) overlay.renderSlide(state.slideIndex, false);
+  if (Number.isInteger(state.slideIndex) && state.slideIndex !== overlay.slideIndex) overlay.renderSlide(state.slideIndex, false);
   if (state.camera) setCamera(state.camera);
+  // 懺悔はサーバーが振った番号で重複を除く（再接続のたびに同じコメントが足されないように）
   for (const c of state.comments || []) overlay.addComment(c, { float: false, silent: true });
   if (state.sound) audio.set(state.sound);
   if (state.trackingOptions) applyTrackingOptions(state.trackingOptions);
   if (state.poll) { overlay.startPoll(state.poll, { silent: true }); overlay.setVotes(state.poll.votes); }
+  else if (overlay.poll) overlay.hidePoll();
 }
 
 // ---------- 通信 ----------

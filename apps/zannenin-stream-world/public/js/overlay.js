@@ -141,7 +141,8 @@ export class Overlay {
   }
 
   // 字幕。duration 秒で文字送り、hold 秒後に消える（0なら残す）
-  showSubtitle(text, { speaker, duration = 0, hold = 3 } = {}) {
+  showSubtitle(text, { speaker, duration = 0, hold = 3, kind = 'speech' } = {}) {
+    this.subtitleKind = kind;
     const box = $('subtitle');
     const el = $('sub-text');
     if (speaker) $('sub-speaker').textContent = speaker;
@@ -164,7 +165,7 @@ export class Overlay {
     } else {
       el.textContent = text;
     }
-    if (hold > 0) this.subTimer = setTimeout(() => box.classList.remove('show'), (duration + hold) * 1000);
+    if (hold > 0) this.subTimer = setTimeout(() => { box.classList.remove('show'); this.subtitleKind = null; }, (duration + hold) * 1000);
   }
 
   // 画面の一時的な表示をすべて片付ける（デモを毎回まっさらな状態から始めるため）
@@ -184,12 +185,19 @@ export class Overlay {
   }
 
   clearSubtitle() {
+    this.subtitleKind = null;
     clearTimeout(this.subTimer);
     clearInterval(this.typeTimer);
     $('subtitle').classList.remove('show');
   }
 
-  addComment({ name, text, amount }, { float = true, silent = false } = {}) {
+  addComment({ id, name, text, amount }, { float = true, silent = false } = {}) {
+    if (id != null) {
+      this.shownIds ||= new Set();
+      if (this.shownIds.has(id)) return;
+      this.shownIds.add(id);
+      if (this.shownIds.size > 300) this.shownIds.delete(this.shownIds.values().next().value);
+    }
     if (!silent && !amount) this.sfx('slip');
     const list = $('chat-list');
     const li = document.createElement('li');
@@ -218,9 +226,9 @@ export class Overlay {
     setTimeout(() => el.remove(), 7200);
   }
 
-  async showOffering({ name, amount, text }) {
+  async showOffering({ id, name, amount, text }) {
     name = name || '名無しの子羊';
-    this.addComment({ name, text, amount }, { float: false });
+    this.addComment({ id, name, text, amount }, { float: false });
     this.sfx('bell');
     const box = $('offering');
     $('off-amount').textContent = `¥${Number(amount).toLocaleString()}`;
@@ -240,6 +248,12 @@ export class Overlay {
     $('poll').classList.add('show');
     if (!silent) this.sfx('oracle-start');
     this.stage.classList.add('polling');
+  }
+
+  hidePoll() {
+    $('poll').classList.remove('show');
+    this.stage.classList.remove('polling');
+    this.poll = null;
   }
 
   vote(option, count = 1) {
