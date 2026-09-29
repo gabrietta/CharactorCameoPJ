@@ -1,31 +1,19 @@
-import fs from "node:fs";
 import path from "node:path";
+import { listBookIds, parseFrontMatter, readBookMeta, readChapterFiles, notesHeading, verseLine } from "./scripture-lib.mjs";
 
 // 教典（content/scripture/{id}/text/*.md）の章ファイル形式を検査する。
 // --random を付けると、節番号付きの行からランダムに一節を表示する。
 
 const rootDir = process.cwd();
-const scriptureDir = path.join(rootDir, "content", "scripture");
 const statuses = new Set(["draft", "review", "adopted"]);
 const requiredKeys = ["id", "part", "chapter", "title", "status"];
-const verseLine = /^\*\*(\d+)\*\*　(.+)$/;
 const legacyVerseLine = /^\d+:\d+　/;
 const slugPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
 const errors = [];
 const verses = [];
 
-function parseFrontMatter(text, file) {
-  const match = text.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n/);
-  if (!match) {
-    errors.push(`${file}: front matter がありません`);
-    return null;
-  }
-  const data = {};
-  for (const line of match[1].split(/\r?\n/)) {
-    const pair = line.match(/^([A-Za-z]+):\s*(.*?)\s*(?:#.*)?$/);
-    if (pair) data[pair[1]] = pair[2];
-  }
+function checkFrontMatter(data, file, parts) {
   for (const key of requiredKeys) {
     if (!data[key]) errors.push(`${file}: front matter に ${key} がありません`);
   }
@@ -34,38 +22,40 @@ function parseFrontMatter(text, file) {
   for (const key of ["part", "chapter"]) {
     if (data[key] && !/^\d+$/.test(data[key])) errors.push(`${file}: ${key} は整数 (${data[key]})`);
   }
-  return { data, bodyStart: match[0].split(/\r?\n/).length - 1 };
+  if (parts && data.part && !(data.part in parts)) errors.push(`${file}: part ${data.part} が book.json の parts にありません`);
 }
 
 function checkBook(bookId) {
-  const textDir = path.join(scriptureDir, bookId, "text");
-  if (!fs.existsSync(textDir)) return;
   const ids = new Map();
   const chapters = new Map();
+  const { parts } = readBookMeta(bookId);
 
-  for (const name of fs.readdirSync(textDir).filter((n) => n.endsWith(".md")).sort()) {
-    const file = path.relative(rootDir, path.join(textDir, name)).replaceAll("\\", "/");
-    const text = fs.readFileSync(path.join(textDir, name), "utf8");
-    const parsed = parseFrontMatter(text, file);
-    if (!parsed) continue;
+  for (const chapterFile of readChapterFiles(bookId)) {
+    const file = path.relative(rootDir, chapterFile.path).replaceAll("\\", "/");
+    const parsed = parseFrontMatter(chapterFile.text);
+    if (!parsed) {
+      errors.push(`${file}: front matter がありません`);
+      continue;
+    }
     const { data, bodyStart } = parsed;
+    checkFrontMatter(data, file, parts);
 
     if (data.id) {
       if (ids.has(data.id)) errors.push(`${file}: id ${data.id} が ${ids.get(data.id)} と重複しています`);
       ids.set(data.id, file);
     }
-    // 章番号0は前付（序、連祷など）で、複数あってよい。
+    // 章番号0は前付・付録（序、連祷、満足暦など）で、複数あってよい。
     if (data.chapter && data.chapter !== "0") {
       if (chapters.has(data.chapter)) errors.push(`${file}: 章番号 ${data.chapter} が ${chapters.get(data.chapter)} と重複しています`);
       chapters.set(data.chapter, file);
     }
 
-    const lines = text.split(/\r?\n/);
+    const lines = chapterFile.text.split(/\r?\n/);
     let expected = 1;
     for (let i = bodyStart; i < lines.length; i += 1) {
       const line = lines[i];
       const at = `${file}:${i + 1}`;
-      if (/^##\s*編纂注/.test(line)) break;
+      if (notesHeading.test(line)) break;
       if (legacyVerseLine.test(line)) {
         errors.push(`${at}: 旧形式の節番号です。**番号**　本文 の形にしてください`);
         continue;
@@ -87,11 +77,7 @@ function checkBook(bookId) {
   }
 }
 
-if (fs.existsSync(scriptureDir)) {
-  for (const entry of fs.readdirSync(scriptureDir, { withFileTypes: true })) {
-    if (entry.isDirectory()) checkBook(entry.name);
-  }
-}
+for (const bookId of listBookIds()) checkBook(bookId);
 
 if (errors.length > 0) {
   console.error("Scripture check failed:");

@@ -1,0 +1,65 @@
+{
+  "title": "満足聖典",
+  "parts": {
+    "0": "前付",
+    "1": "第一部　啓示",
+    "2": "第二部　戒律",
+    "3": "第三部　列伝",
+    "9": "付録"
+  },
+  "calendar": {
+    "chapter": "calendar",
+    "excludeFromDaily": [
+      "calendar",
+      "colophon",
+      "litany"
+    ],
+    "feasts": [
+      {
+        "date": "*-03",
+        "verse": 1,
+        "name": "三分の日"
+      },
+      {
+        "date": "*-04",
+        "verse": 2,
+        "name": "慎みの日"
+      },
+      {
+        "date": "01-26",
+        "verse": 3,
+        "name": "英字の日"
+      },
+      {
+        "date": "04-26",
+        "verse": 4,
+        "name": "告げの日"
+      },
+      {
+        "date": "04-27",
+        "verse": 5,
+        "name": "延べられし二日"
+      },
+      {
+        "date": "04-28",
+        "verse": 5,
+        "name": "延べられし二日"
+      },
+      {
+        "date": "06-21",
+        "verse": 6,
+        "name": "氷の日（夏至。年により前後する）"
+      },
+      {
+        "date": "09-09",
+        "verse": 7,
+        "name": "菊の日"
+      },
+      {
+        "date": "12-31",
+        "verse": 8,
+        "name": "名簿改めの日"
+      }
+    ]
+  }
+}

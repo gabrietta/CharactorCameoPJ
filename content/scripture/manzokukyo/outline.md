@@ -13,13 +13,13 @@
 
 | ファイル | 状態 |
 |---|---|
-| [満足連祷](text/00-litany.md) | draft |
+| [満足連祷](text/00-2-litany.md) | draft |
 
 ## 序
 
 | 章 | ID | 題 | 状態 | 担当 |
 |---|---|---|---|---|
-| 0 | `preface` | [序](text/00-preface.md) | draft | 編纂責任者 |
+| 0 | `preface` | [序](text/00-1-preface.md) | draft | 編纂責任者 |
 
 ## 第一部　啓示
 

@@ -40,8 +40,19 @@ content/scripture/manzokukyo/
 - 本文はMarkdownで、1章を1ファイルにする。共同編集で衝突しにくく、将来Wikiにするときも1章＝1ページで移せる。
 - 各ファイル冒頭のfront matterに、章ID、部、章番号、題、状態を書く。
 - 節は `**1**　本文` の形で書き、節と節の間は空行を入れる（GitHubやWikiで1節ずつ改行して表示されるように）。
+- 書名と部の名前は [book.json](book.json) にまとめてある（一か所を直せば書き出しに反映される）。満足暦の祝祭日の日付もここにある。
 - 形式の確認: `node scripts/check-scripture.mjs`（`npm.cmd run check` にも含まれる）
 - ランダムに一節を表示: `node scripts/check-scripture.mjs --random`
+
+## 書き出し（再利用）
+
+```bash
+node scripts/export-scripture.mjs --markdown --out manzokukyo.md
+```
+
+- `--markdown`: 編纂注を除いた一冊ぶんのMarkdown。書籍・PDF・Wikiの元にする。
+- `--json`: 章と節のJSON。Web書籍、配信ツール、AIへの引用に使う。
+- `--today [YYYY-MM-DD]`: 満足暦によるその日の一節。祝祭日は満足暦の節、それ以外の日は本文の節を順に割り当てる（本文の節が増えると割り当ては変わる）。
 
 ## 将来の形
 
