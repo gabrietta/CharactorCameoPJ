@@ -50,8 +50,8 @@
 | 13 | `birth-in-the-mist` | [霧の国の生誕](text/13-birth-in-the-mist.md) | 食い違う三つの伝え | draft | 編纂責任者 |
 | 14 | `neo-saitama` | [ネオサイタマ](text/14-neo-saitama.md) | ひとり満足修道女、隣の棟の声、名簿の最初の欄 | draft | 編纂責任者 |
 | 15 | `house-of-the-sister` | [姉の家](text/15-house-of-the-sister.md) | 感謝、礼節、暴、救済。継がれなかった一つ | draft | 編纂責任者 |
-| 16 | — | 英字の者たち | ALPHACLAVE列伝。B、F、Z。空席の英字 | 募集中 | — |
-| 17 | — | 問答 | 教理問答。信者Bの問い | 募集中 | — |
+| 16 | `the-lettered` | [英字の者たち](text/16-the-lettered.md) | ALPHACLAVE。B、F、Z、二十三の空席、Aの椅子 | draft | 編纂責任者 |
+| 17 | `catechism` | [教理問答](text/17-catechism.md) | 信者Bの問いと教祖の答え | draft | 編纂責任者 |
 
 ## 付録
 
