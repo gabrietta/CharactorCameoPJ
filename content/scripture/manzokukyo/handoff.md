@@ -6,8 +6,10 @@
 
 - ブランチ: `claude/manzokukyo-scripture`（`origin/main` から作成。ローカルのみ。push・PRはしていない。D-17）
 - 作業フォルダ: `D:\CharactorCameoPJ-scripture`（git worktree）。元のフォルダ `D:\CharactorCameoPJ` の未コミットの別作業には触れていない。
-- 版: 開発版 v0.11.1（12,893字、原稿用紙 約33枚）。版ごとの記録は versions.json。
-- 本文: 序、満足連祷、第1〜20章、満足暦、奥付。全323節。全章 draft。各章に一行の梗概、節どうしの引照あり。全章 draft。
+- 版: 開発版 v0.39.0（40,738字、原稿用紙 約102枚、文庫 約68頁）。版ごとの記録は versions.json。
+- 本文: 序、満足連祷、第1〜68章（五部）、満足暦、奥付。全1,053節。全章 draft。
+- 公開: GitHub Pages の https://zanneninsan.github.io/CharactorCameoPJ/scripture/manzokukyo/viewer/ （2026-09-29 に v0.34.0 を main へ反映。それ以降の版はブランチ claude/manzokukyo-scripture のみ）
+- 査読と評価: [review-2026-09-29.md](review-2026-09-29.md)
 - 検査: `npm.cmd run check` 成功（文字化け検査、教典の形式検査、キャラクターJSON）。
 
 ## おすすめの見る順番
@@ -24,7 +26,7 @@
 
 ## 戻し方
 
-区切りごとにコミットとローカルのタグ（`scripture-m1`〜）を付けてある。
+区切りごとにコミットとローカルのタグ（`scripture-m1`〜`scripture-m55`）を付けてある。一覧は `git tag -l "scripture-*" -n1`、版との対応は versions.json（base に版を上げたときのコミットがある）。
 
 | タグ | コミット | 内容 |
 |---|---|---|
