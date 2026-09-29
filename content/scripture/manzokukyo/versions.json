@@ -582,5 +582,18 @@
       "verses": 1050,
       "chapters": 68
     }
+  },
+  {
+    "version": "0.39.0",
+    "date": "2026-09-29",
+    "base": "77cef3c",
+    "summary": "推敲: 引照のない章をつなぐ、銀の髪・キューピーたらこ・信者Bの節を追加",
+    "stats": {
+      "characters": 40738,
+      "manuscriptSheets": 102,
+      "bunkoPages": 68,
+      "verses": 1053,
+      "chapters": 68
+    }
   }
 ]

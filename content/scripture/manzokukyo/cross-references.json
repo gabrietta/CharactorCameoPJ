@@ -41,7 +41,8 @@
   ],
   "be-not-sated:3": [
     "precepts:4",
-    "litany:15"
+    "litany:15",
+    "kaedama:1"
   ],
   "be-not-sated:5": [
     "table-prayers:10",
@@ -57,7 +58,8 @@
   ],
   "counting:3": [
     "precepts:7",
-    "litany:17"
+    "litany:17",
+    "neighbor:2"
   ],
   "counting:4": [
     "confession:9"
@@ -125,7 +127,8 @@
     "the-last-day:11"
   ],
   "the-second-season:8": [
-    "the-last-day:17"
+    "the-last-day:17",
+    "false-images:1"
   ],
   "the-second-season:13": [
     "the-last-day:6",
@@ -314,7 +317,8 @@
     "litany:8"
   ],
   "proverbs:40": [
-    "preface:3"
+    "preface:3",
+    "notice-board:1"
   ],
   "night-psalm:4": [
     "calendar:2"
@@ -348,7 +352,8 @@
     "regulations:16"
   ],
   "regulations:13": [
-    "proverbs:40"
+    "proverbs:40",
+    "notice-board:10"
   ],
   "regulations:14": [
     "litany:8",
@@ -463,7 +468,8 @@
     "catechism:16"
   ],
   "closing-litany:1": [
-    "litany:1"
+    "litany:1",
+    "streaming:9"
   ],
   "closing-litany:6": [
     "be-not-sated:2"
@@ -587,7 +593,8 @@
     "night-psalm:1"
   ],
   "gathering:1": [
-    "fragments-of-salvation:3"
+    "fragments-of-salvation:3",
+    "meeting-house:2"
   ],
   "gathering:5": [
     "light-of-the-brow:2"
@@ -1254,5 +1261,98 @@
   "archive-log:10": [
     "neo-saitama:15",
     "letter-to-the-archive:7"
+  ],
+  "gathering:4": [
+    "neighbor:4"
+  ],
+  "armaments:3": [
+    "word:7"
+  ],
+  "fragments-of-salvation:6": [
+    "word:6"
+  ],
+  "precepts:4": [
+    "kaedama:1"
+  ],
+  "regulations:3": [
+    "duties:10"
+  ],
+  "table-prayers:11": [
+    "duties:3"
+  ],
+  "regulations:8": [
+    "meeting-house:8"
+  ],
+  "the-second-season:6": [
+    "streaming:7"
+  ],
+  "birth-in-the-mist:12": [
+    "mist-journey:1"
+  ],
+  "vestments:4": [
+    "hair:10"
+  ],
+  "house-of-the-sister:1": [
+    "hair:5"
+  ],
+  "the-last-day:17": [
+    "false-images:1"
+  ],
+  "catechism:24": [
+    "b-questions:1"
+  ],
+  "the-lettered:7": [
+    "b-questions:1"
+  ],
+  "catechism:18": [
+    "silences:3"
+  ],
+  "the-lettered:15": [
+    "silences:4"
+  ],
+  "testimonies:12": [
+    "nameless-believers:1"
+  ],
+  "letter-to-the-archive:9": [
+    "archive-log:1"
+  ],
+  "regulations:12": [
+    "archive-log:1"
+  ],
+  "the-last-day:9": [
+    "letter-to-the-far-utopia:2"
+  ],
+  "founder-day:3": [
+    "letter-to-a-classmate:9"
+  ],
+  "preface:8": [
+    "letter-to-the-reader:1"
+  ],
+  "preface:3": [
+    "letter-to-the-reader:2"
+  ],
+  "table-prayers:1": [
+    "thanksgiving:1"
+  ],
+  "fragments-of-salvation:2": [
+    "thanksgiving:2"
+  ],
+  "be-not-sated:12": [
+    "lament:3"
+  ],
+  "calendar:8": [
+    "lament:1"
+  ],
+  "founder-day:13": [
+    "hair:2",
+    "hair:1"
+  ],
+  "table-prayers:15": [
+    "armaments:6",
+    "armaments:8"
+  ],
+  "gathering:13": [
+    "the-lettered:6",
+    "b-questions:1"
   ]
 }
