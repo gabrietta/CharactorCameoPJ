@@ -3,6 +3,7 @@ id: fragments-of-salvation
 part: 1
 chapter: 2
 title: 救済の欠片
+summary: 大いなる満足と小さき満足。救済の欠片。枕辺に並ぶもの。
 status: draft
 ---
 

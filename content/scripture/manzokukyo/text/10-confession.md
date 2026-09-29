@@ -3,6 +3,7 @@ id: confession
 part: 2
 chapter: 10
 title: 懺悔
+summary: 赤き帳の作法。返されざりし手の話。
 status: draft
 ---
 

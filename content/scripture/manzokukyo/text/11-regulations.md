@@ -3,6 +3,7 @@ id: regulations
 part: 2
 chapter: 11
 title: 事務規程抄
+summary: 満足教事務規程の抜粋。
 status: draft
 ---
 

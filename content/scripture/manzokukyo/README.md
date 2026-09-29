@@ -33,6 +33,9 @@ content/scripture/manzokukyo/
   lexicon.md         # 作中用語の登録簿
   mysteries.md       # 解かれていない謎の登録簿
   fragments.md       # 章に入る前の断片置き場
+  book.json          # 書名、部の名前、満足暦の祝祭日
+  cross-references.json # 引照（節から関連する節への参照）
+  handoff.md         # 引き継ぎメモ
   source-index.md    # 既存設定・素材の棚卸し
   text/              # 本文。1章1ファイル
 ```
@@ -42,6 +45,7 @@ content/scripture/manzokukyo/
 - 本文はMarkdownで、1章を1ファイルにする。共同編集で衝突しにくく、将来Wikiにするときも1章＝1ページで移せる。
 - 各ファイル冒頭のfront matterに、章ID、部、章番号、題、状態を書く。
 - 節は `**1**　本文` の形で書き、節と節の間は空行を入れる（GitHubやWikiで1節ずつ改行して表示されるように）。
+- 節どうしのつながり（引照）は [cross-references.json](cross-references.json) にある。
 - 書名と部の名前は [book.json](book.json) にまとめてある（一か所を直せば書き出しに反映される）。満足暦の祝祭日の日付もここにある。
 - 形式の確認: `node scripts/check-scripture.mjs`（`npm.cmd run check` にも含まれる）
 - ランダムに一節を表示: `node scripts/check-scripture.mjs --random`

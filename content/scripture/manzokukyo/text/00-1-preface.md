@@ -3,6 +3,7 @@ id: preface
 part: 0
 chapter: 0
 title: 序
+summary: 読む者への心得。黒く塗られたる行のこと。
 status: draft
 ---
 

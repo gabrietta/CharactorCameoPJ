@@ -46,6 +46,7 @@ id: hunger              # 英小文字とハイフン。章の固定ID
 part: 1                 # 部の番号
 chapter: 1              # 通し章番号（draftの間は変わりうる）
 title: はじめに空腹ありき
+summary: 空腹のはじめ。…  # 章の頭に置く一行の梗概（文語）
 status: draft           # draft / review / adopted
 ---
 
@@ -67,6 +68,7 @@ status: draft           # draft / review / adopted
 - 節は `**番号**`＋全角空白＋本文。1節は1行。節の間は空行。
 - 付記・規程は `> 【付記】` `> 【規程】` で始まる引用ブロックにする。節番号は付けない。
 - `## 編纂注` は制作用のメモ。書籍・Wikiに載せるときは外す。
+- 別の章の節とつながる節を書いたら、[cross-references.json](cross-references.json) に引照を足す（例: `"hunger:6": ["litany:8"]`）。書き出した本では、章末に「引照」として表示される。存在しない節を指すと検査で止まる。
 
 ## 採否の流れ
 

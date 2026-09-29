@@ -3,6 +3,7 @@ id: hymns
 part: 2
 chapter: 9
 title: 聖歌
+summary: 数え歌、器の歌、恵みの歌。
 status: draft
 ---
 

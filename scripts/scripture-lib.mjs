@@ -21,6 +21,12 @@ export function readBookMeta(bookId) {
   return fs.existsSync(metaPath) ? JSON.parse(fs.readFileSync(metaPath, "utf8")) : {};
 }
 
+// 引照（節から関連する節への参照）。キーと値は "章ID:節番号"。
+export function readCrossReferences(bookId) {
+  const refsPath = path.join(scriptureDir, bookId, "cross-references.json");
+  return fs.existsSync(refsPath) ? JSON.parse(fs.readFileSync(refsPath, "utf8")) : {};
+}
+
 // ファイル名順（00- 前付、01- 本文、90- 付録）に章ファイルを返す。
 export function readChapterFiles(bookId) {
   const textDir = path.join(scriptureDir, bookId, "text");

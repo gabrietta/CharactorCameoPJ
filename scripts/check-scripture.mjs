@@ -1,5 +1,5 @@
 import path from "node:path";
-import { listBookIds, parseFrontMatter, readBookMeta, readChapterFiles, notesHeading, verseLine } from "./scripture-lib.mjs";
+import { listBookIds, parseFrontMatter, readBookMeta, readChapterFiles, readCrossReferences, notesHeading, verseLine } from "./scripture-lib.mjs";
 
 // 教典（content/scripture/{id}/text/*.md）の章ファイル形式を検査する。
 // --random を付けると、節番号付きの行からランダムに一節を表示する。
@@ -28,6 +28,7 @@ function checkFrontMatter(data, file, parts) {
 function checkBook(bookId) {
   const ids = new Map();
   const chapters = new Map();
+  const verseKeys = new Set();
   const { parts } = readBookMeta(bookId);
 
   for (const chapterFile of readChapterFiles(bookId)) {
@@ -70,9 +71,17 @@ function checkBook(bookId) {
       expected = number + 1;
       const next = lines[i + 1];
       if (next !== undefined && next.trim() !== "") errors.push(`${at}: 節のあとに空行を入れてください`);
+      if (data.id) verseKeys.add(`${data.id}:${number}`);
       if (verse[2].trim() !== "（欠番）") {
         verses.push({ book: bookId, chapter: data.chapter, title: data.title, number, text: verse[2] });
       }
+    }
+  }
+
+  // 引照の参照元・参照先が、実在する節を指しているか。
+  for (const [from, targets] of Object.entries(readCrossReferences(bookId))) {
+    for (const key of [from, ...targets]) {
+      if (!verseKeys.has(key)) errors.push(`content/scripture/${bookId}/cross-references.json: ${key} という節がありません`);
     }
   }
 }

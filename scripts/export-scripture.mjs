@@ -1,5 +1,5 @@
 import fs from "node:fs";
-import { parseChapter, readBookMeta, readChapterFiles } from "./scripture-lib.mjs";
+import { parseChapter, readBookMeta, readChapterFiles, readCrossReferences } from "./scripture-lib.mjs";
 
 // 教典を再利用しやすい形で書き出す。
 //
@@ -20,6 +20,22 @@ const meta = readBookMeta(bookId);
 const chapters = readChapterFiles(bookId)
   .map((file) => ({ file: file.name, ...parseChapter(file.text) }))
   .filter((chapter) => chapter.id);
+const crossReferences = readCrossReferences(bookId);
+const chaptersById = new Map(chapters.map((chapter) => [chapter.id, chapter]));
+
+// 引照の短い表記（例: 第1章6節、満足連祷8節）。
+function shortCitation(key) {
+  const [id, number] = key.split(":");
+  const chapter = chaptersById.get(id);
+  if (!chapter) return key;
+  return chapter.chapter === "0" ? `${chapter.title}${number}節` : `第${chapter.chapter}章${number}節`;
+}
+
+function chapterReferences(chapter) {
+  return chapter.verses
+    .filter((verse) => crossReferences[`${chapter.id}:${verse.number}`])
+    .map((verse) => `- ${verse.number}節　${crossReferences[`${chapter.id}:${verse.number}`].map(shortCitation).join("、")}`);
+}
 
 function citation(chapter, number) {
   return chapter.chapter === "0" ? `『${chapter.title}』${number}節` : `『${chapter.title}』${chapter.chapter}章${number}節`;
@@ -38,7 +54,11 @@ function toMarkdown() {
       .replace(/^# .*\n?/, "")
       .replace(/^(#{1,4}) /gm, (_, hashes) => `${hashes}# `)
       .trim();
-    out.push(`### ${heading}`, "", body, "");
+    out.push(`### ${heading}`, "");
+    if (chapter.summary) out.push(`*${chapter.summary}*`, "");
+    out.push(body, "");
+    const references = chapterReferences(chapter);
+    if (references.length > 0) out.push("#### 引照", "", ...references, "");
   }
   return `${out.join("\n").trim()}\n`;
 }
@@ -49,7 +69,15 @@ function toJson() {
       book: bookId,
       title: meta.title ?? bookId,
       parts: meta.parts ?? {},
-      chapters: chapters.map(({ id, part, chapter, title, status, verses }) => ({ id, part: Number(part), chapter: Number(chapter), title, status, verses })),
+      chapters: chapters.map(({ id, part, chapter, title, summary, status, verses }) => ({
+        id,
+        part: Number(part),
+        chapter: Number(chapter),
+        title,
+        summary: summary ?? "",
+        status,
+        verses: verses.map((verse) => ({ ...verse, references: crossReferences[`${id}:${verse.number}`] ?? [] })),
+      })),
     },
     null,
     2,

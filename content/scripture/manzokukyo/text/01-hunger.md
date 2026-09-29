@@ -3,6 +3,7 @@ id: hunger
 part: 1
 chapter: 1
 title: はじめに空腹ありき
+summary: 空腹のはじめ。教祖、湯を沸かさしめたまう。三分と四分目のこと。
 status: draft
 ---
 

@@ -3,6 +3,7 @@ id: the-last-day
 part: 1
 chapter: 6
 title: 終わりの日
+summary: 遠き理想郷の終わり。延べられし二日。MEDの影。次なる終わりの五つのしるし。
 status: draft
 ---
 

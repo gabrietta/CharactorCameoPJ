@@ -3,6 +3,7 @@ id: litany
 part: 0
 chapter: 0
 title: 満足連祷
+summary: 集いのはじめの呼びかけと応え。
 status: draft
 ---
 

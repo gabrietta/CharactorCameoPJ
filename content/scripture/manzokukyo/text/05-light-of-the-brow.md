@@ -3,6 +3,7 @@ id: light-of-the-brow
 part: 1
 chapter: 5
 title: 額の光
+summary: 教祖の額の光。光る目と会釈。
 status: draft
 ---
 

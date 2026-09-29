@@ -3,6 +3,7 @@ id: be-not-sated
 part: 1
 chapter: 3
 title: 満ち足りるなかれ
+summary: 根本の聖句。満腹と満足。完了者と鉛筆の名簿。
 status: draft
 ---
 

@@ -3,6 +3,7 @@ id: calendar
 part: 9
 chapter: 0
 title: 満足暦
+summary: 祝祭日と慎みの日。
 status: draft
 ---
 
