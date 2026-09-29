@@ -465,5 +465,18 @@
       "verses": 861,
       "chapters": 52
     }
+  },
+  {
+    "version": "0.32.0",
+    "date": "2026-09-29",
+    "base": "06dbb76",
+    "summary": "旅の定め、感謝の詩を差し込み",
+    "stats": {
+      "characters": 33769,
+      "manuscriptSheets": 85,
+      "bunkoPages": 57,
+      "verses": 890,
+      "chapters": 54
+    }
   }
 ]
