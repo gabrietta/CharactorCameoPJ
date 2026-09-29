@@ -764,5 +764,18 @@
       "verses": 1171,
       "chapters": 75
     }
+  },
+  {
+    "version": "0.49.0",
+    "date": "2026-09-30",
+    "base": "0a83fe7",
+    "summary": "第68章「空席の詩」を追加",
+    "stats": {
+      "characters": 48114,
+      "manuscriptSheets": 121,
+      "bunkoPages": 81,
+      "verses": 1185,
+      "chapters": 76
+    }
   }
 ]

@@ -1,7 +1,7 @@
 ---
 id: notice-board
 part: 5
-chapter: 73
+chapter: 74
 title: 掲示板の箴言
 summary: 集会所の掲示板に貼られいたる、四十一より後の言葉。箴言にあらず。受付の務めの者の、剥がす前に写せしもの。
 status: draft

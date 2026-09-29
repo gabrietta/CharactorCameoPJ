@@ -1,7 +1,7 @@
 ---
 id: prophecies
 part: 5
-chapter: 72
+chapter: 73
 title: 預言の断片
 summary: 教祖の語りたまいし、来たるべき日々の断片。まだ外れざるもののみを記す。
 status: draft

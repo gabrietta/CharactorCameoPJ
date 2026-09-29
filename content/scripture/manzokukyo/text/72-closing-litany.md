@@ -1,7 +1,7 @@
 ---
 id: closing-litany
 part: 5
-chapter: 71
+chapter: 72
 title: 結びの連祷
 summary: 集いの終わりに唱うる呼びかけと応え。器を持ちて帰ること。
 voice: colloquial
