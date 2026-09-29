@@ -68,6 +68,15 @@
 | 24 | `letter-to-the-sister` | [姉への書簡](text/24-letter-to-the-sister.md) | 私的な「あたし」の手紙。差し出されないまま | draft | 編纂責任者 |
 | 25 | `letter-to-the-reader` | [まだ見ぬ信女への書簡](text/25-letter-to-the-reader.md) | 読者に宛てた手紙 | draft | 編纂責任者 |
 
+## 第五部　箴言と詩
+
+一節ずつ独り立つ格言と、独りで唱える詩（D-24）。
+
+| 章 | ID | 題 | 中身 | 状態 | 担当 |
+|---|---|---|---|---|---|
+| 26 | `proverbs` | [箴言](text/26-proverbs.md) | 満足の格言四十 | draft | 編纂責任者 |
+| 27 | `night-psalm` | [夜の詩](text/27-night-psalm.md) | 眠る前に独りで唱える詩 | draft | 編纂責任者 |
+
 ## 付録
 
 | 題 | 中身 | 状態 |

@@ -218,5 +218,18 @@
       "verses": 391,
       "chapters": 25
     }
+  },
+  {
+    "version": "0.14.0",
+    "date": "2026-09-29",
+    "base": "f84bee9",
+    "summary": "第五部 箴言と詩（第26〜27章）",
+    "stats": {
+      "characters": 17374,
+      "manuscriptSheets": 44,
+      "bunkoPages": 29,
+      "verses": 444,
+      "chapters": 27
+    }
   }
 ]
