@@ -1,7 +1,7 @@
 ---
 id: parables
 part: 3
-chapter: 51
+chapter: 52
 title: 譬え
 summary: 教祖の語りたまいし五つの譬え。いずれも終わりまで語られざること。
 status: draft

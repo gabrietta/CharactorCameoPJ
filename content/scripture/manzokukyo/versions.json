@@ -738,5 +738,18 @@
       "verses": 1139,
       "chapters": 73
     }
+  },
+  {
+    "version": "0.47.0",
+    "date": "2026-09-30",
+    "base": "de703a9",
+    "summary": "第50章「量りの務め」を追加",
+    "stats": {
+      "characters": 46846,
+      "manuscriptSheets": 118,
+      "bunkoPages": 79,
+      "verses": 1156,
+      "chapters": 74
+    }
   }
 ]
