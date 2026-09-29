@@ -608,5 +608,18 @@
       "verses": 1054,
       "chapters": 68
     }
+  },
+  {
+    "version": "0.40.1",
+    "date": "2026-09-30",
+    "base": "2963a9d",
+    "summary": "教祖服の金ボタンを左右三つずつ（計六つ）に戻す",
+    "stats": {
+      "characters": 40868,
+      "manuscriptSheets": 103,
+      "bunkoPages": 69,
+      "verses": 1054,
+      "chapters": 68
+    }
   }
 ]
