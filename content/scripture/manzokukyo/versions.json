@@ -686,5 +686,18 @@
       "verses": 1092,
       "chapters": 70
     }
+  },
+  {
+    "version": "0.44.0",
+    "date": "2026-09-30",
+    "base": "7968dce",
+    "summary": "第26章「音の定め」を追加（音と時のずれの怖さ）",
+    "stats": {
+      "characters": 44643,
+      "manuscriptSheets": 112,
+      "bunkoPages": 75,
+      "verses": 1110,
+      "chapters": 71
+    }
   }
 ]

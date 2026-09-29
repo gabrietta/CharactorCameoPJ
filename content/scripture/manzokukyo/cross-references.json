@@ -1396,5 +1396,23 @@
   ],
   "night-watch:19": [
     "confession:2"
+  ],
+  "sounds:2": [
+    "hunger:3"
+  ],
+  "sounds:3": [
+    "meeting-house:3"
+  ],
+  "sounds:7": [
+    "hunger:5"
+  ],
+  "sounds:9": [
+    "archive-log:7"
+  ],
+  "sounds:10": [
+    "closing-litany:17"
+  ],
+  "sounds:14": [
+    "closing-litany:18"
   ]
 }
