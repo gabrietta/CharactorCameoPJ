@@ -1,6 +1,6 @@
 {
   "title": "満足聖典",
-  "version": "0.41.0",
+  "version": "0.41.1",
   "files": [
     "00-1-preface.md",
     "00-2-litany.md",
@@ -87,6 +87,7 @@
   "docs": [
     "README.md",
     "handoff.md",
+    "cycle-log-2026-09-30.md",
     "review-2026-09-29.md",
     "review-response-2026-09-29.md",
     "decisions.md",

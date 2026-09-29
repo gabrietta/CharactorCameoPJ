@@ -634,5 +634,18 @@
       "verses": 1054,
       "chapters": 68
     }
+  },
+  {
+    "version": "0.41.1",
+    "date": "2026-09-30",
+    "base": "3d6eb5c",
+    "summary": "「一つ多い」型の節を4つ、温度・時のずれ・知られている怖さへ書き換え",
+    "stats": {
+      "characters": 41120,
+      "manuscriptSheets": 103,
+      "bunkoPages": 69,
+      "verses": 1054,
+      "chapters": 68
+    }
   }
 ]
