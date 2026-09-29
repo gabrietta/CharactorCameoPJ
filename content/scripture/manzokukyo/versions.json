@@ -595,5 +595,18 @@
       "verses": 1053,
       "chapters": 68
     }
+  },
+  {
+    "version": "0.40.0",
+    "date": "2026-09-29",
+    "base": "f23f5e5",
+    "summary": "外部レビューによる訂正（釦の数、黒と金の時期、学び舎の友、数え方の範囲、四月の三日、鉛筆の消去、引照）",
+    "stats": {
+      "characters": 40852,
+      "manuscriptSheets": 103,
+      "bunkoPages": 69,
+      "verses": 1054,
+      "chapters": 68
+    }
   }
 ]

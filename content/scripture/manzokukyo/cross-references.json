@@ -352,7 +352,7 @@
     "regulations:16"
   ],
   "regulations:13": [
-    "proverbs:40",
+    "notice-board:1",
     "notice-board:10"
   ],
   "regulations:14": [
@@ -865,7 +865,7 @@
     "letter-to-seat-a:2"
   ],
   "duties:8": [
-    "proverbs:40"
+    "notice-board:1"
   ],
   "duties:9": [
     "confession:17"
@@ -1142,7 +1142,7 @@
     "sleep:8"
   ],
   "meeting-house:7": [
-    "proverbs:40"
+    "notice-board:1"
   ],
   "meeting-house:8": [
     "regulations:8"
@@ -1246,10 +1246,7 @@
     "fuuka:5"
   ],
   "archive-log:5": [
-    "proverbs:40"
-  ],
-  "archive-log:6": [
-    "confession:15"
+    "notice-board:1"
   ],
   "archive-log:7": [
     "the-lettered:12",
@@ -1316,9 +1313,6 @@
   "letter-to-the-archive:9": [
     "archive-log:1"
   ],
-  "regulations:12": [
-    "archive-log:1"
-  ],
   "the-last-day:9": [
     "letter-to-the-far-utopia:2"
   ],
@@ -1354,5 +1348,13 @@
   "gathering:13": [
     "the-lettered:6",
     "b-questions:1"
+  ],
+  "archive-log:6": [
+    "confession:2"
+  ],
+  "counting:13": [
+    "night-psalm:4",
+    "calendar:2",
+    "forbidden-words:4"
   ]
 }
