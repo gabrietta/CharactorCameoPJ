@@ -517,5 +517,18 @@
       "verses": 993,
       "chapters": 63
     }
+  },
+  {
+    "version": "0.36.0",
+    "date": "2026-09-29",
+    "base": "9e8f818",
+    "summary": "時の書、替え玉の定め、髪の伝を差し込み",
+    "stats": {
+      "characters": 39358,
+      "manuscriptSheets": 99,
+      "bunkoPages": 66,
+      "verses": 1027,
+      "chapters": 66
+    }
   }
 ]

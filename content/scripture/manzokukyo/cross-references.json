@@ -1164,5 +1164,45 @@
   ],
   "mist-journey:12": [
     "the-last-day:10"
+  ],
+  "time:2": [
+    "hunger:4"
+  ],
+  "time:4": [
+    "the-last-day:5"
+  ],
+  "time:5": [
+    "hunger:6"
+  ],
+  "time:8": [
+    "litany:2",
+    "litany:25"
+  ],
+  "time:9": [
+    "months:13"
+  ],
+  "kaedama:1": [
+    "precepts:4"
+  ],
+  "kaedama:2": [
+    "parables:16"
+  ],
+  "kaedama:7": [
+    "behind-the-noren:4"
+  ],
+  "kaedama:9": [
+    "sisters-visit:4"
+  ],
+  "kaedama:11": [
+    "forbidden-words:3"
+  ],
+  "hair:5": [
+    "house-of-the-sister:1"
+  ],
+  "hair:7": [
+    "fragment-catalog:13"
+  ],
+  "hair:10": [
+    "vestments:3"
   ]
 }
