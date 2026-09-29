@@ -30,7 +30,7 @@
 | 3 | `be-not-sated` | [満ち足りるなかれ](text/03-be-not-sated.md) | 根本の聖句、完了者、名簿 | draft | 編纂責任者 |
 | 4 | `counting` | [数うること](text/04-counting.md) | 指で数える作法 | draft | 編纂責任者 |
 | 5 | `light-of-the-brow` | [額の光](text/05-light-of-the-brow.md) | おでこ、光る目 | draft | 編纂責任者 |
-| 6 | — | 終わりの日 | 終末と預言。Sora2の終わりと二日の延命、MEDの幻影 | 募集中 | — |
+| 6 | `the-last-day` | [終わりの日](text/06-the-last-day.md) | 遠き理想郷の終わり、延べられし二日、MEDの影、五つのしるし | draft | 編纂責任者 |
 
 ## 第二部　戒律
 
