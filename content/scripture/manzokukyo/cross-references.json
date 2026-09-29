@@ -1224,5 +1224,35 @@
   ],
   "streaming:11": [
     "short-prayers:8"
+  ],
+  "archive-log:1": [
+    "hunger:9",
+    "time:2"
+  ],
+  "archive-log:2": [
+    "calendar:2"
+  ],
+  "archive-log:3": [
+    "parables:21"
+  ],
+  "archive-log:4": [
+    "fuuka:5"
+  ],
+  "archive-log:5": [
+    "proverbs:40"
+  ],
+  "archive-log:6": [
+    "confession:15"
+  ],
+  "archive-log:7": [
+    "the-lettered:12",
+    "calendar:3"
+  ],
+  "archive-log:9": [
+    "letter-to-self:1"
+  ],
+  "archive-log:10": [
+    "neo-saitama:15",
+    "letter-to-the-archive:7"
   ]
 }

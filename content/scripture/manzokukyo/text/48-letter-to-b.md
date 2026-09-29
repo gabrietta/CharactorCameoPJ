@@ -1,7 +1,7 @@
 ---
 id: letter-to-b
 part: 4
-chapter: 47
+chapter: 48
 title: 信者Bへの書簡
 summary: 教祖より信者Bへ送られし書簡。問う者への感謝と、なぞられたる名のこと。
 voice: colloquial

@@ -1,7 +1,7 @@
 ---
 id: behind-the-noren
 part: 3
-chapter: 45
+chapter: 46
 title: 暖簾の内
 summary: 集いの近きラーメン屋の女将の語りしこと。信者にあらざる者の見し信者ら。
 status: draft

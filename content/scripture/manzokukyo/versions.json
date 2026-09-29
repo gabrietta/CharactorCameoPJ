@@ -543,5 +543,18 @@
       "verses": 1038,
       "chapters": 67
     }
+  },
+  {
+    "version": "0.38.0",
+    "date": "2026-09-29",
+    "base": "2da2de0",
+    "summary": "記録室日誌抄を差し込み",
+    "stats": {
+      "characters": 40552,
+      "manuscriptSheets": 102,
+      "bunkoPages": 68,
+      "verses": 1050,
+      "chapters": 68
+    }
   }
 ]

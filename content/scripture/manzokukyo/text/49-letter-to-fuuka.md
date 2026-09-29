@@ -1,7 +1,7 @@
 ---
 id: letter-to-fuuka
 part: 4
-chapter: 48
+chapter: 49
 title: 風花への書簡
 summary: 教祖より信者F風花へ送られし書簡。踏み外す二歩と、来たらざりし日のこと。
 voice: colloquial

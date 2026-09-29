@@ -1,7 +1,7 @@
 ---
 id: letter-to-the-far-utopia
 part: 4
-chapter: 51
+chapter: 52
 title: 遠き理想郷への書簡
 summary: 教祖より、門の閉ざされし遠き理想郷へ。投函され、戻り来たりし書簡。
 voice: colloquial
