@@ -283,5 +283,18 @@
       "verses": 526,
       "chapters": 28
     }
+  },
+  {
+    "version": "0.19.0",
+    "date": "2026-09-29",
+    "base": "745bbb4",
+    "summary": "第7・15・17・21章に節を追加（五つめの譬え）",
+    "stats": {
+      "characters": 20396,
+      "manuscriptSheets": 51,
+      "bunkoPages": 34,
+      "verses": 539,
+      "chapters": 28
+    }
   }
 ]
