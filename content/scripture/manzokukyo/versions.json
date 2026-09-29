@@ -192,5 +192,18 @@
       "verses": 323,
       "chapters": 20
     }
+  },
+  {
+    "version": "0.12.0",
+    "date": "2026-09-29",
+    "base": "56f4210",
+    "summary": "第21章 譬え",
+    "stats": {
+      "characters": 13779,
+      "manuscriptSheets": 35,
+      "bunkoPages": 23,
+      "verses": 343,
+      "chapters": 21
+    }
   }
 ]

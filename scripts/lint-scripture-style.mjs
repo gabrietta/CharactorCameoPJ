@@ -19,8 +19,15 @@ for (const bookId of listBookIds()) {
   for (const file of readChapterFiles(bookId)) {
     const chapter = parseChapter(file.text);
     if (!chapter || chapter.voice === "colloquial") continue;
+    // 教祖の言葉が数節にまたがることがあるので、閉じていない「」は次の節へ持ち越す。
+    let inQuote = false;
     for (const verse of chapter.verses) {
-      const narration = verse.text.replace(/「[^」]*」/g, "「」");
+      let narration = "";
+      for (const char of verse.text) {
+        if (char === "「") inQuote = true;
+        else if (char === "」") inQuote = false;
+        else if (!inQuote) narration += char;
+      }
       for (const [pattern, hint] of patterns) {
         const match = narration.match(pattern);
         if (match) {

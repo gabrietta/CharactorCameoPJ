@@ -1,6 +1,6 @@
 {
   "title": "満足聖典",
-  "version": "0.11.1",
+  "version": "0.12.0",
   "files": [
     "00-1-preface.md",
     "00-2-litany.md",
@@ -24,6 +24,7 @@
     "18-the-lettered.md",
     "19-catechism.md",
     "20-testimonies.md",
+    "21-parables.md",
     "90-calendar.md",
     "99-colophon.md"
   ],

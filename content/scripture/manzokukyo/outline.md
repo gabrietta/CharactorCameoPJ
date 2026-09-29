@@ -55,6 +55,7 @@
 | 18 | `the-lettered` | [英字の者たち](text/18-the-lettered.md) | ALPHACLAVE。B、F、Z、二十三の空席、Aの椅子 | draft | 編纂責任者 |
 | 19 | `catechism` | [教理問答](text/19-catechism.md) | 信者Bの問いと教祖の答え | draft | 編纂責任者 |
 | 20 | `testimonies` | [証言](text/20-testimonies.md) | 名を伏せた信女らの証言。十一の証言と十人の証言者 | draft | 編纂責任者 |
+| 21 | `parables` | [譬え](text/21-parables.md) | 教祖の四つの譬え。どれも終わりまで語られない | draft | 編纂責任者 |
 
 ## 付録
 
