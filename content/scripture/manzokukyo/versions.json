@@ -920,5 +920,18 @@
       "verses": 1288,
       "chapters": 83
     }
+  },
+  {
+    "version": "0.56.3",
+    "date": "2026-09-30",
+    "base": "7a147c8",
+    "summary": "90字を超える3節を縮めた",
+    "stats": {
+      "characters": 53919,
+      "manuscriptSheets": 135,
+      "bunkoPages": 90,
+      "verses": 1288,
+      "chapters": 83
+    }
   }
 ]
