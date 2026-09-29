@@ -1,6 +1,6 @@
 {
   "title": "満足聖典",
-  "version": "0.21.0",
+  "version": "0.22.0",
   "files": [
     "00-1-preface.md",
     "00-2-litany.md",
@@ -34,6 +34,8 @@
     "28-short-prayers.md",
     "29-closing-litany.md",
     "30-prophecies.md",
+    "31-notice-board.md",
+    "32-song-of-the-waiting.md",
     "90-calendar.md",
     "99-colophon.md"
   ],

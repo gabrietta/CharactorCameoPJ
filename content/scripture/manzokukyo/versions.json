@@ -322,5 +322,18 @@
       "verses": 587,
       "chapters": 30
     }
+  },
+  {
+    "version": "0.22.0",
+    "date": "2026-09-29",
+    "base": "b6ebda9",
+    "summary": "第31章 掲示板の箴言、第32章 待つ者の詩",
+    "stats": {
+      "characters": 22707,
+      "manuscriptSheets": 57,
+      "bunkoPages": 38,
+      "verses": 619,
+      "chapters": 32
+    }
   }
 ]

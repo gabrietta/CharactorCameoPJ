@@ -516,5 +516,58 @@
   ],
   "calendar:12": [
     "light-of-the-brow:5"
+  ],
+  "notice-board:1": [
+    "counting:3"
+  ],
+  "notice-board:3": [
+    "be-not-sated:8",
+    "precepts:9"
+  ],
+  "notice-board:4": [
+    "the-lettered:13",
+    "precepts:15"
+  ],
+  "notice-board:5": [
+    "be-not-sated:3"
+  ],
+  "notice-board:6": [
+    "confession:2"
+  ],
+  "notice-board:7": [
+    "regulations:7"
+  ],
+  "notice-board:8": [
+    "hunger:6"
+  ],
+  "notice-board:12": [
+    "proverbs:40"
+  ],
+  "notice-board:13": [
+    "vestments:3"
+  ],
+  "notice-board:14": [
+    "table-prayers:3"
+  ],
+  "notice-board:15": [
+    "litany:1"
+  ],
+  "notice-board:16": [
+    "short-prayers:16"
+  ],
+  "notice-board:17": [
+    "light-of-the-brow:1"
+  ],
+  "song-of-the-waiting:1": [
+    "parables:21"
+  ],
+  "song-of-the-waiting:3": [
+    "parables:19"
+  ],
+  "song-of-the-waiting:9": [
+    "parables:21"
+  ],
+  "song-of-the-waiting:13": [
+    "short-prayers:15"
   ]
 }

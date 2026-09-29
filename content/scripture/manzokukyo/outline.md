@@ -79,6 +79,8 @@
 | 28 | `short-prayers` | [短き祈り](text/28-short-prayers.md) | 目覚め、雨、替え玉、配信、眠れぬ夜などの短い祈り | draft | 編纂責任者 |
 | 29 | `closing-litany` | [結びの連祷](text/29-closing-litany.md) | 集いの終わりの呼びかけと応え。台本にない25の問い | draft | 編纂責任者 |
 | 30 | `prophecies` | [預言の断片](text/30-prophecies.md) | まだ外れていない預言だけを記した章 | draft | 編纂責任者 |
+| 31 | `notice-board` | [掲示板の箴言](text/31-notice-board.md) | 四十一番目以降の、箴言ではない言葉 | draft | 編纂責任者 |
+| 32 | `song-of-the-waiting` | [待つ者の詩](text/32-song-of-the-waiting.md) | 記録室の扉の前に並ぶ者たちの詩 | draft | 編纂責任者 |
 
 ## 付録
 
