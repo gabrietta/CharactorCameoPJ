@@ -281,8 +281,10 @@ try {
     await document.fonts.ready;
     relayout();
     setupControls();
-    const start = Number(location.hash.match(/^#p(\d+)$/)?.[1] ?? 1) - 2;
-    show(start);
+    // #p12 は頁番号、#c-litany は章ID（頁番号は文字量で変わるので、外からのリンクは章IDを使う）
+    const chapterLink = location.hash.match(/^#c-([a-z0-9-]+)$/)?.[1];
+    if (chapterLink && view.chapterPages.has(chapterLink)) show(view.chapterPages.get(chapterLink));
+    else show(Number(location.hash.match(/^#p(\d+)$/)?.[1] ?? 1) - 2);
   }
 } catch (error) {
   stage.innerHTML = `<p class="loading">頁をひらけませんでした。<br>${esc(error.message)}<br>npm.cmd run scripture:view で起動したサーバー経由で開いてください。</p>`;

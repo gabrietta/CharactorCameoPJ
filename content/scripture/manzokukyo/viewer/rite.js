@@ -256,7 +256,7 @@ function ending() {
       ${state.strays ? `<p class="rite-note">途中で ${state.strays} 度、言葉が逸れた。司は、それを名簿に書かなかった。</p>` : `<p class="rite-note">一度も言葉が逸れなかった。司は、あなたの欄を指でなぞった。</p>`}
       <div class="rite-actions">
         <button type="button" class="rite-secondary" id="again">もう一度、集いに加わる</button>
-        <a class="rite-secondary" href="book.html#p4">連祷を教典で読む</a>
+        <a class="rite-secondary" href="book.html#c-litany">連祷を教典で読む</a>
       </div>`);
   }
   document.getElementById("again").addEventListener("click", () => {
