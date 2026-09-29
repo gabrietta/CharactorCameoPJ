@@ -712,5 +712,18 @@
       "verses": 1122,
       "chapters": 72
     }
+  },
+  {
+    "version": "0.45.1",
+    "date": "2026-09-30",
+    "base": "c8cc2cc",
+    "summary": "孤立した謎の登録を整理、眠りの章に「別の目録」の手がかり",
+    "stats": {
+      "characters": 45284,
+      "manuscriptSheets": 114,
+      "bunkoPages": 76,
+      "verses": 1123,
+      "chapters": 72
+    }
   }
 ]
