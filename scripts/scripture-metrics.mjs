@@ -84,6 +84,21 @@ const oneMore = allVerses.filter((v) => /一つ多|一本多|一膳多|一枚多
 line(`- 「一つ多い・少ない」型の節: ${oneMore.length}`);
 line();
 
+// 怖さ・可笑しさ・意味深の配分（書き手が編纂注に「- 配分（節の数）: 怖さ10・可笑しさ2・意味深3・中立1」と書いた章だけを合算する）
+const toneLine = /配分（節の数）: 怖さ(\d+)・可笑しさ(\d+)・意味深(\d+)(?:・中立(\d+))?/;
+const toned = chapters.map((c) => ({ c, m: c.text.match(toneLine) })).filter((x) => x.m);
+line("## 怖さ・可笑しさ・意味深の配分（書き手の申告）");
+line();
+if (toned.length) {
+  const sum = [1, 2, 3, 4].map((i) => toned.reduce((s, x) => s + Number(x.m[i] ?? 0), 0));
+  const judged = sum[0] + sum[1] + sum[2];
+  line(`- 申告のある章: ${toned.length} / ${stats.chapters}（${toned.map((x) => x.c.title).join("、")}）`);
+  line(`- 怖さ ${sum[0]}（${pct(sum[0], judged)}）、可笑しさ ${sum[1]}（${pct(sum[1], judged)}）、意味深 ${sum[2]}（${pct(sum[2], judged)}）、中立 ${sum[3]}（割合の計算から除く）`);
+} else {
+  line("- 申告のある章はまだない");
+}
+line();
+
 // 引照
 const incoming = new Map(chapters.map((c) => [c.id, 0]));
 for (const targets of Object.values(refs)) for (const key of targets) incoming.set(key.split(":")[0], (incoming.get(key.split(":")[0]) ?? 0) + 1);
