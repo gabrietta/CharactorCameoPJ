@@ -21,6 +21,7 @@ npm.cmd run scripture:view
 
 - **編集者向け** `/manzokukyo/viewer/`: 版と文字量（原稿用紙の枚数、版ごとの伸び）、章ごとの状態、未決定・仮決定、募集中の章、本文（編纂注つき）、資料。
 - **読者向け** `/manzokukyo/viewer/book.html`: 表紙・目次・1章1頁の本。矢印キー、端のタップ、スワイプで頁をめくる。「今日の満足」ボタンあり。
+- **体験** `/manzokukyo/viewer/rite.html`: 満足連祷を会衆として唱える体験ページ。本文は連祷の章から読む。誤りの応答と反応は `viewer/rite.js` の `branches` にある（連祷の節番号を変えたら合わせて直す）。
 - **PDF**: `npm.cmd run scripture:pdf` で、読者向けの本をA5のPDFにする（`output/scripture/manzokukyo.pdf`。EdgeかChromeを使う。追加のインストール不要）。
 
 ## 版

@@ -1,0 +1,155 @@
+:root {
+  --night: #0c0909;
+  --gold: #c9a24a;
+  --gold-deep: #8f6e27;
+  --text: #eee5d2;
+  --muted: #a3967f;
+  --blood: #7b1a22;
+  --serif: "Noto Serif JP", "Yu Mincho", "YuMincho", "Hiragino Mincho ProN", serif;
+  --sans: "Noto Sans JP", "Yu Gothic", "Hiragino Sans", system-ui, sans-serif;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; min-height: 100%; }
+
+body {
+  min-height: 100dvh;
+  background:
+    radial-gradient(ellipse at 50% 20%, rgba(201, 162, 74, 0.10), transparent 55%),
+    radial-gradient(ellipse at 50% 120%, rgba(123, 26, 34, 0.35), transparent 60%),
+    var(--night);
+  color: var(--text);
+  font-family: var(--serif);
+}
+
+.rite {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 32px 16px;
+}
+
+.rite-loading { color: var(--muted); text-align: center; line-height: 2; }
+
+.rite-screen {
+  width: min(560px, 100%);
+  text-align: center;
+  animation: rise 700ms ease-out;
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rite-screen { animation: none; }
+}
+
+.rite-emblem { width: 120px; height: auto; filter: drop-shadow(0 8px 24px rgba(201, 162, 74, 0.3)); }
+.rite-emblem.small { width: 64px; }
+
+.rite-title { margin: 18px 0 0; font-size: 38px; font-weight: 900; letter-spacing: 0.3em; text-indent: 0.3em; color: var(--gold); }
+.rite-lead { margin: 22px 0 8px; font-size: 16px; line-height: 2; }
+.rite-note { margin: 12px 0 0; font-family: var(--sans); font-size: 12.5px; color: var(--muted); line-height: 1.8; }
+
+.rite-progress { margin: 0 0 28px; font-family: var(--sans); font-size: 11px; letter-spacing: 0.3em; color: var(--muted); }
+.rite-who { margin: 0 0 8px; font-family: var(--sans); font-size: 12px; letter-spacing: 0.4em; color: var(--gold-deep); }
+.rite-who.you { margin-top: 36px; }
+.rite-call { margin: 0; font-size: clamp(24px, 6vw, 32px); line-height: 1.7; letter-spacing: 0.06em; }
+.rite-call.together { font-size: clamp(40px, 10vw, 64px); color: var(--gold); }
+
+.rite-options { display: grid; gap: 12px; margin-top: 4px; }
+
+.rite-option, .rite-primary, .rite-secondary {
+  font: inherit;
+  cursor: pointer;
+  border-radius: 999px;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.rite-option {
+  width: 100%;
+  padding: 14px 20px;
+  border: 1px solid #4b3b2a;
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--text);
+  font-size: 17px;
+}
+
+.rite-option:hover, .rite-option:focus-visible { border-color: var(--gold); color: var(--gold); outline: none; }
+
+.rite-primary {
+  margin-top: 30px;
+  padding: 12px 34px;
+  border: 1px solid var(--gold);
+  background: var(--gold);
+  color: #1d1406;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.rite-secondary {
+  margin-top: 28px;
+  padding: 10px 24px;
+  border: 1px solid #5a4832;
+  background: transparent;
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 14px;
+}
+
+.rite-secondary:hover, .rite-primary:hover { filter: brightness(1.1); }
+.rite-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 0 12px; }
+
+.rite-said { margin: 0; font-size: 22px; color: var(--muted); text-decoration: line-through; text-decoration-color: var(--blood); }
+.rite-reaction { margin: 22px 0 0; font-size: 17px; line-height: 2; }
+
+.rite-silence { margin: 10px 0; font-size: 72px; font-weight: 900; color: var(--gold); min-height: 1.4em; }
+.rite-silence.fourth { color: #d94b57; animation: shiver 180ms linear 4; }
+
+@keyframes shiver {
+  25% { transform: translateX(-3px); }
+  75% { transform: translateX(3px); }
+}
+
+.roll {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 30px auto 0;
+  padding: 14px 20px;
+  width: min(360px, 100%);
+  background: #efe6d4;
+  color: #2a241b;
+  border-radius: 2px;
+  font-family: var(--sans);
+  text-align: left;
+}
+
+.roll-label { font-size: 11px; letter-spacing: 0.3em; color: #7d705a; }
+.roll-line { position: relative; font-size: 16px; }
+.roll-line.erased { color: #b8ac95; }
+.roll-line.erased::after {
+  content: "";
+  position: absolute;
+  left: -4px;
+  right: -4px;
+  top: 50%;
+  height: 2px;
+  background: #6d6557;
+  transform-origin: left;
+  animation: erase 1600ms ease-in 600ms both;
+}
+
+@keyframes erase {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+.rite-links { margin-top: 26px; font-family: var(--sans); font-size: 13px; }
+.rite-links a { color: var(--muted); }
