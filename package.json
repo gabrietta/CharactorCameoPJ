@@ -7,7 +7,8 @@
     "build": "node scripts/build.mjs",
     "build:with-videos": "node scripts/build.mjs --download-drive-videos",
     "dev": "node scripts/dev-server.mjs",
-    "check": "node scripts/check-encoding.mjs && node scripts/build.mjs --check",
+    "check": "node scripts/check-encoding.mjs && node scripts/check-scripture.mjs && node scripts/build.mjs --check",
+    "check:scripture": "node scripts/check-scripture.mjs",
     "check:encoding": "node scripts/check-encoding.mjs",
     "import:drive-visuals": "node scripts/import-drive-visuals.mjs",
     "import:drive-videos": "node scripts/import-drive-videos.mjs"

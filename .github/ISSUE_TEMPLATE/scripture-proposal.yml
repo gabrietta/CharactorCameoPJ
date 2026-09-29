@@ -1,0 +1,47 @@
+name: 教典の提案
+description: 満足教の教典への一節・章・用語・謎・添削の提案
+title: "[教典] "
+labels: ["scripture"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        満足教の教典（content/scripture/manzokukyo/）への提案です。
+        書く前に、参加ガイド（CONTRIBUTING.md）と文体ガイド（style-guide.md）に目を通してください。
+  - type: dropdown
+    id: kind
+    attributes:
+      label: 提案の種類
+      options:
+        - 新しい節・断片
+        - 章を書きたい（担当の名乗り出）
+        - 既存の章の修正
+        - 用語の追加・修正
+        - 謎の追加・手がかり
+        - 文語・誤字の添削
+        - 構成・その他
+    validations:
+      required: true
+  - type: input
+    id: chapter
+    attributes:
+      label: 対象の章
+      description: 例「3章 満ち足りるなかれ」「未定」
+  - type: textarea
+    id: body
+    attributes:
+      label: 提案の内容
+      description: 本文の案は、本文（文語）・教祖の言葉（ですわ調）・付記や規程（内部文書調）のどれかが分かるように書いてください。文語になっていなくてもかまいません。
+    validations:
+      required: true
+  - type: checkboxes
+    id: rules
+    attributes:
+      label: 確認
+      options:
+        - label: 実在の宗教・宗派・人物を名指ししていない
+          required: true
+        - label: 自傷・自死・摂食制限を勧めたり美化したりしていない
+          required: true
+        - label: 謎の登録簿（mysteries.md）の謎に答えを書いていない
+          required: true

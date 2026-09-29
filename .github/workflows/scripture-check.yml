@@ -1,0 +1,25 @@
+name: Scripture check
+
+on:
+  pull_request:
+    paths:
+      - "content/scripture/**"
+      - "scripts/check-scripture.mjs"
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Encoding check
+        run: node scripts/check-encoding.mjs
+      - name: Scripture check
+        run: node scripts/check-scripture.mjs

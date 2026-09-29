@@ -4,6 +4,10 @@
 
 新しいコンテキストで作業するCodexは、まずこのファイルを読んでから進めてください。
 
+## 満足教の教典
+
+満足教の教典（`content/scripture/manzokukyo/`）を書く・直す・評価する前に、同フォルダの `CONTRIBUTING.md`、`style-guide.md`、`decisions.md` を読む。教典の内容はキャラクター公式設定ではないため、`character.json` へは反映しない。
+
 ## Project Intent
 
 目的は「キャラクター情報を育てていくサイクル」を作ることです。
