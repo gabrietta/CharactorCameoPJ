@@ -491,5 +491,18 @@
       "verses": 922,
       "chapters": 57
     }
+  },
+  {
+    "version": "0.34.0",
+    "date": "2026-09-29",
+    "base": "9551bf9",
+    "summary": "欠片の目録、Bの問い、嘆きの詩を差し込み",
+    "stats": {
+      "characters": 36427,
+      "manuscriptSheets": 92,
+      "bunkoPages": 61,
+      "verses": 958,
+      "chapters": 60
+    }
   }
 ]
