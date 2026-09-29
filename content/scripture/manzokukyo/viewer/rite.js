@@ -57,7 +57,7 @@ function intro() {
   document.getElementById("confess").addEventListener("click", confessionCount);
 }
 
-// ---------- 懺悔（第10章） ----------
+// ---------- 懺悔（「懺悔」の章） ----------
 // 告げた言葉はこのページの中だけで使い、どこにも送らず、保存もしない。
 
 const confession = { count: 0, reason: "" };
