@@ -393,5 +393,33 @@
   ],
   "short-prayers:15": [
     "litany:25"
+  ],
+  "catechism:32": [
+    "be-not-sated:8",
+    "neo-saitama:15"
+  ],
+  "catechism:34": [
+    "precepts:5",
+    "catechism:22"
+  ],
+  "catechism:36": [
+    "the-lettered:6"
+  ],
+  "hymns:21": [
+    "confession:5",
+    "confession:6"
+  ],
+  "hymns:23": [
+    "confession:7"
+  ],
+  "hymns:24": [
+    "confession:8"
+  ],
+  "birth-in-the-mist:15": [
+    "birth-in-the-mist:5"
+  ],
+  "neo-saitama:18": [
+    "neo-saitama:7",
+    "light-of-the-brow:1"
   ]
 }
