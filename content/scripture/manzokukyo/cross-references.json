@@ -461,5 +461,30 @@
   "parables:20": [
     "regulations:2",
     "catechism:16"
+  ],
+  "closing-litany:1": [
+    "litany:1"
+  ],
+  "closing-litany:6": [
+    "be-not-sated:2"
+  ],
+  "closing-litany:12": [
+    "light-of-the-brow:5"
+  ],
+  "closing-litany:14": [
+    "light-of-the-brow:7"
+  ],
+  "closing-litany:16": [
+    "the-lettered:18"
+  ],
+  "closing-litany:20": [
+    "calendar:2",
+    "night-psalm:4"
+  ],
+  "closing-litany:25": [
+    "the-lettered:13"
+  ],
+  "closing-litany:27": [
+    "litany:25"
   ]
 }

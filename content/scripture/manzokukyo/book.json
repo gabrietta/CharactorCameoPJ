@@ -1,6 +1,6 @@
 {
   "title": "満足聖典",
-  "version": "0.19.0",
+  "version": "0.20.0",
   "files": [
     "00-1-preface.md",
     "00-2-litany.md",
@@ -32,6 +32,7 @@
     "26-proverbs.md",
     "27-night-psalm.md",
     "28-short-prayers.md",
+    "29-closing-litany.md",
     "90-calendar.md",
     "99-colophon.md"
   ],
@@ -41,7 +42,7 @@
     "2": "第二部　戒律",
     "3": "第三部　列伝",
     "4": "第四部　書簡",
-    "5": "第五部　箴言と詩",
+    "5": "第五部　箴言と祈り",
     "9": "付録"
   },
   "docs": [

@@ -296,5 +296,18 @@
       "verses": 539,
       "chapters": 28
     }
+  },
+  {
+    "version": "0.20.0",
+    "date": "2026-09-29",
+    "base": "fbba473",
+    "summary": "第29章 結びの連祷。第五部を「箴言と祈り」に改名",
+    "stats": {
+      "characters": 20762,
+      "manuscriptSheets": 52,
+      "bunkoPages": 35,
+      "verses": 566,
+      "chapters": 29
+    }
   }
 ]
