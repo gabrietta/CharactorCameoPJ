@@ -803,5 +803,18 @@
       "verses": 1202,
       "chapters": 77
     }
+  },
+  {
+    "version": "0.51.0",
+    "date": "2026-09-30",
+    "base": "f702f24",
+    "summary": "「便りの定め」を追加",
+    "stats": {
+      "characters": 49696,
+      "manuscriptSheets": 125,
+      "bunkoPages": 83,
+      "verses": 1215,
+      "chapters": 78
+    }
   }
 ]
