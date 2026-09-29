@@ -183,5 +183,60 @@
   "parables:16": [
     "be-not-sated:3",
     "precepts:4"
+  ],
+  "letter-to-b:3": [
+    "be-not-sated:3"
+  ],
+  "letter-to-b:4": [
+    "the-lettered:13"
+  ],
+  "letter-to-b:6": [
+    "the-lettered:6"
+  ],
+  "letter-to-b:7": [
+    "regulations:10"
+  ],
+  "letter-to-b:9": [
+    "litany:1"
+  ],
+  "letter-to-fuuka:3": [
+    "the-lettered:10"
+  ],
+  "letter-to-fuuka:7": [
+    "the-lettered:9"
+  ],
+  "letter-to-fuuka:12": [
+    "fragments-of-salvation:5"
+  ],
+  "letter-to-the-sister:4": [
+    "house-of-the-sister:11"
+  ],
+  "letter-to-the-sister:6": [
+    "house-of-the-sister:8"
+  ],
+  "letter-to-the-sister:9": [
+    "counting:6"
+  ],
+  "letter-to-the-sister:10": [
+    "house-of-the-sister:7"
+  ],
+  "letter-to-the-sister:11": [
+    "house-of-the-sister:15"
+  ],
+  "letter-to-the-reader:2": [
+    "preface:3"
+  ],
+  "letter-to-the-reader:6": [
+    "precepts:10"
+  ],
+  "letter-to-the-reader:9": [
+    "be-not-sated:8"
+  ],
+  "letter-to-the-reader:12": [
+    "precepts:15",
+    "the-lettered:13"
+  ],
+  "letter-to-the-reader:13": [
+    "be-not-sated:1"
   ]
 }

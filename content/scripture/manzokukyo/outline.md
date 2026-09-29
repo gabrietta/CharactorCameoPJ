@@ -57,6 +57,17 @@
 | 20 | `testimonies` | [証言](text/20-testimonies.md) | 名を伏せた信女らの証言。十一の証言と十人の証言者 | draft | 編纂責任者 |
 | 21 | `parables` | [譬え](text/21-parables.md) | 教祖の四つの譬え。どれも終わりまで語られない | draft | 編纂責任者 |
 
+## 第四部　書簡
+
+教祖が特定の相手へ宛てた手紙（D-23）。
+
+| 章 | ID | 題 | 中身 | 状態 | 担当 |
+|---|---|---|---|---|---|
+| 22 | `letter-to-b` | [信者Bへの書簡](text/22-letter-to-b.md) | 問う者への感謝、なぞられた名、二枚の券 | draft | 編纂責任者 |
+| 23 | `letter-to-fuuka` | [風花への書簡](text/23-letter-to-fuuka.md) | 踏み外す二歩、来ていなかった日 | draft | 編纂責任者 |
+| 24 | `letter-to-the-sister` | [姉への書簡](text/24-letter-to-the-sister.md) | 私的な「あたし」の手紙。差し出されないまま | draft | 編纂責任者 |
+| 25 | `letter-to-the-reader` | [まだ見ぬ信女への書簡](text/25-letter-to-the-reader.md) | 読者に宛てた手紙 | draft | 編纂責任者 |
+
 ## 付録
 
 | 題 | 中身 | 状態 |

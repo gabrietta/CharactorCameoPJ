@@ -205,5 +205,18 @@
       "verses": 343,
       "chapters": 21
     }
+  },
+  {
+    "version": "0.13.0",
+    "date": "2026-09-29",
+    "base": "28140a6",
+    "summary": "第四部 書簡（第22〜25章）",
+    "stats": {
+      "characters": 15736,
+      "manuscriptSheets": 40,
+      "bunkoPages": 27,
+      "verses": 391,
+      "chapters": 25
+    }
   }
 ]

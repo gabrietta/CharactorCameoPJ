@@ -1,6 +1,6 @@
 {
   "title": "満足聖典",
-  "version": "0.12.0",
+  "version": "0.13.0",
   "files": [
     "00-1-preface.md",
     "00-2-litany.md",
@@ -25,6 +25,10 @@
     "19-catechism.md",
     "20-testimonies.md",
     "21-parables.md",
+    "22-letter-to-b.md",
+    "23-letter-to-fuuka.md",
+    "24-letter-to-the-sister.md",
+    "25-letter-to-the-reader.md",
     "90-calendar.md",
     "99-colophon.md"
   ],
@@ -33,6 +37,7 @@
     "1": "第一部　啓示",
     "2": "第二部　戒律",
     "3": "第三部　列伝",
+    "4": "第四部　書簡",
     "9": "付録"
   },
   "docs": [
