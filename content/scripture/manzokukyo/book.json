@@ -102,7 +102,10 @@
     "excludeFromDaily": [
       "calendar",
       "colophon",
-      "litany"
+      "litany",
+      "closing-litany",
+      "catechism",
+      "childrens-catechism"
     ],
     "feasts": [
       {

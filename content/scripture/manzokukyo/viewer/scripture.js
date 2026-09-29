@@ -231,6 +231,15 @@ export function renderMarkdown(markdown, book, options = {}) {
 
 // ---------- 今日の満足 ----------
 
+// 連続した日が同じ章に固まらないよう、日ごとに一定の間隔で飛ばして選ぶ（同じ日には同じ節）。
+// viewer/scripture.js と scripts/export-scripture.mjs で同じ計算にしておくこと。
+function dailyIndex(day, length) {
+  let stride = Math.max(1, Math.round(length * 0.382));
+  const gcd = (a, b) => (b ? gcd(b, a % b) : a);
+  while (gcd(stride, length) !== 1) stride += 1;
+  return ((day - 1) * stride) % length;
+}
+
 function dayOfYear(date) {
   return Math.floor((Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) - Date.UTC(date.getFullYear(), 0, 1)) / 86400000) + 1;
 }
@@ -248,7 +257,7 @@ export function verseForDate(book, date = new Date()) {
     if (verse) return { chapter: calendarChapter, verse, feast: feast.name };
   }
   const pool = dailyPool(book);
-  return pool.length ? pool[(dayOfYear(date) - 1) % pool.length] : null;
+  return pool.length ? pool[dailyIndex(dayOfYear(date), pool.length)] : null;
 }
 
 export function randomVerse(book) {
@@ -258,7 +267,10 @@ export function randomVerse(book) {
 
 function dailyPool(book) {
   const excluded = new Set(book.meta.calendar?.excludeFromDaily ?? []);
-  return book.chapters.filter((chapter) => !excluded.has(chapter.id)).flatMap((chapter) => chapter.verses.map((verse) => ({ chapter, verse })));
+  // 一節だけで意味が通るものに絞る（短すぎる節、問答・連祷の片方だけの節は外す）。scripts/export-scripture.mjs と同じ条件。
+  return book.chapters
+    .filter((chapter) => !excluded.has(chapter.id))
+    .flatMap((chapter) => chapter.verses.filter((verse) => [...verse.text].length >= 12 && !/^(問|答|司|会|司と会)　/.test(verse.text)).map((verse) => ({ chapter, verse })));
 }
 
 // 「今日の満足」ダイアログ。両方のビューアで使う。

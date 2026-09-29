@@ -49,7 +49,7 @@ function chapterHtml(chapter, index) {
       ${chapter.summary ? `<p class="chapter-summary">${esc(chapter.summary)}</p>` : ""}
     </header>
     <div class="chapter-body">${renderMarkdown(chapter.main, book, { headingShift: 2 })}</div>
-    ${referencesHtml(book, chapter)}`;
+    ${referencesHtml(book, chapter, (id) => `#c-${id}`)}`;
 }
 
 // ---------- PDF用（1章1頁で縦に並べる） ----------
@@ -157,7 +157,13 @@ function show(page, direction = 0) {
   document.getElementById("page-label").textContent = page === -1 ? `1 / ${totalPages}　表紙` : `${shown}${view.perView === 2 && page + 1 <= last ? `–${shown + 1}` : ""} / ${totalPages}　${chapterAt(page)}`;
   document.getElementById("prev-button").disabled = page === -1;
   document.getElementById("next-button").disabled = page + view.perView > last;
-  history.replaceState(null, "", `#p${shown}`);
+  // 見開きの中で始まる章があれば、その章をURLにする（左頁が前の章の終わりのことがあるため）。
+  const startingHere = book.chapters.filter((chapter) => {
+    const start = view.chapterPages.get(chapter.id);
+    return start !== undefined && start >= page && start <= page + view.perView - 1;
+  });
+  const currentChapter = startingHere.length ? startingHere.at(-1).id : chapterIdAt(page);
+  history.replaceState(null, "", currentChapter ? `#c-${currentChapter}` : `#p${shown}`);
 }
 
 function chapterAt(page) {
@@ -236,6 +242,11 @@ function setupControls() {
     if (!item) return;
     tocDialog.close();
     show(Number(item.dataset.page), 1);
+  });
+
+  window.addEventListener("hashchange", () => {
+    const id = location.hash.match(/^#c-([a-z0-9-]+)$/)?.[1];
+    if (id && view.chapterPages.has(id) && chapterIdAt(view.page) !== id) goToChapter(id);
   });
 
   let resizeTimer;

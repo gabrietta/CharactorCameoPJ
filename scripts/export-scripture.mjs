@@ -84,6 +84,15 @@ function toJson() {
   )}\n`;
 }
 
+// 連続した日が同じ章に固まらないよう、日ごとに一定の間隔で飛ばして選ぶ（同じ日には同じ節）。
+// viewer/scripture.js と scripts/export-scripture.mjs で同じ計算にしておくこと。
+function dailyIndex(day, length) {
+  let stride = Math.max(1, Math.round(length * 0.382));
+  const gcd = (a, b) => (b ? gcd(b, a % b) : a);
+  while (gcd(stride, length) !== 1) stride += 1;
+  return ((day - 1) * stride) % length;
+}
+
 function dayOfYear(date) {
   const start = Date.UTC(date.getUTCFullYear(), 0, 1);
   return Math.floor((date.getTime() - start) / 86400000) + 1;
@@ -108,9 +117,12 @@ function today(dateText) {
 
   // それ以外の日は、本文の節を並び順に一日一節ずつ割り当てる。節が増えると割り当ては変わる。
   const excluded = new Set(calendar.excludeFromDaily ?? []);
-  const pool = chapters.filter((chapter) => !excluded.has(chapter.id)).flatMap((chapter) => chapter.verses.map((verse) => ({ chapter, verse })));
+  // viewer/scripture.js の dailyPool と同じ条件（短すぎる節、問答・連祷の片方だけの節は外す）。
+  const pool = chapters
+    .filter((chapter) => !excluded.has(chapter.id))
+    .flatMap((chapter) => chapter.verses.filter((verse) => [...verse.text].length >= 12 && !/^(問|答|司|会|司と会)　/.test(verse.text)).map((verse) => ({ chapter, verse })));
   if (pool.length === 0) return `${label}\n（節がありません）`;
-  const { chapter, verse } = pool[(dayOfYear(date) - 1) % pool.length];
+  const { chapter, verse } = pool[dailyIndex(dayOfYear(date), pool.length)];
   return `${label}\n${verse.text}\n　——${citation(chapter, verse.number)}`;
 }
 
