@@ -6,7 +6,7 @@
 
 - ブランチ: `claude/manzokukyo-scripture`（`origin/main` から作成。ローカルのみ。push・PRはしていない。D-17）
 - 作業フォルダ: `D:\CharactorCameoPJ-scripture`（git worktree）。元のフォルダ `D:\CharactorCameoPJ` の未コミットの別作業には触れていない。
-- 本文: 序、満足連祷、第1〜19章、満足暦、奥付。全章 draft。
+- 本文: 序、満足連祷、第1〜19章、満足暦、奥付。全311節。全章 draft。各章に一行の梗概、節どうしの引照あり。全章 draft。
 - 検査: `npm.cmd run check` 成功（文字化け検査、教典の形式検査、キャラクターJSON）。
 
 ## おすすめの見る順番
@@ -37,6 +37,9 @@
 | `scripture-m8` | `bbdd1a7` | 付録（満足暦、奥付） |
 | `scripture-m9` | `69b4f26` | 通し読みの見直し |
 | `scripture-m10` | `edc2c94` | 書き出しスクリプト |
+| `scripture-m11` | `eac9f90` | 引き継ぎメモ |
+| `scripture-m12` | `9bb1ae6` | 章の梗概と引照 |
+| `scripture-m13` | `d3be8e4` | 16章 教祖の武具、17章 第二の季節（英字の者たち・教理問答は18〜19章へ） |
 
 - ある時点から別の方向へやり直す: `git switch -c <新しいブランチ名> scripture-m3`
 - ある区切りだけ取り消す: `git revert <コミット>`
@@ -53,6 +56,5 @@
 ## 次にやれること（候補）
 
 - Web書籍の試作（参考: <https://minmin4410.github.io/hajiteki-zaisan/>）。`--json` の出力をそのまま使える。HTMLの生成は依頼があってから行う。
-- 各節への引照（関連する節への参照）を付けて、本物の聖典らしさを増す。
-- 配信用の抜粋（連祷、懺悔、教理問答）を台本形式で書き出す。
+- 配信用の抜粋（連祷、懺悔、教理問答）を台本形式で書き出す。懺悔室配信ワールドの聖歌（`apps/zannenin-stream-world/public/js/show.js` の `HYMN`）へ、9章の歌詞を `--json` から流し込む案もある（配信ワールド側の変更になるので未着手）。
 - 協力者向けに「募集中」の章を新しく立てる（例: 替え玉の由来、夏の祭り、MEDの影の続き）。
