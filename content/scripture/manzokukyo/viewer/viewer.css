@@ -216,6 +216,11 @@ a.tile:hover { border-color: var(--gold-soft); }
 .growth .bar { fill: #6b5a3a; }
 .growth .bar-current { fill: var(--gold); }
 .growth .axis { fill: var(--desk-muted); font-size: 10px; text-anchor: middle; font-family: var(--sans); }
+.growth .axis-current { fill: var(--gold); }
+.growth .axis-y { fill: var(--desk-muted); font-size: 9px; text-anchor: end; font-family: var(--sans); }
+.growth .grid { stroke: var(--desk-line); stroke-width: 1; }
+.growth .hit { fill: transparent; }
+.growth g:hover .bar { fill: #9c8249; }
 .growth .value { fill: var(--gold); font-size: 11px; text-anchor: middle; font-family: var(--sans); }
 
 /* ---------- 謎の地図 ---------- */

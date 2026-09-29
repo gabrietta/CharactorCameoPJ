@@ -36,27 +36,45 @@ function manuscriptStrip(sheets) {
 }
 
 // 版ごとの文字数の伸び。
+// 版が増えても目盛りが重ならないよう、横軸の版名は間引いて表示する（各版の数字は棒に乗せたときに出る）。
 function growthChart(versions) {
   if (versions.length < 2) return "";
   const width = 640;
-  const height = 150;
-  const pad = { top: 16, right: 12, bottom: 34, left: 12 };
-  const max = Math.max(...versions.map((v) => v.stats.characters));
+  const height = 170;
+  const pad = { top: 22, right: 16, bottom: 30, left: 40 };
+  const plotHeight = height - pad.top - pad.bottom;
+  const peak = Math.max(...versions.map((v) => v.stats.characters));
+  const gridStep = peak > 20000 ? 10000 : 5000;
+  const max = Math.ceil(peak / gridStep) * gridStep;
   const step = (width - pad.left - pad.right) / versions.length;
-  const barWidth = Math.min(34, step * 0.62);
+  const barWidth = Math.max(2, Math.min(28, step * 0.64));
+  const yOf = (value) => height - pad.bottom - (plotHeight * value) / max;
+  const shortVersion = (version) => version.replace(/\.0$/, "");
+
+  const grid = [];
+  for (let value = gridStep; value <= max; value += gridStep) {
+    grid.push(`<line x1="${pad.left}" x2="${width - pad.right}" y1="${yOf(value)}" y2="${yOf(value)}" class="grid"></line>
+      <text x="${pad.left - 6}" y="${yOf(value) + 3}" class="axis-y">${value / 10000}万</text>`);
+  }
+
+  // 横軸の版名は、最大7つ程度まで間引く。最新版は必ず出し、直前の目盛りと近すぎる場合はそちらを省く。
+  const every = Math.ceil(versions.length / 7);
+  const lastIndex = versions.length - 1;
+  const labelled = (index) => index === lastIndex || (index % every === 0 && lastIndex - index >= every / 2);
+
   const bars = versions
     .map((v, index) => {
-      const h = ((height - pad.top - pad.bottom) * v.stats.characters) / max;
       const x = pad.left + step * index + (step - barWidth) / 2;
-      const y = height - pad.bottom - h;
-      const last = index === versions.length - 1;
+      const y = yOf(v.stats.characters);
+      const last = index === lastIndex;
       return `<g><title>v${esc(v.version)}　${v.stats.characters.toLocaleString("ja-JP")}字（原稿用紙 約${v.stats.manuscriptSheets}枚）　${esc(v.summary)}</title>
-        <rect x="${x}" y="${y}" width="${barWidth}" height="${h}" rx="2" class="${last ? "bar-current" : "bar"}"></rect>
-        <text x="${x + barWidth / 2}" y="${height - pad.bottom + 14}" class="axis">${esc(v.version)}</text>
-        ${last ? `<text x="${x + barWidth / 2}" y="${y - 5}" class="value">${v.stats.characters.toLocaleString("ja-JP")}</text>` : ""}</g>`;
+        <rect x="${x - (step - barWidth) / 2}" y="${pad.top}" width="${step}" height="${plotHeight}" class="hit"></rect>
+        <rect x="${x}" y="${y}" width="${barWidth}" height="${height - pad.bottom - y}" rx="1.5" class="${last ? "bar-current" : "bar"}"></rect>
+        ${labelled(index) ? `<text x="${x + barWidth / 2}" y="${height - pad.bottom + 16}" class="axis${last ? " axis-current" : ""}">${esc(shortVersion(v.version))}</text>` : ""}
+        ${last ? `<text x="${x + barWidth / 2}" y="${y - 7}" class="value">${v.stats.characters.toLocaleString("ja-JP")}字</text>` : ""}</g>`;
     })
     .join("");
-  return `<figure class="growth"><figcaption>版ごとの文字数</figcaption><svg viewBox="0 0 ${width} ${height}" role="img" aria-label="版ごとの文字数の推移">${bars}</svg></figure>`;
+  return `<figure class="growth"><figcaption>版ごとの文字数（棒に乗せると各版の数字）</figcaption><svg viewBox="0 0 ${width} ${height}" role="img" aria-label="版ごとの文字数の推移。${versions.length}版、最新 ${peak.toLocaleString("ja-JP")}字">${grid.join("")}${bars}</svg></figure>`;
 }
 
 async function renderProgress() {
