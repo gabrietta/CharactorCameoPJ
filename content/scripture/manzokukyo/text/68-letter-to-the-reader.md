@@ -1,7 +1,7 @@
 ---
 id: letter-to-the-reader
 part: 4
-chapter: 67
+chapter: 68
 title: まだ見ぬ信女への書簡
 summary: 教祖より、この書を読む者へ。宛名なくして、すべての刷りに綴じ込まるる書簡。
 voice: colloquial

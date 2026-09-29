@@ -842,5 +842,18 @@
       "verses": 1235,
       "chapters": 79
     }
+  },
+  {
+    "version": "0.53.0",
+    "date": "2026-09-30",
+    "base": "e3a5a0b",
+    "summary": "「菊の花びら」を追加（信女の場面型の列伝）",
+    "stats": {
+      "characters": 51460,
+      "manuscriptSheets": 129,
+      "bunkoPages": 86,
+      "verses": 1250,
+      "chapters": 80
+    }
   }
 ]
