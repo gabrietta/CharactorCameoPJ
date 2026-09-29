@@ -6,16 +6,17 @@
 
 - ブランチ: `claude/manzokukyo-scripture`（`origin/main` から作成。ローカルのみ。push・PRはしていない。D-17）
 - 作業フォルダ: `D:\CharactorCameoPJ-scripture`（git worktree）。元のフォルダ `D:\CharactorCameoPJ` の未コミットの別作業には触れていない。
-- 本文: 序、満足連祷、第1〜19章、満足暦、奥付。全311節。全章 draft。各章に一行の梗概、節どうしの引照あり。全章 draft。
+- 版: 開発版 v0.11.1（12,893字、原稿用紙 約33枚）。版ごとの記録は versions.json。
+- 本文: 序、満足連祷、第1〜20章、満足暦、奥付。全323節。全章 draft。各章に一行の梗概、節どうしの引照あり。全章 draft。
 - 検査: `npm.cmd run check` 成功（文字化け検査、教典の形式検査、キャラクターJSON）。
 
 ## おすすめの見る順番
 
-1. **通しで読む**: 次のコマンドで一冊ぶんのMarkdownを書き出して読む（編纂注なし、約3.7万字）。
-
-   ```bash
-   node scripts/export-scripture.mjs --markdown --out manzokukyo.md
-   ```
+1. **ビューアで見る**: `npm.cmd run scripture:view` を実行して、表示されたURLを開く。
+   - 編纂室（`/manzokukyo/viewer/`）: 版と文字量、章ごとの状態、確認してほしい仮決定、本文（編纂注つき）。
+   - 読者向け（`book.html`）: 本として通して読む。
+   - 体験（`rite.html`）: 満足連祷を会衆として唱える。
+   - PDFで読むなら `npm.cmd run scripture:pdf`（`output/scripture/manzokukyo.pdf`）。
 
 2. **仮決定を確認する**: [decisions.md](decisions.md) の D-07〜D-18。気に入らないものは番号で指示すれば差し替える。
 3. **未決定を決める**: D-19（Wiki）、D-20（協力者の投稿の権利）、D-21（商標）。D-20は外部の協力者を招く前に必要。
@@ -40,6 +41,11 @@
 | `scripture-m11` | `eac9f90` | 引き継ぎメモ |
 | `scripture-m12` | `9bb1ae6` | 章の梗概と引照 |
 | `scripture-m13` | `d3be8e4` | 16章 教祖の武具、17章 第二の季節（英字の者たち・教理問答は18〜19章へ） |
+| `scripture-m14` | `7a2c8b1` | 引き継ぎメモ更新（v0.10.1） |
+| `scripture-m15` | `488f21f` | ビューア（編纂室・読者向け）、PDF出力、版と文字量の記録、エンブレム |
+| `scripture-m16` | `156257c` | 体験ページ「満足連祷」 |
+| `scripture-m17` | `69b16f3` | 第20章 証言（v0.11.0） |
+| `scripture-m18` | `a25bb0a` | 文語の検査、九つの戒めの修正（v0.11.1） |
 
 - ある時点から別の方向へやり直す: `git switch -c <新しいブランチ名> scripture-m3`
 - ある区切りだけ取り消す: `git revert <コミット>`
@@ -55,6 +61,8 @@
 
 ## 次にやれること（候補）
 
-- Web書籍の試作（参考: <https://minmin4410.github.io/hajiteki-zaisan/>）。`--json` の出力をそのまま使える。HTMLの生成は依頼があってから行う。
+- 読者向けビューアを、参考サイト（<https://minmin4410.github.io/hajiteki-zaisan/>）のような見開き表示にする。
+- GitHub Pagesでビューアを公開する（`content/scripture/` を `dist/` へ写す処理をビルドに足す必要がある）。
+- 体験ページを増やす（懺悔室、満足暦の日めくり、欠片を数える）。
 - 配信用の抜粋（連祷、懺悔、教理問答）を台本形式で書き出す。懺悔室配信ワールドの聖歌（`apps/zannenin-stream-world/public/js/show.js` の `HYMN`）へ、9章の歌詞を `--json` から流し込む案もある（配信ワールド側の変更になるので未着手）。
 - 協力者向けに「募集中」の章を新しく立てる（例: 替え玉の由来、夏の祭り、MEDの影の続き）。
