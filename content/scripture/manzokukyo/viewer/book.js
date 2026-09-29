@@ -35,7 +35,7 @@ function tocHtml(pageOf = () => "") {
     }
     items.push(`<li><a href="#" data-chapter="${esc(chapter.id)}"><span>${esc(chapterLabel(chapter))}</span><span class="toc-dots"></span><span class="toc-num">${pageOf(chapter.id)}</span></a></li>`);
   }
-  return `<h2 class="toc-title">目　次</h2><ol class="toc">${items.join("")}</ol>`;
+  return `<h2 class="toc-title">目　次</h2><ol class="toc">${items.join("")}</ol><p class="disclaimer">この書は、コメディ宗教「満足教」を題材にした創作です。実在の宗教・団体とは関係がなく、信仰や入会を勧めるものではありません。</p>`;
 }
 
 function chapterHtml(chapter, index) {

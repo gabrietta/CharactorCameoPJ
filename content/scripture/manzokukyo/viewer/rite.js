@@ -48,6 +48,7 @@ function intro() {
     <h1 class="rite-title">満足連祷</h1>
     <p class="rite-lead">集いのはじめに、連祷を唱えます。<br>司の呼びかけに、会衆として応えてください。</p>
     <p class="rite-note">音は出ません。途中に、三つ数えるあいだの沈黙があります。</p>
+    <p class="rite-note">コメディ宗教「満足教」を題材にした創作の体験です。実在の宗教・団体とは関係ありません。</p>
     <button type="button" class="rite-primary" id="begin">集いに加わる</button>
     <p class="rite-or">あるいは</p>
     <button type="button" class="rite-secondary" id="confess">赤き帳の前で懺悔する</button>
