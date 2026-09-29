@@ -387,5 +387,18 @@
       "verses": 726,
       "chapters": 41
     }
+  },
+  {
+    "version": "0.26.1",
+    "date": "2026-09-29",
+    "base": "7d4d1fc",
+    "summary": "第23章の文語修正",
+    "stats": {
+      "characters": 27328,
+      "manuscriptSheets": 69,
+      "bunkoPages": 46,
+      "verses": 726,
+      "chapters": 41
+    }
   }
 ]
