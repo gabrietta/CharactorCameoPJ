@@ -5,6 +5,8 @@ on:
     paths:
       - "content/scripture/**"
       - "scripts/check-scripture.mjs"
+      - "scripts/export-scripture.mjs"
+      - "scripts/scripture-lib.mjs"
 
 permissions:
   contents: read
@@ -23,3 +25,5 @@ jobs:
         run: node scripts/check-encoding.mjs
       - name: Scripture check
         run: node scripts/check-scripture.mjs
+      - name: Scripture export
+        run: node scripts/export-scripture.mjs --json > /dev/null
