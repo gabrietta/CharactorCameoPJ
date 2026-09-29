@@ -77,7 +77,9 @@
 | 33 | `letter-to-the-sister` | [姉への書簡](text/33-letter-to-the-sister.md) | 私的な「あたし」の手紙。差し出されないまま | draft | 編纂責任者 |
 | 34 | `letter-to-med` | [MEDへの書簡](text/34-letter-to-med.md) | 追いつかないように追いかける影への、出されない手紙 | draft | 編纂責任者 |
 | 35 | `letter-to-the-far-utopia` | [遠き理想郷への書簡](text/35-letter-to-the-far-utopia.md) | 閉ざされた理想郷へ。投函され、戻ってきた手紙 | draft | 編纂責任者 |
-| 36 | `letter-to-the-reader` | [まだ見ぬ信女への書簡](text/36-letter-to-the-reader.md) | 読者に宛てた手紙 | draft | 編纂責任者 |
+| 36 | `letter-to-seat-a` | [Aの席への書簡](text/36-letter-to-seat-a.md) | 誰も座らない最前の席へ。二度目は消さないA欄 | draft | 編纂責任者 |
+| 37 | `letter-to-the-archive` | [記録室への書簡](text/37-letter-to-the-archive.md) | 記録室への頼みごと。写しを取らないでほしい手紙の写し | draft | 編纂責任者 |
+| 38 | `letter-to-the-reader` | [まだ見ぬ信女への書簡](text/38-letter-to-the-reader.md) | 読者に宛てた手紙 | draft | 編纂責任者 |
 
 ## 第五部　箴言と祈り
 
@@ -85,13 +87,13 @@
 
 | 章 | ID | 題 | 中身 | 状態 | 担当 |
 |---|---|---|---|---|---|
-| 37 | `proverbs` | [箴言](text/37-proverbs.md) | 満足の格言四十 | draft | 編纂責任者 |
-| 38 | `night-psalm` | [夜の詩](text/38-night-psalm.md) | 眠る前に独りで唱える詩 | draft | 編纂責任者 |
-| 39 | `short-prayers` | [短き祈り](text/39-short-prayers.md) | 目覚め、雨、替え玉、配信、眠れぬ夜などの短い祈り | draft | 編纂責任者 |
-| 40 | `closing-litany` | [結びの連祷](text/40-closing-litany.md) | 集いの終わりの呼びかけと応え。台本にない25の問い | draft | 編纂責任者 |
-| 41 | `prophecies` | [預言の断片](text/41-prophecies.md) | まだ外れていない預言だけを記した章 | draft | 編纂責任者 |
-| 42 | `notice-board` | [掲示板の箴言](text/42-notice-board.md) | 四十一番目以降の、箴言ではない言葉 | draft | 編纂責任者 |
-| 43 | `song-of-the-waiting` | [待つ者の詩](text/43-song-of-the-waiting.md) | 記録室の扉の前に並ぶ者たちの詩 | draft | 編纂責任者 |
+| 39 | `proverbs` | [箴言](text/39-proverbs.md) | 満足の格言四十 | draft | 編纂責任者 |
+| 40 | `night-psalm` | [夜の詩](text/40-night-psalm.md) | 眠る前に独りで唱える詩 | draft | 編纂責任者 |
+| 41 | `short-prayers` | [短き祈り](text/41-short-prayers.md) | 目覚め、雨、替え玉、配信、眠れぬ夜などの短い祈り | draft | 編纂責任者 |
+| 42 | `closing-litany` | [結びの連祷](text/42-closing-litany.md) | 集いの終わりの呼びかけと応え。台本にない25の問い | draft | 編纂責任者 |
+| 43 | `prophecies` | [預言の断片](text/43-prophecies.md) | まだ外れていない預言だけを記した章 | draft | 編纂責任者 |
+| 44 | `notice-board` | [掲示板の箴言](text/44-notice-board.md) | 四十一番目以降の、箴言ではない言葉 | draft | 編纂責任者 |
+| 45 | `song-of-the-waiting` | [待つ者の詩](text/45-song-of-the-waiting.md) | 記録室の扉の前に並ぶ者たちの詩 | draft | 編纂責任者 |
 
 ## 付録
 

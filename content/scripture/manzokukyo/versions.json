@@ -413,5 +413,18 @@
       "verses": 749,
       "chapters": 43
     }
+  },
+  {
+    "version": "0.28.0",
+    "date": "2026-09-29",
+    "base": "5851cd0",
+    "summary": "Aの席への書簡、記録室への書簡を差し込み",
+    "stats": {
+      "characters": 29278,
+      "manuscriptSheets": 74,
+      "bunkoPages": 49,
+      "verses": 768,
+      "chapters": 45
+    }
   }
 ]
