@@ -1,6 +1,3 @@
-| 33 | `hair` | [髪の伝](text/33-hair.md) | 銀の二つ結い、ほどかない髪、増える一本 | draft | 編纂責任者 |
-| 15 | `kaedama` | [替え玉の定め](text/15-kaedama.md) | ひとたびに限る替え玉の細かな定め | draft | 編纂責任者 |
-| 12 | `time` | [時の書](text/12-time.md) | 待つ時・数える時・延びる時、四分目、止まった時計 | draft | 編纂責任者 |
 # 構成と進捗
 
 - 更新日: 2026-09-29
@@ -39,6 +36,7 @@
 | 9 | `sleep` | [眠り](text/09-sleep.md) | 小さな完了としての眠り、夢の教祖、枕の窪み | draft | 編纂責任者 |
 | 10 | `word` | [満足という語](text/10-word.md) | 口にするほど薄まる語、変わる意味、辞書の欠けた頁 | draft | 編纂責任者 |
 | 11 | `forgiveness` | [赦し](text/11-forgiveness.md) | 「まあ」の一語。赦されないただ一つのこと | draft | 編纂責任者 |
+| 12 | `time` | [時の書](text/12-time.md) | 待つ時・数える時・延びる時、四分目、止まった時計 | draft | 編纂責任者 |
 | 13 | `the-last-day` | [終わりの日](text/13-the-last-day.md) | 遠き理想郷の終わり、延べられし二日、MEDの影、五つのしるし | draft | 編纂責任者 |
 
 ## 第二部　戒律
@@ -46,6 +44,7 @@
 | 章 | ID | 題 | 中身 | 状態 | 担当 |
 |---|---|---|---|---|---|
 | 14 | `precepts` | [九つの戒め](text/14-precepts.md) | 九つの戒めと書かれない十番目、貪る者 | draft | 編纂責任者 |
+| 15 | `kaedama` | [替え玉の定め](text/15-kaedama.md) | ひとたびに限る替え玉の細かな定め | draft | 編纂責任者 |
 | 16 | `table-prayers` | [食卓の祈り](text/16-table-prayers.md) | 食前・食後の言葉、好物ごとの作法 | draft | 編纂責任者 |
 | 17 | `hymns` | [聖歌](text/17-hymns.md) | 数え歌、器の歌、恵みの歌、帳の歌 | draft | 編纂責任者 |
 | 18 | `confession` | [懺悔](text/18-confession.md) | 赤き帳の作法、返されざりし手の話 | draft | 編纂責任者 |
@@ -68,6 +67,7 @@
 | 30 | `house-of-the-sister` | [姉の家](text/30-house-of-the-sister.md) | 感謝、礼節、暴、救済。継がれなかった一つ | draft | 編纂責任者 |
 | 31 | `sisters-visit` | [姉の来訪](text/31-sisters-visit.md) | 姉が集いに来た日。最後列の冷たい椅子 | draft | 編纂責任者 |
 | 32 | `armaments` | [教祖の武具](text/32-armaments.md) | 概念兵器とキューピーたらこ。武具より箸 | draft | 編纂責任者 |
+| 33 | `hair` | [髪の伝](text/33-hair.md) | 銀の二つ結い、ほどかない髪、増える一本 | draft | 編纂責任者 |
 | 34 | `the-second-season` | [第二の季節](text/34-the-second-season.md) | 門の閉ざされしのちの三つの地。生き残ること | draft | 編纂責任者 |
 | 35 | `false-images` | [偽りの像の祭り](text/35-false-images.md) | 教祖の似姿を切り貼りする祭り。千と一の像 | draft | 編纂責任者 |
 | 36 | `founder-day` | [教祖の一日](text/36-founder-day.md) | 学び舎、古着、アイスティー、集い、夜の数 | draft | 編纂責任者 |
