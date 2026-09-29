@@ -4,7 +4,7 @@
 
 ## いまの状態（2026-09-30 早朝に更新）
 
-- ブランチ: `claude/manzokukyo-scripture`（作業フォルダ `D:CharactorCameoPJ-scripture`、git worktree）。元のフォルダ `D:CharactorCameoPJ` の未コミットの別作業には触れていない。
+- ブランチ: `claude/manzokukyo-scripture`（作業フォルダ `D:\CharactorCameoPJ-scripture`、git worktree）。元のフォルダ `D:\CharactorCameoPJ` の未コミットの別作業には触れていない。
 - main への反映: 2026-09-30 の `c947a55`（v0.41.0、D-26・初等部・釦の文章の直し）まで。**それ以降（下の「早朝の更新」）はブランチのみで、main へは push していない。**
 - 版: 開発版 v0.46.0（46,023字、原稿用紙 約116枚、文庫 約77頁）。本文は序、満足連祷、第1〜73章（五部）、満足暦、奥付。全章 draft。初等部の冊子『よいこの まんぞく』は v0.2.0（おはなし13）。
 - 公開（main 反映分）: 総合入口は main へ反映後に https://zanneninsan.github.io/CharactorCameoPJ/scripture/ 。編纂室は `scripture/manzokukyo/viewer/`。
