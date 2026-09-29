@@ -426,5 +426,18 @@
       "verses": 768,
       "chapters": 45
     }
+  },
+  {
+    "version": "0.29.0",
+    "date": "2026-09-29",
+    "base": "3b804ef",
+    "summary": "第9章 赦し、第42章 月々の詩を差し込み",
+    "stats": {
+      "characters": 30147,
+      "manuscriptSheets": 76,
+      "bunkoPages": 51,
+      "verses": 792,
+      "chapters": 47
+    }
   }
 ]

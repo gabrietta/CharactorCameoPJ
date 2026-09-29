@@ -790,5 +790,56 @@
   ],
   "letter-to-the-archive:8": [
     "fuuka:5"
+  ],
+  "forgiveness:1": [
+    "confession:5"
+  ],
+  "forgiveness:2": [
+    "confession:6"
+  ],
+  "forgiveness:6": [
+    "be-not-sated:1"
+  ],
+  "forgiveness:8": [
+    "be-not-sated:7",
+    "names:8"
+  ],
+  "forgiveness:9": [
+    "forbidden-words:3"
+  ],
+  "forgiveness:10": [
+    "confession:7"
+  ],
+  "months:1": [
+    "hunger:13"
+  ],
+  "months:4": [
+    "calendar:4",
+    "calendar:5"
+  ],
+  "months:5": [
+    "vestments:13"
+  ],
+  "months:6": [
+    "short-prayers:4"
+  ],
+  "months:7": [
+    "calendar:10",
+    "short-prayers:6"
+  ],
+  "months:8": [
+    "calendar:11"
+  ],
+  "months:9": [
+    "calendar:7"
+  ],
+  "months:10": [
+    "calendar:12"
+  ],
+  "months:11": [
+    "calendar:13"
+  ],
+  "months:12": [
+    "calendar:8"
   ]
 }
