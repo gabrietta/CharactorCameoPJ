@@ -77,8 +77,10 @@ for (const bookId of listBookIds()) {
     for (const verse of chapter.verses) {
       const key = verse.text.replace(/[「」、。\s]/g, "");
       if (key.length < 12) continue;
-      if (seen.has(key)) report(`重なる節: 『${seen.get(key)}』と『${chapter.title}』${verse.number}節「${verse.text.slice(0, 30)}…」`);
-      else seen.set(key, `${chapter.title}』${verse.number}節`);
+      // 同じ章の中の繰り返し（歌の繰り返しの句など）はわざとなので数えない
+      const first = seen.get(key);
+      if (first && first.id !== chapter.id) report(`重なる節: 『${first.label}』と『${chapter.title}』${verse.number}節「${verse.text.slice(0, 30)}…」`);
+      else if (!first) seen.set(key, { id: chapter.id, label: `${chapter.title}』${verse.number}節` });
     }
   }
 }

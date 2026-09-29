@@ -1376,5 +1376,25 @@
   ],
   "lost-and-found:13": [
     "fragment-catalog:7"
+  ],
+  "night-watch:3": [
+    "meeting-house:9",
+    "meeting-house:3",
+    "meeting-house:12"
+  ],
+  "night-watch:5": [
+    "meeting-house:4"
+  ],
+  "night-watch:7": [
+    "hunger:6"
+  ],
+  "night-watch:8": [
+    "meeting-house:8"
+  ],
+  "night-watch:14": [
+    "lost-and-found:16"
+  ],
+  "night-watch:19": [
+    "confession:2"
   ]
 }

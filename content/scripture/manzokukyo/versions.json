@@ -673,5 +673,18 @@
       "verses": 1071,
       "chapters": 69
     }
+  },
+  {
+    "version": "0.43.0",
+    "date": "2026-09-30",
+    "base": "f9a205c",
+    "summary": "第47章「夜番の記」を追加（場面と結末のある列伝）",
+    "stats": {
+      "characters": 43614,
+      "manuscriptSheets": 110,
+      "bunkoPages": 73,
+      "verses": 1092,
+      "chapters": 70
+    }
   }
 ]
