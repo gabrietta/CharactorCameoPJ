@@ -183,3 +183,15 @@ body {
 
 .rite-said.plain { text-decoration: none; color: var(--text); font-size: 18px; line-height: 1.9; }
 .rite-silence.small { font-size: 40px; }
+
+/* 正しく応えたときの一行（次の画面の頭に、静かに出る） */
+.rite-echo { margin: 0 0 18px; font-family: var(--sans); font-size: 13px; line-height: 1.8; color: var(--muted); font-style: italic; animation: echo-in 900ms ease-out; }
+
+@keyframes echo-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rite-echo { animation: none; }
+}

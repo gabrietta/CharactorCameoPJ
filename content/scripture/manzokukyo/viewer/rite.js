@@ -17,6 +17,28 @@ const branches = {
   22: { wrong: "……ありません。", reaction: "司は名簿をめくった。鉛筆の音がした。" },
 };
 
+// 正しく応えたときに、次の画面の頭に出す一行（キーは会の節番号）。無い節は既定の一行。
+const echoes = {
+  4: "司の指が、名簿の上で、ひとつ動いた。",
+  6: "足もとで、何かが並ぶ小さな音がした。",
+  10: "あなたの器に、湯気が立った。まだ少しだけ足りない量だった。",
+  12: "あなたの手は、器を持ったままだった。それで、よい。",
+  14: "給湯室で、三分のタイマーが鳴った。",
+  16: "前の席から、小さな拍手が聞こえた。教祖の手の音だった。",
+  18: "司は、あなたの指の数を数えなかった。",
+  20: "司は、今度はうなずいた。隣の信者は、左の手を膝の下に隠した。",
+  22: "司は名簿をめくらなかった。鉛筆の音も、しなかった。",
+  24: "どこかで、誰かのお腹が鳴った。笑いが起きた。司も、少し笑った。",
+};
+const defaultEcho = "会衆の声が、あなたの声にそろった。";
+let echo = "";
+function takeEcho() {
+  const html = echo ? `<p class="rite-echo">${esc(echo)}</p>` : "";
+  echo = "";
+  return html;
+}
+
+let book;
 let steps = [];
 let index = 0;
 const state = { sated: false, strays: 0 };
@@ -52,7 +74,7 @@ function intro() {
     <button type="button" class="rite-primary" id="begin">集いに加わる</button>
     <p class="rite-or">あるいは</p>
     <button type="button" class="rite-secondary" id="confess">赤き帳の前で懺悔する</button>
-    <p class="rite-links"><a href="book.html">教典を読む</a>　<a href="./">編纂室</a></p>`);
+    <p class="rite-links"><a href="../../">総合入口</a>　<a href="book.html">教典を読む</a>　<a href="./">編纂室</a></p>`);
   document.getElementById("begin").addEventListener("click", () => showStep(0));
   document.getElementById("confess").addEventListener("click", confessionCount);
 }
@@ -155,6 +177,7 @@ function confessionAnswer() {
 
 function leaveCurtain() {
   root.classList.remove("red-curtain");
+  echo = "";
   confession.count = 0;
   confession.reason = "";
   intro();
@@ -166,6 +189,7 @@ function showStep(stepIndex) {
   if (!step) return ending();
   if (step.together) {
     screen(`
+      ${takeEcho()}
       <p class="rite-progress">${index + 1} / ${steps.length}</p>
       <p class="rite-who">司と会</p>
       <p class="rite-call together">${inline(step.together.text)}</p>
@@ -181,6 +205,7 @@ function showStep(stepIndex) {
   if (Math.random() < 0.5) options.reverse();
 
   screen(`
+    ${takeEcho()}
     <p class="rite-progress">${index + 1} / ${steps.length}</p>
     <p class="rite-who">司</p>
     <p class="rite-call">${inline(step.call.text)}</p>
@@ -193,7 +218,10 @@ function showStep(stepIndex) {
     button.addEventListener("click", () => {
       const option = options[Number(button.dataset.i)];
       if (option.correct && branch.silence) return silence();
-      if (option.correct) return showStep(index + 1);
+      if (option.correct) {
+        echo = echoes[step.answer.number] ?? defaultEcho;
+        return showStep(index + 1);
+      }
       state.strays += 1;
       if (branch.flag) state[branch.flag] = true;
       stray(option.label, branch.reaction);
@@ -235,9 +263,16 @@ function silence() {
       count.classList.add("fourth");
       setTimeout(() => stray("（沈黙のあいだに、何かに触れた）", "誰かが、四つ目を数えた。あなたの声に、よく似ていた。"), 1200);
     } else {
+      echo = "沈黙は、三つで終わった。誰も、四つ目を数えなかった。";
       showStep(index + 1);
     }
   }, 900 * 4);
+}
+
+// 教典の章へのリンク（章が見つからなければ出さない）
+function chapterLink(id, label) {
+  const chapter = book?.byId.get(id);
+  return chapter ? `<a class="rite-secondary" href="book.html#c-${esc(id)}">${esc(label ?? `『${chapter.title}』を読む`)}</a>` : "";
 }
 
 function ending() {
@@ -248,9 +283,13 @@ function ending() {
       <p class="rite-reaction">帰り支度をするあいだ、あなたはとても穏やかな気持ちだった。<br>もう、何も欲しくなかった。</p>
       <div class="roll"><span class="roll-label">名簿</span><span class="roll-line erased">あなたの名前</span></div>
       <p class="rite-note">次回の集会から、あなたの席は用意されません。</p>
-      <button type="button" class="rite-secondary" id="again">もう一度、集いに加わる</button>`);
+      <div class="rite-actions">
+        <button type="button" class="rite-secondary" id="again">もう一度、集いに加わる</button>
+        ${chapterLink("be-not-sated")}
+      </div>`);
   } else {
     screen(`
+      ${takeEcho()}
       <img class="rite-emblem small" src="emblem.png" alt="">
       <p class="rite-call together">一。</p>
       <p class="rite-reaction">連祷は終わった。あなたは、まだ満ち足りていない。<br>それで、よいのです。</p>
@@ -258,6 +297,7 @@ function ending() {
       <div class="rite-actions">
         <button type="button" class="rite-secondary" id="again">もう一度、集いに加わる</button>
         <a class="rite-secondary" href="book.html#c-litany">連祷を教典で読む</a>
+        ${state.strays ? chapterLink("confession") : chapterLink("hunger")}
       </div>`);
   }
   document.getElementById("again").addEventListener("click", () => {
@@ -268,7 +308,7 @@ function ending() {
 }
 
 try {
-  const book = await loadBook();
+  book = await loadBook();
   const litany = book.byId.get("litany");
   if (!litany) throw new Error("満足連祷（litany）が見つかりません");
   steps = parseLitany(litany);
