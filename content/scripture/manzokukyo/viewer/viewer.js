@@ -157,6 +157,76 @@ async function renderProgress() {
   `;
 }
 
+// ---------- 謎の地図 ----------
+
+// 「3章6節」「連祷付記」「序5〜7節」「満足暦10節」などから、触れている章を取り出す。
+function placesIn(text) {
+  const ids = new Set();
+  for (const match of text.matchAll(/(\d+)章/g)) {
+    const chapter = book.chapters.find((c) => c.chapter === match[1]);
+    if (chapter) ids.add(chapter.id);
+  }
+  const named = [["序", "preface"], ["連祷", "litany"], ["満足暦", "calendar"], ["奥付", "colophon"]];
+  for (const [word, id] of named) if (text.includes(word) && book.byId.has(id)) ids.add(id);
+  return ids;
+}
+
+async function renderMysteries() {
+  const rows = tableRows(await doc("mysteries.md")).filter((row) => row.length >= 4 && row[0] !== "謎");
+  const mysteries = rows.map(([name, first, mentions, status]) => {
+    const firstIds = placesIn(first);
+    const mentionIds = new Set([...placesIn(mentions)].filter((id) => !firstIds.has(id)));
+    return { name, first, mentions, status, firstIds, mentionIds, reach: firstIds.size + mentionIds.size };
+  });
+  const columns = book.chapters;
+  const short = (chapter) => (chapter.chapter !== "0" ? chapter.chapter : { preface: "序", litany: "連", calendar: "暦", colophon: "奥" }[chapter.id] ?? "・");
+  const lonely = mysteries.filter((m) => m.reach <= 1 && m.status.startsWith("未解決"));
+  const perChapter = new Map(columns.map((c) => [c.id, 0]));
+  for (const m of mysteries) for (const id of [...m.firstIds, ...m.mentionIds]) perChapter.set(id, perChapter.get(id) + 1);
+
+  const head = columns.map((c) => `<th title="${esc(chapterLabel(c))}"><a href="#/read/${esc(c.id)}">${esc(short(c))}</a></th>`).join("");
+  const body = mysteries
+    .map((m) => {
+      const cells = columns
+        .map((c) => {
+          if (m.firstIds.has(c.id)) return `<td><span class="dot first" title="初出: ${esc(m.first)}"></span></td>`;
+          if (m.mentionIds.has(c.id)) return `<td><span class="dot mention" title="言及: ${esc(m.mentions)}"></span></td>`;
+          return "<td></td>";
+        })
+        .join("");
+      return `<tr class="${m.reach <= 1 ? "lonely" : ""}"><th class="mystery-name">${esc(m.name)}</th>${cells}</tr>`;
+    })
+    .join("");
+  const density = columns.map((c) => `<td class="density" style="--n:${perChapter.get(c.id)}">${perChapter.get(c.id) || ""}</td>`).join("");
+
+  app.innerHTML = `
+    <h2 class="section-title">謎の地図</h2>
+    <p class="muted">行が謎、列が章。<span class="dot first"></span> 初出　<span class="dot mention"></span> 言及。答えは書かずに、手がかりだけを別の章へ足していくと、謎が教典全体に広がる。</p>
+    <div class="two-col" style="margin:18px 0 26px">
+      <div class="list-card">
+        <h3>手がかりが一か所しかない謎（${lonely.length}）</h3>
+        <ul>${lonely.slice(0, 12).map((m) => `<li>${esc(m.name)} <span class="muted">（${esc(m.first)}）</span></li>`).join("")}</ul>
+        ${lonely.length > 12 ? `<p class="more muted">ほか${lonely.length - 12}件</p>` : ""}
+      </div>
+      <div class="list-card">
+        <h3>集計</h3>
+        <ul>
+          <li>登録された謎: ${mysteries.length}件</li>
+          <li>別の章でも触れられている謎: ${mysteries.length - lonely.length}件</li>
+          <li>謎がいちばん多い章: ${esc(chapterLabel(book.byId.get([...perChapter.entries()].sort((a, b) => b[1] - a[1])[0][0])))}</li>
+        </ul>
+        <p class="more"><a href="#/doc/mysteries.md">謎の登録簿を開く</a></p>
+      </div>
+    </div>
+    <div class="table-scroll">
+      <table class="mystery-map">
+        <thead><tr><th class="mystery-name">謎</th>${head}</tr></thead>
+        <tbody>${body}</tbody>
+        <tfoot><tr><th class="mystery-name">章ごとの謎の数</th>${density}</tr></tfoot>
+      </table>
+    </div>`;
+}
+
 // ---------- 本文 ----------
 
 let showNotes = true;
@@ -237,7 +307,7 @@ async function renderDoc(name) {
 async function route() {
   const hash = location.hash.replace(/^#\/?/, "") || "progress";
   const [view, ...rest] = hash.split("/");
-  const tab = view === "doc" ? "doc" : view === "read" ? "read" : "progress";
+  const tab = ["doc", "read", "mysteries"].includes(view) ? view : "progress";
   for (const link of document.querySelectorAll(".tabs a")) {
     link.toggleAttribute("aria-current", link.dataset.tab === tab);
     if (link.dataset.tab === tab) link.setAttribute("aria-current", "page");
@@ -245,6 +315,7 @@ async function route() {
   try {
     if (tab === "read") renderRead(rest.join("/"));
     else if (tab === "doc") await renderDoc(rest.join("/"));
+    else if (tab === "mysteries") await renderMysteries();
     else await renderProgress();
   } catch (error) {
     app.innerHTML = `<p class="error">${esc(error.message)}</p>`;

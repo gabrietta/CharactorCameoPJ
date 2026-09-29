@@ -218,6 +218,23 @@ a.tile:hover { border-color: var(--gold-soft); }
 .growth .axis { fill: var(--desk-muted); font-size: 10px; text-anchor: middle; font-family: var(--sans); }
 .growth .value { fill: var(--gold); font-size: 11px; text-anchor: middle; font-family: var(--sans); }
 
+/* ---------- 謎の地図 ---------- */
+
+.table-scroll { overflow-x: auto; }
+.mystery-map { border-collapse: collapse; font-size: 12.5px; }
+.mystery-map th, .mystery-map td { border-bottom: 1px solid var(--desk-line); padding: 5px 0; text-align: center; min-width: 26px; }
+.mystery-map thead th { position: sticky; top: 0; background: var(--desk); font-weight: 500; color: var(--desk-muted); }
+.mystery-map thead a { color: var(--desk-muted); text-decoration: none; }
+.mystery-map thead a:hover { color: var(--gold); }
+.mystery-map .mystery-name { text-align: left; min-width: 260px; max-width: 360px; padding-right: 14px; font-weight: 400; color: var(--desk-text); }
+.mystery-map tbody tr:hover { background: var(--gold-faint); }
+.mystery-map tr.lonely .mystery-name { color: #e0b86a; }
+.mystery-map tfoot th { color: var(--desk-muted); font-weight: 500; }
+.mystery-map .density { color: var(--desk-text); font-variant-numeric: tabular-nums; background: rgba(201, 162, 74, calc(var(--n) * 0.06)); }
+.dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; vertical-align: -1px; }
+.dot.first { background: var(--gold); }
+.dot.mention { border: 2px solid var(--gold-soft); }
+
 /* ---------- 本文 ---------- */
 
 .reader { display: grid; grid-template-columns: 240px 1fr; gap: 28px; align-items: start; }
