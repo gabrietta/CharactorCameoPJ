@@ -1,7 +1,7 @@
 ---
 id: vestments
 part: 2
-chapter: 13
+chapter: 14
 title: 装いの定め
 summary: 黒と金。菱形の留め金。釦の数。白き肩掛けと古着。
 status: draft

@@ -1,7 +1,7 @@
 ---
 id: catechism
 part: 3
-chapter: 21
+chapter: 22
 title: 教理問答
 summary: 信者Bの問いと、教祖の答え。
 voice: colloquial

@@ -1,7 +1,7 @@
 ---
 id: gathering
 part: 2
-chapter: 14
+chapter: 15
 title: 集いの作法
 summary: 集いに来たり、座し、唱え、すすり、帰るまでの作法。
 status: draft

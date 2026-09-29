@@ -361,5 +361,18 @@
       "verses": 665,
       "chapters": 36
     }
+  },
+  {
+    "version": "0.25.0",
+    "date": "2026-09-29",
+    "base": "e7ef5ba",
+    "summary": "第7章 眠り、第24章 暖簾の内を差し込み",
+    "stats": {
+      "characters": 25817,
+      "manuscriptSheets": 65,
+      "bunkoPages": 44,
+      "verses": 691,
+      "chapters": 38
+    }
   }
 ]

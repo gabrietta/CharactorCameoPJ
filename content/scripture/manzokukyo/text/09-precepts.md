@@ -1,7 +1,7 @@
 ---
 id: precepts
 part: 2
-chapter: 8
+chapter: 9
 title: 九つの戒め
 summary: 九つの戒めと、書かれざる十番目。貪る者のこと。
 status: draft

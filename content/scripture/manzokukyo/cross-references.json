@@ -628,5 +628,44 @@
   ],
   "letter-to-the-far-utopia:10": [
     "the-last-day:10"
+  ],
+  "sleep:3": [
+    "litany:25",
+    "litany:2"
+  ],
+  "sleep:5": [
+    "light-of-the-brow:1"
+  ],
+  "sleep:6": [
+    "parables:13"
+  ],
+  "sleep:10": [
+    "short-prayers:10",
+    "table-prayers:9"
+  ],
+  "sleep:11": [
+    "be-not-sated:5"
+  ],
+  "sleep:13": [
+    "fragments-of-salvation:10"
+  ],
+  "behind-the-noren:3": [
+    "hunger:9"
+  ],
+  "behind-the-noren:4": [
+    "be-not-sated:3"
+  ],
+  "behind-the-noren:5": [
+    "table-prayers:2"
+  ],
+  "behind-the-noren:8": [
+    "parables:14"
+  ],
+  "behind-the-noren:9": [
+    "light-of-the-brow:1",
+    "vestments:4"
+  ],
+  "behind-the-noren:11": [
+    "gathering:12"
   ]
 }
