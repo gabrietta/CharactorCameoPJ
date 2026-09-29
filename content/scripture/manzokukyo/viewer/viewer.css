@@ -234,6 +234,7 @@ a.tile:hover { border-color: var(--gold-soft); }
 .mystery-map .mystery-name { text-align: left; min-width: 260px; max-width: 360px; padding-right: 14px; font-weight: 400; color: var(--desk-text); }
 .mystery-map tbody tr:hover { background: var(--gold-faint); }
 .mystery-map tr.lonely .mystery-name { color: #e0b86a; }
+.mystery-map tr.core-row th { padding-top: 16px; color: var(--gold); font-family: var(--serif); letter-spacing: 0.06em; border-bottom-color: var(--gold-soft); }
 .mystery-map tfoot th { color: var(--desk-muted); font-weight: 500; }
 .mystery-map .density { color: var(--desk-text); font-variant-numeric: tabular-nums; background: rgba(201, 162, 74, calc(var(--n) * 0.06)); }
 .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; vertical-align: -1px; }

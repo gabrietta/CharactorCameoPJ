@@ -191,10 +191,10 @@ function placesIn(text) {
 
 async function renderMysteries() {
   const rows = tableRows(await doc("mysteries.md")).filter((row) => row.length >= 4 && row[0] !== "謎");
-  const mysteries = rows.map(([name, first, mentions, status]) => {
+  const mysteries = rows.map(([name, first, mentions, status, core = ""]) => {
     const firstIds = placesIn(first);
     const mentionIds = new Set([...placesIn(mentions)].filter((id) => !firstIds.has(id)));
-    return { name, first, mentions, status, firstIds, mentionIds, reach: firstIds.size + mentionIds.size };
+    return { name, first, mentions, status, core: core || "—", firstIds, mentionIds, reach: firstIds.size + mentionIds.size };
   });
   const columns = book.chapters;
   const short = (chapter) => (chapter.chapter !== "0" ? chapter.chapter : { preface: "序", litany: "連", calendar: "暦", colophon: "奥" }[chapter.id] ?? "・");
@@ -203,8 +203,9 @@ async function renderMysteries() {
   for (const m of mysteries) for (const id of [...m.firstIds, ...m.mentionIds]) perChapter.set(id, perChapter.get(id) + 1);
 
   const head = columns.map((c) => `<th title="${esc(chapterLabel(c))}"><a href="#/read/${esc(c.id)}">${esc(short(c))}</a></th>`).join("");
-  const body = mysteries
-    .map((m) => {
+  // 主要な謎ごとにまとめて並べる（登録簿の「主要な謎」の列）。
+  const cores = [...new Set(mysteries.map((m) => m.core))];
+  const rowOf = (m) => {
       const cells = columns
         .map((c) => {
           if (m.firstIds.has(c.id)) return `<td><span class="dot first" title="初出: ${esc(m.first)}"></span></td>`;
@@ -213,6 +214,11 @@ async function renderMysteries() {
         })
         .join("");
       return `<tr class="${m.reach <= 1 ? "lonely" : ""}"><th class="mystery-name">${esc(m.name)}</th>${cells}</tr>`;
+  };
+  const body = cores
+    .map((core) => {
+      const members = mysteries.filter((m) => m.core === core);
+      return `<tr class="core-row"><th class="mystery-name" colspan="${columns.length + 1}">${esc(core)}（${members.length}）</th></tr>${members.map(rowOf).join("")}`;
     })
     .join("");
   const density = columns.map((c) => `<td class="density" style="--n:${perChapter.get(c.id)}">${perChapter.get(c.id) || ""}</td>`).join("");
@@ -229,7 +235,8 @@ async function renderMysteries() {
       <div class="list-card">
         <h3>集計</h3>
         <ul>
-          <li>登録された謎: ${mysteries.length}件</li>
+          <li>登録された謎: ${mysteries.length}件（主要な謎 ${cores.filter((c) => c !== "—").length}）</li>
+          ${cores.map((core) => `<li class="muted">${esc(core)}: ${mysteries.filter((m) => m.core === core).length}</li>`).join("")}
           <li>別の章でも触れられている謎: ${mysteries.length - lonely.length}件</li>
           <li>謎がいちばん多い章: ${esc(chapterLabel(book.byId.get([...perChapter.entries()].sort((a, b) => b[1] - a[1])[0][0])))}</li>
         </ul>

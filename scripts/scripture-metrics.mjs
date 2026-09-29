@@ -99,7 +99,9 @@ line();
 const mysteries = fs.readFileSync(path.join(scriptureDir, bookId, "mysteries.md"), "utf8")
   .split(/\r?\n/)
   .filter((l) => l.startsWith("| ") && !l.startsWith("| 謎") && !l.startsWith("|---"))
-  .map((l) => l.split("|").map((s) => s.trim()));
+  .map((l) => l.split("|").map((s) => s.trim()))
+  // 登録された謎の表（謎・初出・言及箇所・状態…）だけを数える。主要な謎の表（2列）は除く。
+  .filter((cells) => cells.length >= 6);
 const lonely = mysteries.filter((m) => m[3] === "—" || m[3] === "");
 line("## 謎");
 line();
