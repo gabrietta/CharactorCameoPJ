@@ -1,7 +1,7 @@
 ---
 id: letter-to-the-reception
 part: 4
-chapter: 65
+chapter: 66
 title: 受付への書簡
 summary: 教祖より受付の務めの者へ。空き缶のこと。教祖の落とし物のこと。帳の終わりの欄をひらきし日のこと。
 voice: colloquial

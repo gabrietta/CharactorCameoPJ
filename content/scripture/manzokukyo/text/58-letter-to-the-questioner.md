@@ -1,7 +1,7 @@
 ---
 id: letter-to-the-questioner
 part: 4
-chapter: 57
+chapter: 58
 title: 問いの侍者への書簡
 summary: 教祖より問いの侍者へ送られし書簡。問う者への感謝と、なぞられたる名のこと。
 voice: colloquial

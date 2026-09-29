@@ -1,7 +1,7 @@
 ---
 id: letter-to-the-jester
 part: 4
-chapter: 58
+chapter: 59
 title: 戯れの侍者への書簡
 summary: 教祖より戯れの侍者へ送られし書簡。踏み外す二歩と、来たらざりし日のこと。
 voice: colloquial

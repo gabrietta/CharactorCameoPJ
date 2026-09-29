@@ -1,7 +1,7 @@
 ---
 id: short-prayers
 part: 5
-chapter: 76
+chapter: 77
 title: 短き祈り
 summary: 日々のおりおりに唱うる短き祈り。目覚め、雨、替え玉、配信、眠れぬ夜。
 status: draft

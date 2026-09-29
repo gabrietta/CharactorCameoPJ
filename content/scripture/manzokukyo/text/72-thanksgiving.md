@@ -1,7 +1,7 @@
 ---
 id: thanksgiving
 part: 5
-chapter: 71
+chapter: 72
 title: 感謝の詩
 summary: 小さき満足を一つずつ数えて謝する詩。
 status: draft

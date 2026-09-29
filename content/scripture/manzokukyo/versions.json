@@ -868,5 +868,18 @@
       "verses": 1263,
       "chapters": 81
     }
+  },
+  {
+    "version": "0.55.0",
+    "date": "2026-09-30",
+    "base": "c9c22ad",
+    "summary": "「暗き画面」を追加（信女の場面型の列伝）",
+    "stats": {
+      "characters": 52675,
+      "manuscriptSheets": 132,
+      "bunkoPages": 88,
+      "verses": 1276,
+      "chapters": 82
+    }
   }
 ]
