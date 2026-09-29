@@ -12,6 +12,7 @@ import { listBookIds, parseChapter, readChapterFiles, scriptureDir } from "./scr
 // - 同じ文が二つの章に重なっていないか
 // - 「第12章（時の書）」のように章の名を添えた参照で、番号と章の名が食い違っていないか
 //   （章の差し込みで番号がずれたのに名だけ古いまま、またはその逆）
+// - 謎の登録簿で、言及が片方向になっている組がないか
 
 const kanjiDigits = "〇一二三四五六七八九";
 const fromKanji = (text) => {
@@ -70,6 +71,28 @@ for (const bookId of listBookIds()) {
     const file = path.join(bookDir, name);
     if (fs.existsSync(file)) checkRefs(fs.readFileSync(file, "utf8"), name);
   }
+  // 謎の登録簿で、言及が片方向になっている組（BがAの初出を言及に挙げているのに、AがBの初出を挙げていない）
+  const mysteriesFile = path.join(bookDir, "mysteries.md");
+  if (fs.existsSync(mysteriesFile)) {
+    const rows = fs.readFileSync(mysteriesFile, "utf8").split(/\r?\n/)
+      .filter((l) => l.startsWith("| ") && !l.startsWith("| 謎") && !l.startsWith("|---"))
+      .map((l) => l.split("|").map((s) => s.trim()))
+      .filter((c) => c.length >= 6)
+      .map((c) => ({ name: c[1], first: c[2], mentions: c[3] }));
+    const refs = (s) => [...s.matchAll(/(\d+)章(?:(\d+)(?:〜(\d+))?節)?/g)].map((m) => ({ ch: Number(m[1]), from: Number(m[2] ?? 0), to: Number(m[3] ?? m[2] ?? 0) }));
+    const overlaps = (a, b) => a.ch === b.ch && (a.from === 0 || b.from === 0 || (a.from <= b.to && b.from <= a.to));
+    for (const a of rows) {
+      const aFirst = refs(a.first);
+      for (const b of rows) {
+        const bFirst = refs(b.first);
+        if (a === b || !aFirst.length || !bFirst.length) continue;
+        const bMentionsA = refs(b.mentions).some((r) => aFirst.some((f) => overlaps(r, f) && r.from !== 0 && f.from !== 0));
+        const aMentionsB = refs(a.mentions).some((r) => bFirst.some((f) => overlaps(r, f)));
+        if (bMentionsA && !aMentionsB) report(`mysteries.md: 「${b.name}」は「${a.name}」を言及に挙げているが、逆向きの言及がない（${b.first} を足す）`);
+      }
+    }
+  }
+
   const seen = new Map();
   for (const chapter of chapters) {
     checkRefs(chapter.text.replace(/^---[\s\S]*?---/, ""), `text/${chapter.file}`);
