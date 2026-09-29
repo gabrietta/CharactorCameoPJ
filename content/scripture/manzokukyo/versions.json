@@ -452,5 +452,18 @@
       "verses": 834,
       "chapters": 50
     }
+  },
+  {
+    "version": "0.31.0",
+    "date": "2026-09-29",
+    "base": "c5e7452",
+    "summary": "信女らの伝、学び舎の友への書簡を差し込み",
+    "stats": {
+      "characters": 32874,
+      "manuscriptSheets": 83,
+      "bunkoPages": 55,
+      "verses": 861,
+      "chapters": 52
+    }
   }
 ]
