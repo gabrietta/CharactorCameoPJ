@@ -1,7 +1,7 @@
 ---
 id: letter-to-the-sister
 part: 4
-chapter: 58
+chapter: 59
 title: 姉への書簡
 summary: 教祖より姉へ宛てられし書簡。差し出されずに封をされたまま残る。
 voice: colloquial

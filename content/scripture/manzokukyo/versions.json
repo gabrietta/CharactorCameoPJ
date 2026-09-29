@@ -855,5 +855,18 @@
       "verses": 1250,
       "chapters": 80
     }
+  },
+  {
+    "version": "0.54.0",
+    "date": "2026-09-30",
+    "base": "ad58119",
+    "summary": "「閏の日の名」を追加（信女の場面型の列伝）",
+    "stats": {
+      "characters": 52111,
+      "manuscriptSheets": 131,
+      "bunkoPages": 87,
+      "verses": 1263,
+      "chapters": 81
+    }
   }
 ]
