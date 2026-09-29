@@ -1485,5 +1485,16 @@
   ],
   "letter-to-the-reception:12": [
     "lost-and-found:17"
+  ],
+  "duties:13": [
+    "lost-and-found:2",
+    "lost-and-found:17"
+  ],
+  "duties:14": [
+    "night-watch:1",
+    "night-watch:16"
+  ],
+  "duties:15": [
+    "the-scale:2"
   ]
 }

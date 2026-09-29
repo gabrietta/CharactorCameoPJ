@@ -790,5 +790,18 @@
       "verses": 1198,
       "chapters": 77
     }
+  },
+  {
+    "version": "0.50.1",
+    "date": "2026-09-30",
+    "base": "c68de88",
+    "summary": "務めの定めに受付・夜番・量りの務めを追加",
+    "stats": {
+      "characters": 48941,
+      "manuscriptSheets": 123,
+      "bunkoPages": 82,
+      "verses": 1202,
+      "chapters": 77
+    }
   }
 ]
