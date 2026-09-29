@@ -907,5 +907,18 @@
       "verses": 1288,
       "chapters": 83
     }
+  },
+  {
+    "version": "0.56.2",
+    "date": "2026-09-30",
+    "base": "e1f7ae6",
+    "summary": "意味深に寄った5章にもう一巡、付記・規程を追加",
+    "stats": {
+      "characters": 53975,
+      "manuscriptSheets": 135,
+      "bunkoPages": 90,
+      "verses": 1288,
+      "chapters": 83
+    }
   }
 ]
