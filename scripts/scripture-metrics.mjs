@@ -94,6 +94,16 @@ if (toned.length) {
   const judged = sum[0] + sum[1] + sum[2];
   line(`- 申告のある章: ${toned.length} / ${stats.chapters}（${toned.map((x) => x.c.title).join("、")}）`);
   line(`- 怖さ ${sum[0]}（${pct(sum[0], judged)}）、可笑しさ ${sum[1]}（${pct(sum[1], judged)}）、意味深 ${sum[2]}（${pct(sum[2], judged)}）、中立 ${sum[3]}（割合の計算から除く）`);
+  line();
+  line("| 部 | 申告のある章 | 怖さ | 可笑しさ | 意味深 |");
+  line("|---|---|---|---|---|");
+  for (const [part, name] of Object.entries(meta.parts ?? {})) {
+    const inPart = toned.filter((x) => x.c.part === part);
+    if (!inPart.length) continue;
+    const s = [1, 2, 3].map((i) => inPart.reduce((t, x) => t + Number(x.m[i]), 0));
+    const total = s[0] + s[1] + s[2];
+    line(`| ${name} | ${inPart.length} / ${chapters.filter((c) => c.part === part).length} | ${pct(s[0], total)} | ${pct(s[1], total)} | ${pct(s[2], total)} |`);
+  }
 } else {
   line("- 申告のある章はまだない");
 }
