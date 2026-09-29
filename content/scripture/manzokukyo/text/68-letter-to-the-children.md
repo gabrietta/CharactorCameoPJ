@@ -1,7 +1,7 @@
 ---
 id: letter-to-the-children
 part: 4
-chapter: 67
+chapter: 68
 title: よいこの皆さんへの書簡
 summary: 教祖より初等部の子らへ。ひらがなの多き手紙。枕を裏返せし子のこと。四番のうたのこと。
 voice: colloquial

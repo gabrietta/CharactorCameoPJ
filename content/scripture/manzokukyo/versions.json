@@ -881,5 +881,18 @@
       "verses": 1276,
       "chapters": 82
     }
+  },
+  {
+    "version": "0.56.0",
+    "date": "2026-09-30",
+    "base": "cec33b2",
+    "summary": "「名簿の裏」を追加（信女の場面型の列伝）",
+    "stats": {
+      "characters": 53199,
+      "manuscriptSheets": 133,
+      "bunkoPages": 89,
+      "verses": 1288,
+      "chapters": 83
+    }
   }
 ]
