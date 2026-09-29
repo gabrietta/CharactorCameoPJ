@@ -52,7 +52,7 @@
 | 20 | `duties` | [務めの定め](text/20-duties.md) | 給湯、配膳、名簿、Redbull、椅子、掲示板、帳、出欠の務め | draft | 編纂責任者 |
 | 21 | `vestments` | [装いの定め](text/21-vestments.md) | 黒と金、菱形の留め金、白い肩掛け、古着 | draft | 編纂責任者 |
 | 22 | `gathering` | [集いの作法](text/22-gathering.md) | 来る、座る、沈黙、ラーメンの時、帰り道 | draft | 編纂責任者 |
-| 23 | `meeting-house` | [集会所](text/23-meeting-house.md) | 集会所の部屋めぐりと、一つ多い部屋 | draft | 編纂責任者 |
+| 23 | `meeting-house` | [集いの家](text/23-meeting-house.md) | 集いの家（集会所）の部屋めぐりと、一つ多い部屋 | draft | 編纂責任者 |
 | 24 | `names` | [名の定め](text/24-names.md) | 本名・英字・名簿の名、呼ばれる名と呼ばれない名 | draft | 編纂責任者 |
 | 25 | `forbidden-words` | [言葉の禁忌](text/25-forbidden-words.md) | 集いで口にしてはならない言葉 | draft | 編纂責任者 |
 | 26 | `journeys` | [旅の定め](text/26-journeys.md) | 旅先の枕、宿、麺、霧、便り、帰り道 | draft | 編纂責任者 |

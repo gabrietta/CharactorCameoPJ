@@ -556,5 +556,18 @@
       "verses": 1050,
       "chapters": 68
     }
+  },
+  {
+    "version": "0.38.1",
+    "date": "2026-09-29",
+    "base": "7deaeaf",
+    "summary": "校正: 本文の建物の呼び名を「集いの家」に統一",
+    "stats": {
+      "characters": 40557,
+      "manuscriptSheets": 102,
+      "bunkoPages": 68,
+      "verses": 1050,
+      "chapters": 68
+    }
   }
 ]
