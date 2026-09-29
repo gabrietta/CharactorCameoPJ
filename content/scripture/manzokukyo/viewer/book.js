@@ -252,11 +252,14 @@ function setupControls() {
   let resizeTimer;
   window.addEventListener("resize", () => {
     clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => {
-      const chapter = chapterIdAt(view.page);
-      relayout();
-      show(chapter ? view.chapterPages.get(chapter) ?? 0 : view.page);
-    }, 150);
+    resizeTimer = setTimeout(relayoutKeepingPlace, 150);
+  });
+  // 日本語のWebフォントは字の範囲ごとに分かれて、あとから届く。届くたびに組版が変わり、
+  // 章の頭の頁がずれるので、読んでいる場所（章と、章の中の何頁目か）を保って組み直す。
+  let fontTimer;
+  document.fonts.addEventListener("loadingdone", () => {
+    clearTimeout(fontTimer);
+    fontTimer = setTimeout(relayoutKeepingPlace, 150);
   });
 
   setupTodayDialog(book, {
@@ -279,6 +282,19 @@ function chapterIdAt(page) {
   return id;
 }
 
+function relayoutKeepingPlace() {
+  if (view.page < 0) {
+    relayout();
+    show(-1);
+    return;
+  }
+  const chapter = chapterIdAt(view.page);
+  const offset = chapter ? view.page - (view.chapterPages.get(chapter) ?? 0) : 0;
+  relayout();
+  const start = chapter ? view.chapterPages.get(chapter) : undefined;
+  show(Math.max(0, Math.min(start === undefined ? view.page : start + offset, view.total - 1)));
+}
+
 function relayout() {
   const spread = document.getElementById("spread");
   const wasHidden = spread.hidden;
@@ -298,8 +314,9 @@ try {
   } else {
     renderReader();
     await document.fonts.ready;
-    relayout();
+    // 操作バーを出すと頁の高さが変わるので、バーを出してから組版する（逆だと章の頭の頁がずれる）
     setupControls();
+    relayout();
     // #p12 は頁番号、#c-litany は章ID（頁番号は文字量で変わるので、外からのリンクは章IDを使う）
     const chapterLink = location.hash.match(/^#c-([a-z0-9-]+)$/)?.[1];
     if (chapterLink && view.chapterPages.has(chapterLink)) show(view.chapterPages.get(chapterLink));
