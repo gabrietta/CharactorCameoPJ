@@ -175,7 +175,8 @@ body {
 
 .cover-title {
   margin: 10px 0 0;
-  font-size: clamp(28px, min(9vw, 7.5vh), 64px);
+  font-size: min(64px, calc(var(--page-w, 620px) * 0.12), 7.5vh);
+  white-space: nowrap;
   font-weight: 900;
   letter-spacing: 0.28em;
   text-indent: 0.28em;
