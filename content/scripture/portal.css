@@ -132,3 +132,24 @@ a { color: var(--gold); }
 @media (prefers-reduced-motion: reduce) {
   .door { transition: none; }
 }
+
+.updates { margin-top: 40px; }
+.updates-list { list-style: none; margin: 0 0 12px; padding: 0; }
+
+.updates-list li {
+  display: grid;
+  grid-template-columns: 7em 6.5em 1fr;
+  gap: 2px 12px;
+  align-items: baseline;
+  padding: 10px 6px;
+  border-bottom: 1px solid var(--gold-faint);
+}
+
+.updates-version { font-weight: 600; color: var(--gold); }
+.updates-date { font-family: var(--sans); font-size: 12px; color: var(--muted); }
+.updates-summary { font-family: var(--sans); font-size: 13.5px; line-height: 1.7; }
+
+@media (max-width: 560px) {
+  .updates-list li { grid-template-columns: auto 1fr; }
+  .updates-summary { grid-column: 1 / -1; }
+}

@@ -33,6 +33,18 @@ try {
       <span class="route-note">${esc(note)}</span>
     </a></li>`)
     .join("");
+
+  // 最近の更新（versions.json の新しいほうから五つ）。概要の章番号はその版の時点のもので、
+  // あとの差し込みでずれるので、入口では外して章の名だけを見せる。
+  document.getElementById("updates-list").innerHTML = [...book.versions]
+    .reverse()
+    .slice(0, 5)
+    .map((entry) => `<li>
+      <span class="updates-version">第${esc(entry.version)}版</span>
+      <span class="updates-date">${esc(entry.date ?? "")}</span>
+      <span class="updates-summary">${esc((entry.summary ?? "").replace(/第\d+章/g, ""))}</span>
+    </li>`)
+    .join("");
 } catch (error) {
   document.getElementById("meta").textContent = "教典を読み込めませんでした。";
   document.getElementById("today-verse").textContent = error.message;
