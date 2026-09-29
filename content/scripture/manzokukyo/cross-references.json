@@ -982,5 +982,59 @@
   ],
   "journeys:10": [
     "gathering:12"
+  ],
+  "silences:2": [
+    "catechism:10"
+  ],
+  "silences:3": [
+    "catechism:18"
+  ],
+  "silences:4": [
+    "the-lettered:15"
+  ],
+  "silences:5": [
+    "the-last-day:13"
+  ],
+  "silences:6": [
+    "calendar:15"
+  ],
+  "silences:7": [
+    "house-of-the-sister:8"
+  ],
+  "silences:8": [
+    "parables:24"
+  ],
+  "sisters-visit:1": [
+    "gathering:1"
+  ],
+  "sisters-visit:3": [
+    "litany:8"
+  ],
+  "sisters-visit:4": [
+    "be-not-sated:3"
+  ],
+  "sisters-visit:6": [
+    "house-of-the-sister:12"
+  ],
+  "sisters-visit:8": [
+    "the-lettered:13"
+  ],
+  "letter-to-self:3": [
+    "childrens-catechism:18"
+  ],
+  "letter-to-self:5": [
+    "names:4"
+  ],
+  "letter-to-self:6": [
+    "letter-to-med:4"
+  ],
+  "letter-to-self:7": [
+    "letter-to-the-sister:1"
+  ],
+  "letter-to-self:8": [
+    "hunger:9"
+  ],
+  "letter-to-self:11": [
+    "forgiveness:1"
   ]
 }

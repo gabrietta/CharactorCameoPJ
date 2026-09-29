@@ -1,7 +1,7 @@
 ---
 id: testimonies
 part: 3
-chapter: 32
+chapter: 34
 title: 証言
 summary: 集いに加わりし信女らの証言。記録室の集めしところ。
 status: draft

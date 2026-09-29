@@ -478,5 +478,18 @@
       "verses": 890,
       "chapters": 54
     }
+  },
+  {
+    "version": "0.33.0",
+    "date": "2026-09-29",
+    "base": "89faa11",
+    "summary": "姉の来訪、沈黙の伝、自らへの書簡を差し込み",
+    "stats": {
+      "characters": 35138,
+      "manuscriptSheets": 88,
+      "bunkoPages": 59,
+      "verses": 922,
+      "chapters": 57
+    }
   }
 ]
