@@ -61,7 +61,6 @@
 
 ## 次にやれること（候補）
 
-- 読者向けビューアを、参考サイト（<https://minmin4410.github.io/hajiteki-zaisan/>）のような見開き表示にする。
 - GitHub Pagesでビューアを公開する（`content/scripture/` を `dist/` へ写す処理をビルドに足す必要がある）。
 - 体験ページを増やす（懺悔室、満足暦の日めくり、欠片を数える）。
 - 配信用の抜粋（連祷、懺悔、教理問答）を台本形式で書き出す。懺悔室配信ワールドの聖歌（`apps/zannenin-stream-world/public/js/show.js` の `HYMN`）へ、9章の歌詞を `--json` から流し込む案もある（配信ワールド側の変更になるので未着手）。

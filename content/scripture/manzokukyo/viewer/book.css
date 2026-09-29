@@ -37,10 +37,12 @@ body {
 
 .loading { color: #b7a98f; text-align: center; line-height: 2; }
 
+[hidden] { display: none !important; }
+
 .page {
   position: relative;
-  width: min(620px, 100%);
-  height: min(880px, 100%);
+  width: var(--page-w, min(620px, 100%));
+  height: var(--page-h, min(880px, 100%));
   background: var(--paper);
   color: var(--ink);
   border-radius: 3px 8px 8px 3px;
@@ -85,6 +87,68 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .turn-next, .turn-prev { animation: none; }
 }
+
+/* ---------- 頁送り（段組みで頁を区切る） ---------- */
+
+.spread {
+  position: relative;
+  width: var(--spread-w);
+  height: var(--page-h);
+  overflow: hidden;
+  background: var(--paper);
+  color: var(--ink);
+  border-radius: 4px;
+  box-shadow: 0 0 0 1px var(--paper-edge), 0 24px 60px rgba(0, 0, 0, 0.6);
+}
+
+/* 見開きの綴じ目 */
+.spread::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--page-w) - 24px);
+  width: 48px;
+  background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.12) 45%, rgba(0, 0, 0, 0.18) 50%, rgba(0, 0, 0, 0.12) 55%, transparent);
+  pointer-events: none;
+}
+
+.spread[data-one]::after { display: none; }
+
+.flow {
+  width: var(--spread-w);
+  height: 100%;
+  padding: 52px calc(var(--col-gap) / 2) 58px;
+  column-width: var(--col-w);
+  column-gap: var(--col-gap);
+  column-fill: auto;
+  transition: transform 420ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flow { transition: none; }
+}
+
+.flow-section + .flow-section { break-before: column; }
+.flow .verse, .flow blockquote, .flow .chapter-head { break-inside: avoid; }
+.flow .chapter-head { margin-bottom: 26px; }
+
+.folios {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 18px;
+  display: flex;
+  pointer-events: none;
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--ink-muted);
+}
+
+.folios span { width: var(--page-w); text-align: center; }
+
+.cover-view { display: grid; place-items: center; }
 
 /* ---------- 表紙 ---------- */
 
