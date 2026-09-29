@@ -374,5 +374,18 @@
       "verses": 691,
       "chapters": 38
     }
+  },
+  {
+    "version": "0.26.0",
+    "date": "2026-09-29",
+    "base": "3aca494",
+    "summary": "満足という語、名の定め、教祖の一日を差し込み",
+    "stats": {
+      "characters": 27331,
+      "manuscriptSheets": 69,
+      "bunkoPages": 46,
+      "verses": 726,
+      "chapters": 41
+    }
   }
 ]
