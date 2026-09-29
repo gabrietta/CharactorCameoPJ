@@ -530,5 +530,18 @@
       "verses": 1027,
       "chapters": 66
     }
+  },
+  {
+    "version": "0.37.0",
+    "date": "2026-09-29",
+    "base": "e76e074",
+    "summary": "配信の定めを差し込み（原稿用紙100枚を超える）",
+    "stats": {
+      "characters": 39877,
+      "manuscriptSheets": 100,
+      "bunkoPages": 67,
+      "verses": 1038,
+      "chapters": 67
+    }
   }
 ]
