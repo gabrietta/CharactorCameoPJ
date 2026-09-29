@@ -829,5 +829,18 @@
       "verses": 1224,
       "chapters": 78
     }
+  },
+  {
+    "version": "0.52.0",
+    "date": "2026-09-30",
+    "base": "1340875",
+    "summary": "「よいこの皆さんへの書簡」を追加",
+    "stats": {
+      "characters": 50793,
+      "manuscriptSheets": 127,
+      "bunkoPages": 85,
+      "verses": 1235,
+      "chapters": 79
+    }
   }
 ]

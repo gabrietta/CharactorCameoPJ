@@ -1,7 +1,7 @@
 ---
 id: psalm-of-the-empty-seat
 part: 5
-chapter: 70
+chapter: 71
 title: 空席の詩
 summary: 集いにて隣の空けし席に向かいて、小さき声にて唱うる詩。
 status: draft
