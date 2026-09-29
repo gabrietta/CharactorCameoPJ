@@ -421,5 +421,29 @@
   "neo-saitama:18": [
     "neo-saitama:7",
     "light-of-the-brow:1"
+  ],
+  "be-not-sated:16": [
+    "proverbs:11"
+  ],
+  "table-prayers:12": [
+    "light-of-the-brow:1"
+  ],
+  "table-prayers:14": [
+    "be-not-sated:6"
+  ],
+  "confession:16": [
+    "confession:2"
+  ],
+  "vestments:14": [
+    "proverbs:14"
+  ],
+  "armaments:15": [
+    "proverbs:33"
+  ],
+  "armaments:16": [
+    "armaments:12"
+  ],
+  "the-lettered:18": [
+    "regulations:14"
   ]
 }

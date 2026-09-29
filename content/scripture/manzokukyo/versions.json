@@ -270,5 +270,18 @@
       "verses": 507,
       "chapters": 28
     }
+  },
+  {
+    "version": "0.18.0",
+    "date": "2026-09-29",
+    "base": "31c32aa",
+    "summary": "第3・8・10・12・16・18章に節を追加",
+    "stats": {
+      "characters": 19959,
+      "manuscriptSheets": 50,
+      "bunkoPages": 34,
+      "verses": 526,
+      "chapters": 28
+    }
   }
 ]
