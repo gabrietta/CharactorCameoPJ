@@ -1,0 +1,27 @@
+{
+  "title": "よいこの まんぞく",
+  "version": "0.1.0",
+  "files": [
+    "00-preface.md",
+    "01-ramen.md",
+    "02-fragments.md",
+    "03-vessel.md",
+    "04-brow.md",
+    "05-kaedama.md",
+    "06-three.md",
+    "07-neighbor.md",
+    "08-founder.md",
+    "09-names.md",
+    "10-not-yet.md",
+    "90-promises.md"
+  ],
+  "parts": {
+    "0": "まえがき",
+    "1": "おはなし",
+    "9": "おやくそく"
+  },
+  "docs": [],
+  "calendar": {
+    "excludeFromDaily": []
+  }
+}
