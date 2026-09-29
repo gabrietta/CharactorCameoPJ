@@ -49,8 +49,114 @@ function intro() {
     <p class="rite-lead">集いのはじめに、連祷を唱えます。<br>司の呼びかけに、会衆として応えてください。</p>
     <p class="rite-note">音は出ません。途中に、三つ数えるあいだの沈黙があります。</p>
     <button type="button" class="rite-primary" id="begin">集いに加わる</button>
+    <p class="rite-or">あるいは</p>
+    <button type="button" class="rite-secondary" id="confess">赤き帳の前で懺悔する</button>
     <p class="rite-links"><a href="book.html">教典を読む</a>　<a href="./">編纂室</a></p>`);
   document.getElementById("begin").addEventListener("click", () => showStep(0));
+  document.getElementById("confess").addEventListener("click", confessionCount);
+}
+
+// ---------- 懺悔（第10章） ----------
+// 告げた言葉はこのページの中だけで使い、どこにも送らず、保存もしない。
+
+const confession = { count: 0, reason: "" };
+
+function confessionCount() {
+  root.classList.add("red-curtain");
+  screen(`
+    <p class="rite-who">赤き帳の前</p>
+    <p class="rite-call">今日、数えそこねた欠片の数を<br>告げてください。</p>
+    <form class="confess-form" id="count-form">
+      <input class="confess-number" id="count-input" type="number" min="0" max="999" value="1" inputmode="numeric" aria-label="数えそこねた欠片の数">
+      <button type="submit" class="rite-primary">告げる</button>
+    </form>
+    <p class="rite-note">ここで告げたことは、このページの外へは出ません。</p>`);
+  document.getElementById("count-input").focus();
+  document.getElementById("count-form").addEventListener("submit", (event) => {
+    event.preventDefault();
+    confession.count = Math.max(0, Math.min(999, Number(document.getElementById("count-input").value) || 0));
+    confessionReason();
+  });
+}
+
+function confessionReason() {
+  screen(`
+    <p class="rite-who">赤き帳の前</p>
+    <p class="rite-call">数えそこねた理由を<br>告げてください。</p>
+    <div class="rite-options">
+      <button type="button" class="rite-option" data-reason="忘れました。">忘れました。</button>
+      <button type="button" class="rite-option" data-reason="数えたくありませんでした。">数えたくありませんでした。</button>
+    </div>
+    <form class="confess-form" id="reason-form">
+      <input class="confess-text" id="reason-input" type="text" maxlength="80" placeholder="自分の言葉で告げる" aria-label="理由">
+      <button type="submit" class="rite-secondary">告げる</button>
+    </form>`);
+  const submit = (reason) => {
+    confession.reason = reason.trim() || "……。";
+    confessionWait();
+  };
+  for (const button of root.querySelectorAll("[data-reason]")) button.addEventListener("click", () => submit(button.dataset.reason));
+  document.getElementById("reason-form").addEventListener("submit", (event) => {
+    event.preventDefault();
+    submit(document.getElementById("reason-input").value);
+  });
+}
+
+function confessionWait() {
+  screen(`
+    <p class="rite-who">あなたの懺悔</p>
+    <p class="rite-said plain">「今日、欠片を${confession.count}個、数えそこねました。${esc(confession.reason)}」</p>
+    <p class="rite-silence small" id="curtain">……</p>
+    <p class="rite-note">帳のかなたが、あなたの懺悔を聞いています。</p>`);
+  setTimeout(confessionAnswer, 3200);
+}
+
+function confessionAnswer() {
+  const roll = Math.random();
+  let html;
+  if (confession.count >= 100) {
+    html = `
+      <p class="rite-who">帳のかなた</p>
+      <p class="rite-call">「……まあ。」</p>
+      <p class="rite-reaction">一日に百を超えて数えそこねたと告げる者は、数え誤りを疑え。<br>百を超える欠片の来たるは、祝福か、しからずば罠なり。</p>`;
+  } else if (roll < 0.6) {
+    html = `
+      <p class="rite-who">帳のかなた</p>
+      <p class="rite-call">「まあ。」</p>
+      <p class="rite-reaction">それきり、何も続かなかった。<br>あなたは赦された。</p>`;
+  } else if (roll < 0.9) {
+    html = `
+      <p class="rite-who">帳のかなた</p>
+      <p class="rite-call">「まあ。……うふふ。」</p>
+      <p class="rite-reaction">次の週も、また来なければならない。</p>`;
+  } else {
+    html = `
+      <p class="rite-who">帳のかなた</p>
+      <p class="rite-call">　</p>
+      <p class="rite-reaction">帳のかなたから、何の声もしない。<br>今日、懺悔の部屋に座しているのは、教祖ではない。</p>
+      <p class="rite-note">懺悔を途中でやめず、振り返らずに出てください。</p>
+      <div class="rite-actions">
+        <button type="button" class="rite-secondary" id="leave">振り返らずに出る</button>
+        <button type="button" class="rite-secondary" id="look">振り返る</button>
+      </div>`;
+  }
+  screen(`${html}${roll < 0.9 || confession.count >= 100 ? `<div class="rite-actions"><button type="button" class="rite-secondary" id="done">帳の前を離れる</button></div>` : ""}`);
+  document.getElementById("done")?.addEventListener("click", leaveCurtain);
+  document.getElementById("leave")?.addEventListener("click", leaveCurtain);
+  document.getElementById("look")?.addEventListener("click", () => {
+    screen(`
+      <p class="rite-reaction">振り返ると、帳は閉じていた。<br>帳のかなたから、あなたの声で、あなたの懺悔の続きが語られていた。</p>
+      <p class="rite-said plain">「${esc(confession.reason)}……それから、」</p>
+      <div class="rite-actions"><button type="button" class="rite-secondary" id="done">帳の前を離れる</button></div>`);
+    document.getElementById("done").addEventListener("click", leaveCurtain);
+  });
+}
+
+function leaveCurtain() {
+  root.classList.remove("red-curtain");
+  confession.count = 0;
+  confession.reason = "";
+  intro();
 }
 
 function showStep(stepIndex) {

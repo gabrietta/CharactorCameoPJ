@@ -153,3 +153,33 @@ body {
 
 .rite-links { margin-top: 26px; font-family: var(--sans); font-size: 13px; }
 .rite-links a { color: var(--muted); }
+
+/* ---------- 懺悔 ---------- */
+
+.rite-or { margin: 18px 0 0; font-family: var(--sans); font-size: 12px; color: var(--muted); letter-spacing: 0.3em; }
+.rite-or + .rite-secondary { margin-top: 10px; }
+
+.rite.red-curtain {
+  background:
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.18) 0 18px, transparent 18px 44px),
+    radial-gradient(ellipse at 50% 30%, #5a1219, #2a0709 70%);
+}
+
+.confess-form { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 12px; margin-top: 26px; }
+.confess-form .rite-primary, .confess-form .rite-secondary { margin-top: 0; }
+
+.confess-number, .confess-text {
+  font: inherit;
+  color: var(--text);
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid #6b4a3a;
+  border-radius: 8px;
+  padding: 10px 14px;
+}
+
+.confess-number { width: 110px; font-size: 26px; text-align: center; }
+.confess-text { width: min(360px, 100%); font-size: 16px; }
+.confess-number:focus, .confess-text:focus { outline: 2px solid var(--gold); outline-offset: 1px; }
+
+.rite-said.plain { text-decoration: none; color: var(--text); font-size: 18px; line-height: 1.9; }
+.rite-silence.small { font-size: 40px; }
