@@ -348,5 +348,18 @@
       "verses": 633,
       "chapters": 33
     }
+  },
+  {
+    "version": "0.24.0",
+    "date": "2026-09-29",
+    "base": "999708b",
+    "summary": "集いの作法、MEDへの書簡、遠き理想郷への書簡を差し込み",
+    "stats": {
+      "characters": 24704,
+      "manuscriptSheets": 62,
+      "bunkoPages": 42,
+      "verses": 665,
+      "chapters": 36
+    }
   }
 ]

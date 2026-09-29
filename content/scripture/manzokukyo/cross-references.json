@@ -585,5 +585,48 @@
   ],
   "vessel:14": [
     "night-psalm:1"
+  ],
+  "gathering:1": [
+    "fragments-of-salvation:3"
+  ],
+  "gathering:5": [
+    "light-of-the-brow:2"
+  ],
+  "gathering:6": [
+    "litany:8"
+  ],
+  "gathering:9": [
+    "table-prayers:11"
+  ],
+  "gathering:10": [
+    "closing-litany:1"
+  ],
+  "gathering:12": [
+    "light-of-the-brow:7"
+  ],
+  "letter-to-med:4": [
+    "the-last-day:14"
+  ],
+  "letter-to-med:5": [
+    "the-last-day:15"
+  ],
+  "letter-to-the-far-utopia:3": [
+    "the-last-day:4",
+    "the-last-day:5"
+  ],
+  "letter-to-the-far-utopia:5": [
+    "the-last-day:10"
+  ],
+  "letter-to-the-far-utopia:6": [
+    "the-second-season:3"
+  ],
+  "letter-to-the-far-utopia:8": [
+    "neo-saitama:15"
+  ],
+  "letter-to-the-far-utopia:9": [
+    "the-last-day:25"
+  ],
+  "letter-to-the-far-utopia:10": [
+    "the-last-day:10"
   ]
 }

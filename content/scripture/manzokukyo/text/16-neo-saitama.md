@@ -1,7 +1,7 @@
 ---
 id: neo-saitama
 part: 3
-chapter: 15
+chapter: 16
 title: ネオサイタマ
 summary: ひとり満足修道女の時代。隣の棟の声。名簿の最初の欄。
 status: draft

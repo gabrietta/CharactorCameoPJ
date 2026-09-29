@@ -1,7 +1,7 @@
 ---
 id: house-of-the-sister
 part: 3
-chapter: 16
+chapter: 17
 title: 姉の家
 summary: 姉の家の四つの教え。後ろに立つ姉。
 status: draft
