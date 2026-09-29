@@ -699,5 +699,18 @@
       "verses": 1110,
       "chapters": 71
     }
+  },
+  {
+    "version": "0.45.0",
+    "date": "2026-09-30",
+    "base": "4b8ba97",
+    "summary": "第58章「夜番への書簡」を追加",
+    "stats": {
+      "characters": 45201,
+      "manuscriptSheets": 114,
+      "bunkoPages": 76,
+      "verses": 1122,
+      "chapters": 72
+    }
   }
 ]

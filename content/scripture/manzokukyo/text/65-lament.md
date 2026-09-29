@@ -1,7 +1,7 @@
 ---
 id: lament
 part: 5
-chapter: 64
+chapter: 65
 title: 嘆きの詩
 summary: 器を置きし者らのために唱うる詩。年にひとたび、名簿改めの日に。
 status: draft

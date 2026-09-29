@@ -1,7 +1,7 @@
 ---
 id: letter-to-a-classmate
 part: 4
-chapter: 58
+chapter: 59
 title: 学び舎の友への書簡
 summary: 教祖より、学び舎の隣の席の友へ。教祖と知りて、なお教祖と呼ばざるただ一人へ。
 voice: colloquial

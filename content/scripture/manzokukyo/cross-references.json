@@ -1414,5 +1414,20 @@
   ],
   "sounds:14": [
     "closing-litany:18"
+  ],
+  "letter-to-the-night-watch:3": [
+    "letter-to-the-archive:8"
+  ],
+  "letter-to-the-night-watch:5": [
+    "night-watch:19"
+  ],
+  "letter-to-the-night-watch:7": [
+    "night-watch:9"
+  ],
+  "letter-to-the-night-watch:8": [
+    "confession:7"
+  ],
+  "letter-to-the-night-watch:11": [
+    "night-watch:16"
   ]
 }

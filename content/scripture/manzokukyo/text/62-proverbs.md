@@ -1,7 +1,7 @@
 ---
 id: proverbs
 part: 5
-chapter: 61
+chapter: 62
 title: 箴言
 summary: 一節ごとに独り立つ、満足の格言四十。
 status: draft

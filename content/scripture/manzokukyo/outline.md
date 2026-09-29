@@ -99,9 +99,10 @@
 | 55 | `letter-to-the-far-utopia` | [遠き理想郷への書簡](text/55-letter-to-the-far-utopia.md) | 閉ざされた理想郷へ。投函され、戻ってきた手紙 | draft | 編纂責任者 |
 | 56 | `letter-to-seat-a` | [Aの席への書簡](text/56-letter-to-seat-a.md) | 誰も座らない最前の席へ。二度目は消さないA欄 | draft | 編纂責任者 |
 | 57 | `letter-to-the-archive` | [記録室への書簡](text/57-letter-to-the-archive.md) | 記録室への頼みごと。写しを取らないでほしい手紙の写し | draft | 編纂責任者 |
-| 58 | `letter-to-a-classmate` | [学び舎の友への書簡](text/58-letter-to-a-classmate.md) | 教祖と呼ばない、ただ一人の友へ | draft | 編纂責任者 |
-| 59 | `letter-to-self` | [自らへの書簡](text/59-letter-to-self.md) | 教祖から教祖へ、「あたし」の手紙 | draft | 編纂責任者 |
-| 60 | `letter-to-the-reader` | [まだ見ぬ信女への書簡](text/60-letter-to-the-reader.md) | 読者に宛てた手紙 | draft | 編纂責任者 |
+| 58 | `letter-to-the-night-watch` | [夜番への書簡](text/58-letter-to-the-night-watch.md) | 夜の集会所で教祖に会っても、返事をしないこと | draft | 編纂責任者 |
+| 59 | `letter-to-a-classmate` | [学び舎の友への書簡](text/59-letter-to-a-classmate.md) | 教祖と呼ばない、ただ一人の友へ | draft | 編纂責任者 |
+| 60 | `letter-to-self` | [自らへの書簡](text/60-letter-to-self.md) | 教祖から教祖へ、「あたし」の手紙 | draft | 編纂責任者 |
+| 61 | `letter-to-the-reader` | [まだ見ぬ信女への書簡](text/61-letter-to-the-reader.md) | 読者に宛てた手紙 | draft | 編纂責任者 |
 
 ## 第五部　箴言と祈り
 
@@ -109,17 +110,17 @@
 
 | 章 | ID | 題 | 中身 | 状態 | 担当 |
 |---|---|---|---|---|---|
-| 61 | `proverbs` | [箴言](text/61-proverbs.md) | 満足の格言四十 | draft | 編纂責任者 |
-| 62 | `thanksgiving` | [感謝の詩](text/62-thanksgiving.md) | 小さな満足を一つずつ数えて感謝する詩 | draft | 編纂責任者 |
-| 63 | `night-psalm` | [夜の詩](text/63-night-psalm.md) | 眠る前に独りで唱える詩 | draft | 編纂責任者 |
-| 64 | `lament` | [嘆きの詩](text/64-lament.md) | 器を置いた者のための、年に一度の詩 | draft | 編纂責任者 |
-| 65 | `months` | [月々の詩](text/65-months.md) | 十二の月の詩と、暦にない十三月 | draft | 編纂責任者 |
-| 66 | `short-prayers` | [短き祈り](text/66-short-prayers.md) | 目覚め、雨、替え玉、配信、眠れぬ夜などの短い祈り | draft | 編纂責任者 |
-| 67 | `closing-litany` | [結びの連祷](text/67-closing-litany.md) | 集いの終わりの呼びかけと応え。台本にない25の問い | draft | 編纂責任者 |
-| 68 | `prophecies` | [預言の断片](text/68-prophecies.md) | まだ外れていない預言だけを記した章 | draft | 編纂責任者 |
-| 69 | `notice-board` | [掲示板の箴言](text/69-notice-board.md) | 四十一番目以降の、箴言ではない言葉 | draft | 編纂責任者 |
-| 70 | `song-of-the-waiting` | [待つ者の詩](text/70-song-of-the-waiting.md) | 記録室の扉の前に並ぶ者たちの詩 | draft | 編纂責任者 |
-| 71 | `childrens-catechism` | [童の問答](text/71-childrens-catechism.md) | 子ども向けのひらがなの問答 | draft | 編纂責任者 |
+| 62 | `proverbs` | [箴言](text/62-proverbs.md) | 満足の格言四十 | draft | 編纂責任者 |
+| 63 | `thanksgiving` | [感謝の詩](text/63-thanksgiving.md) | 小さな満足を一つずつ数えて感謝する詩 | draft | 編纂責任者 |
+| 64 | `night-psalm` | [夜の詩](text/64-night-psalm.md) | 眠る前に独りで唱える詩 | draft | 編纂責任者 |
+| 65 | `lament` | [嘆きの詩](text/65-lament.md) | 器を置いた者のための、年に一度の詩 | draft | 編纂責任者 |
+| 66 | `months` | [月々の詩](text/66-months.md) | 十二の月の詩と、暦にない十三月 | draft | 編纂責任者 |
+| 67 | `short-prayers` | [短き祈り](text/67-short-prayers.md) | 目覚め、雨、替え玉、配信、眠れぬ夜などの短い祈り | draft | 編纂責任者 |
+| 68 | `closing-litany` | [結びの連祷](text/68-closing-litany.md) | 集いの終わりの呼びかけと応え。台本にない25の問い | draft | 編纂責任者 |
+| 69 | `prophecies` | [預言の断片](text/69-prophecies.md) | まだ外れていない預言だけを記した章 | draft | 編纂責任者 |
+| 70 | `notice-board` | [掲示板の箴言](text/70-notice-board.md) | 四十一番目以降の、箴言ではない言葉 | draft | 編纂責任者 |
+| 71 | `song-of-the-waiting` | [待つ者の詩](text/71-song-of-the-waiting.md) | 記録室の扉の前に並ぶ者たちの詩 | draft | 編纂責任者 |
+| 72 | `childrens-catechism` | [童の問答](text/72-childrens-catechism.md) | 子ども向けのひらがなの問答 | draft | 編纂責任者 |
 
 ## 付録
 
