@@ -722,5 +722,52 @@
   ],
   "founder-day:11": [
     "neo-saitama:9"
+  ],
+  "forbidden-words:2": [
+    "litany:2"
+  ],
+  "forbidden-words:3": [
+    "be-not-sated:2"
+  ],
+  "forbidden-words:4": [
+    "calendar:2"
+  ],
+  "forbidden-words:5": [
+    "precepts:12"
+  ],
+  "forbidden-words:6": [
+    "be-not-sated:3"
+  ],
+  "forbidden-words:7": [
+    "names:4"
+  ],
+  "forbidden-words:8": [
+    "gathering:11"
+  ],
+  "forbidden-words:9": [
+    "the-last-day:6"
+  ],
+  "forbidden-words:10": [
+    "short-prayers:15"
+  ],
+  "fuuka:2": [
+    "litany:11",
+    "litany:12"
+  ],
+  "fuuka:3": [
+    "the-lettered:9"
+  ],
+  "fuuka:4": [
+    "parables:20"
+  ],
+  "fuuka:5": [
+    "regulations:8"
+  ],
+  "fuuka:6": [
+    "light-of-the-brow:6"
+  ],
+  "fuuka:10": [
+    "the-lettered:9",
+    "the-lettered:10"
   ]
 }

@@ -47,22 +47,24 @@
 | 15 | `vestments` | [装いの定め](text/15-vestments.md) | 黒と金、菱形の留め金、白い肩掛け、古着 | draft | 編纂責任者 |
 | 16 | `gathering` | [集いの作法](text/16-gathering.md) | 来る、座る、沈黙、ラーメンの時、帰り道 | draft | 編纂責任者 |
 | 17 | `names` | [名の定め](text/17-names.md) | 本名・英字・名簿の名、呼ばれる名と呼ばれない名 | draft | 編纂責任者 |
+| 18 | `forbidden-words` | [言葉の禁忌](text/18-forbidden-words.md) | 集いで口にしてはならない言葉 | draft | 編纂責任者 |
 
 ## 第三部　列伝
 
 | 章 | ID | 題 | 中身 | 状態 | 担当 |
 |---|---|---|---|---|---|
-| 18 | `birth-in-the-mist` | [霧の国の生誕](text/18-birth-in-the-mist.md) | 食い違う三つの伝え | draft | 編纂責任者 |
-| 19 | `neo-saitama` | [ネオサイタマ](text/19-neo-saitama.md) | ひとり満足修道女、隣の棟の声、名簿の最初の欄 | draft | 編纂責任者 |
-| 20 | `house-of-the-sister` | [姉の家](text/20-house-of-the-sister.md) | 感謝、礼節、暴、救済。継がれなかった一つ | draft | 編纂責任者 |
-| 21 | `armaments` | [教祖の武具](text/21-armaments.md) | 概念兵器とキューピーたらこ。武具より箸 | draft | 編纂責任者 |
-| 22 | `the-second-season` | [第二の季節](text/22-the-second-season.md) | 門の閉ざされしのちの三つの地。生き残ること | draft | 編纂責任者 |
-| 23 | `founder-day` | [教祖の一日](text/23-founder-day.md) | 学び舎、古着、アイスティー、集い、夜の数 | draft | 編纂責任者 |
-| 24 | `the-lettered` | [英字の者たち](text/24-the-lettered.md) | ALPHACLAVE。B、F、Z、二十三の空席、Aの椅子 | draft | 編纂責任者 |
-| 25 | `catechism` | [教理問答](text/25-catechism.md) | 信者Bの問いと教祖の答え | draft | 編纂責任者 |
-| 26 | `testimonies` | [証言](text/26-testimonies.md) | 名を伏せた信女らの証言。十一の証言と十人の証言者 | draft | 編纂責任者 |
-| 27 | `behind-the-noren` | [暖簾の内](text/27-behind-the-noren.md) | ラーメン屋の女将が見た信者たち | draft | 編纂責任者 |
-| 28 | `parables` | [譬え](text/28-parables.md) | 教祖の五つの譬え。どれも終わりまで語られない | draft | 編纂責任者 |
+| 19 | `birth-in-the-mist` | [霧の国の生誕](text/19-birth-in-the-mist.md) | 食い違う三つの伝え | draft | 編纂責任者 |
+| 20 | `neo-saitama` | [ネオサイタマ](text/20-neo-saitama.md) | ひとり満足修道女、隣の棟の声、名簿の最初の欄 | draft | 編纂責任者 |
+| 21 | `house-of-the-sister` | [姉の家](text/21-house-of-the-sister.md) | 感謝、礼節、暴、救済。継がれなかった一つ | draft | 編纂責任者 |
+| 22 | `armaments` | [教祖の武具](text/22-armaments.md) | 概念兵器とキューピーたらこ。武具より箸 | draft | 編纂責任者 |
+| 23 | `the-second-season` | [第二の季節](text/23-the-second-season.md) | 門の閉ざされしのちの三つの地。生き残ること | draft | 編纂責任者 |
+| 24 | `founder-day` | [教祖の一日](text/24-founder-day.md) | 学び舎、古着、アイスティー、集い、夜の数 | draft | 編纂責任者 |
+| 25 | `the-lettered` | [英字の者たち](text/25-the-lettered.md) | ALPHACLAVE。B、F、Z、二十三の空席、Aの椅子 | draft | 編纂責任者 |
+| 26 | `fuuka` | [風花の逸話](text/26-fuuka.md) | 信者F風花の悪ノリの逸話五つ（第五は記さず） | draft | 編纂責任者 |
+| 27 | `catechism` | [教理問答](text/27-catechism.md) | 信者Bの問いと教祖の答え | draft | 編纂責任者 |
+| 28 | `testimonies` | [証言](text/28-testimonies.md) | 名を伏せた信女らの証言。十一の証言と十人の証言者 | draft | 編纂責任者 |
+| 29 | `behind-the-noren` | [暖簾の内](text/29-behind-the-noren.md) | ラーメン屋の女将が見た信者たち | draft | 編纂責任者 |
+| 30 | `parables` | [譬え](text/30-parables.md) | 教祖の五つの譬え。どれも終わりまで語られない | draft | 編纂責任者 |
 
 ## 第四部　書簡
 
@@ -70,12 +72,12 @@
 
 | 章 | ID | 題 | 中身 | 状態 | 担当 |
 |---|---|---|---|---|---|
-| 29 | `letter-to-b` | [信者Bへの書簡](text/29-letter-to-b.md) | 問う者への感謝、なぞられた名、二枚の券 | draft | 編纂責任者 |
-| 30 | `letter-to-fuuka` | [風花への書簡](text/30-letter-to-fuuka.md) | 踏み外す二歩、来ていなかった日 | draft | 編纂責任者 |
-| 31 | `letter-to-the-sister` | [姉への書簡](text/31-letter-to-the-sister.md) | 私的な「あたし」の手紙。差し出されないまま | draft | 編纂責任者 |
-| 32 | `letter-to-med` | [MEDへの書簡](text/32-letter-to-med.md) | 追いつかないように追いかける影への、出されない手紙 | draft | 編纂責任者 |
-| 33 | `letter-to-the-far-utopia` | [遠き理想郷への書簡](text/33-letter-to-the-far-utopia.md) | 閉ざされた理想郷へ。投函され、戻ってきた手紙 | draft | 編纂責任者 |
-| 34 | `letter-to-the-reader` | [まだ見ぬ信女への書簡](text/34-letter-to-the-reader.md) | 読者に宛てた手紙 | draft | 編纂責任者 |
+| 31 | `letter-to-b` | [信者Bへの書簡](text/31-letter-to-b.md) | 問う者への感謝、なぞられた名、二枚の券 | draft | 編纂責任者 |
+| 32 | `letter-to-fuuka` | [風花への書簡](text/32-letter-to-fuuka.md) | 踏み外す二歩、来ていなかった日 | draft | 編纂責任者 |
+| 33 | `letter-to-the-sister` | [姉への書簡](text/33-letter-to-the-sister.md) | 私的な「あたし」の手紙。差し出されないまま | draft | 編纂責任者 |
+| 34 | `letter-to-med` | [MEDへの書簡](text/34-letter-to-med.md) | 追いつかないように追いかける影への、出されない手紙 | draft | 編纂責任者 |
+| 35 | `letter-to-the-far-utopia` | [遠き理想郷への書簡](text/35-letter-to-the-far-utopia.md) | 閉ざされた理想郷へ。投函され、戻ってきた手紙 | draft | 編纂責任者 |
+| 36 | `letter-to-the-reader` | [まだ見ぬ信女への書簡](text/36-letter-to-the-reader.md) | 読者に宛てた手紙 | draft | 編纂責任者 |
 
 ## 第五部　箴言と祈り
 
@@ -83,13 +85,13 @@
 
 | 章 | ID | 題 | 中身 | 状態 | 担当 |
 |---|---|---|---|---|---|
-| 35 | `proverbs` | [箴言](text/35-proverbs.md) | 満足の格言四十 | draft | 編纂責任者 |
-| 36 | `night-psalm` | [夜の詩](text/36-night-psalm.md) | 眠る前に独りで唱える詩 | draft | 編纂責任者 |
-| 37 | `short-prayers` | [短き祈り](text/37-short-prayers.md) | 目覚め、雨、替え玉、配信、眠れぬ夜などの短い祈り | draft | 編纂責任者 |
-| 38 | `closing-litany` | [結びの連祷](text/38-closing-litany.md) | 集いの終わりの呼びかけと応え。台本にない25の問い | draft | 編纂責任者 |
-| 39 | `prophecies` | [預言の断片](text/39-prophecies.md) | まだ外れていない預言だけを記した章 | draft | 編纂責任者 |
-| 40 | `notice-board` | [掲示板の箴言](text/40-notice-board.md) | 四十一番目以降の、箴言ではない言葉 | draft | 編纂責任者 |
-| 41 | `song-of-the-waiting` | [待つ者の詩](text/41-song-of-the-waiting.md) | 記録室の扉の前に並ぶ者たちの詩 | draft | 編纂責任者 |
+| 37 | `proverbs` | [箴言](text/37-proverbs.md) | 満足の格言四十 | draft | 編纂責任者 |
+| 38 | `night-psalm` | [夜の詩](text/38-night-psalm.md) | 眠る前に独りで唱える詩 | draft | 編纂責任者 |
+| 39 | `short-prayers` | [短き祈り](text/39-short-prayers.md) | 目覚め、雨、替え玉、配信、眠れぬ夜などの短い祈り | draft | 編纂責任者 |
+| 40 | `closing-litany` | [結びの連祷](text/40-closing-litany.md) | 集いの終わりの呼びかけと応え。台本にない25の問い | draft | 編纂責任者 |
+| 41 | `prophecies` | [預言の断片](text/41-prophecies.md) | まだ外れていない預言だけを記した章 | draft | 編纂責任者 |
+| 42 | `notice-board` | [掲示板の箴言](text/42-notice-board.md) | 四十一番目以降の、箴言ではない言葉 | draft | 編纂責任者 |
+| 43 | `song-of-the-waiting` | [待つ者の詩](text/43-song-of-the-waiting.md) | 記録室の扉の前に並ぶ者たちの詩 | draft | 編纂責任者 |
 
 ## 付録
 

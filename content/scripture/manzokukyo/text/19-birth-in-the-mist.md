@@ -1,7 +1,7 @@
 ---
 id: birth-in-the-mist
 part: 3
-chapter: 18
+chapter: 19
 title: 霧の国の生誕
 summary: 霧の国における教祖の生誕の、三つの伝え。
 status: draft

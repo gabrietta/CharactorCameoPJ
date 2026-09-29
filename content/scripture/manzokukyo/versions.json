@@ -400,5 +400,18 @@
       "verses": 726,
       "chapters": 41
     }
+  },
+  {
+    "version": "0.27.0",
+    "date": "2026-09-29",
+    "base": "c302529",
+    "summary": "言葉の禁忌、風花の逸話を差し込み",
+    "stats": {
+      "characters": 28478,
+      "manuscriptSheets": 72,
+      "bunkoPages": 48,
+      "verses": 749,
+      "chapters": 43
+    }
   }
 ]

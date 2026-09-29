@@ -1,7 +1,7 @@
 ---
 id: the-lettered
 part: 3
-chapter: 24
+chapter: 25
 title: 英字の者たち
 summary: 英字の者たち。B、F、Z。二十三の空席とAの椅子。
 status: draft

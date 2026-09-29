@@ -1,7 +1,7 @@
 ---
 id: the-second-season
 part: 3
-chapter: 22
+chapter: 23
 title: 第二の季節
 summary: 遠き理想郷の門の閉ざされしのち、教祖の三つの地へ赴きたまいしこと。生き残ること。
 status: draft

@@ -1,7 +1,7 @@
 ---
 id: letter-to-med
 part: 4
-chapter: 32
+chapter: 34
 title: MEDへの書簡
 summary: 教祖より、霧の中の影へ。宛先を知らざるゆえに出されざる書簡。
 voice: colloquial
