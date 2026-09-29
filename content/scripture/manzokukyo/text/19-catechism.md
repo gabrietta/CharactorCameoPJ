@@ -4,6 +4,7 @@ part: 3
 chapter: 19
 title: 教理問答
 summary: 信者Bの問いと、教祖の答え。
+voice: colloquial
 status: draft
 ---
 

@@ -179,5 +179,18 @@
       "verses": 323,
       "chapters": 20
     }
+  },
+  {
+    "version": "0.11.1",
+    "date": "2026-09-29",
+    "base": "69b16f3",
+    "summary": "九つの戒めの文語修正（文語の検査を導入）",
+    "stats": {
+      "characters": 12893,
+      "manuscriptSheets": 33,
+      "bunkoPages": 22,
+      "verses": 323,
+      "chapters": 20
+    }
   }
 ]

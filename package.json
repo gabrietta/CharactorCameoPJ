@@ -12,6 +12,7 @@
     "scripture:view": "node scripts/serve-scripture.mjs",
     "scripture:pdf": "node scripts/print-scripture.mjs",
     "scripture:version": "node scripts/scripture-version.mjs",
+    "scripture:lint": "node scripts/lint-scripture-style.mjs",
     "check:encoding": "node scripts/check-encoding.mjs",
     "import:drive-visuals": "node scripts/import-drive-visuals.mjs",
     "import:drive-videos": "node scripts/import-drive-videos.mjs"

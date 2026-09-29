@@ -17,6 +17,12 @@ PRを出す前に、次を実行して形式を確認してください。
 node scripts/check-scripture.mjs
 ```
 
+文語の本文に現代語が混ざっていないかは、次で確認できます（失敗にはならず、推敲の手がかりを出すだけ）。
+
+```bash
+node scripts/lint-scripture-style.mjs
+```
+
 ## 書き方の約束
 
 詳しくは [style-guide.md](style-guide.md)。要点だけ:
@@ -47,6 +53,7 @@ part: 1                 # 部の番号
 chapter: 1              # 通し章番号（draftの間は変わりうる）
 title: はじめに空腹ありき
 summary: 空腹のはじめ。…  # 章の頭に置く一行の梗概（文語）
+# voice: colloquial     # 連祷・聖歌・規程・問答など、わざと口語で書く章だけに付ける
 status: draft           # draft / review / adopted
 ---
 
