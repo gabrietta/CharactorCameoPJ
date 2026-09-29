@@ -841,5 +841,61 @@
   ],
   "months:12": [
     "calendar:8"
+  ],
+  "duties:2": [
+    "hunger:9"
+  ],
+  "duties:3": [
+    "table-prayers:11"
+  ],
+  "duties:4": [
+    "parables:21"
+  ],
+  "duties:5": [
+    "testimonies:10"
+  ],
+  "duties:7": [
+    "letter-to-seat-a:2"
+  ],
+  "duties:8": [
+    "proverbs:40"
+  ],
+  "duties:9": [
+    "confession:17"
+  ],
+  "duties:10": [
+    "regulations:3"
+  ],
+  "false-images:1": [
+    "the-second-season:8"
+  ],
+  "false-images:3": [
+    "the-last-day:17"
+  ],
+  "false-images:4": [
+    "precepts:5",
+    "precepts:6"
+  ],
+  "false-images:6": [
+    "the-second-season:5"
+  ],
+  "false-images:9": [
+    "sleep:5",
+    "the-second-season:4"
+  ],
+  "childrens-catechism:2": [
+    "be-not-sated:1"
+  ],
+  "childrens-catechism:6": [
+    "hunger:9"
+  ],
+  "childrens-catechism:10": [
+    "calendar:2"
+  ],
+  "childrens-catechism:12": [
+    "fragments-of-salvation:9"
+  ],
+  "childrens-catechism:16": [
+    "litany:2"
   ]
 }

@@ -439,5 +439,18 @@
       "verses": 792,
       "chapters": 47
     }
+  },
+  {
+    "version": "0.30.0",
+    "date": "2026-09-29",
+    "base": "d3a052d",
+    "summary": "務めの定め、偽りの像の祭り、童の問答を差し込み",
+    "stats": {
+      "characters": 31759,
+      "manuscriptSheets": 80,
+      "bunkoPages": 53,
+      "verses": 834,
+      "chapters": 50
+    }
   }
 ]
