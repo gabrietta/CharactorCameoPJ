@@ -1,5 +1,6 @@
+import fs from "node:fs";
 import path from "node:path";
-import { listBookIds, parseFrontMatter, readBookMeta, readChapterFiles, readCrossReferences, notesHeading, verseLine } from "./scripture-lib.mjs";
+import { scriptureDir, listBookIds, parseFrontMatter, readBookMeta, readChapterFiles, readCrossReferences, notesHeading, verseLine } from "./scripture-lib.mjs";
 
 // 教典（content/scripture/{id}/text/*.md）の章ファイル形式を検査する。
 // --random を付けると、節番号付きの行からランダムに一節を表示する。
@@ -29,7 +30,24 @@ function checkBook(bookId) {
   const ids = new Map();
   const chapters = new Map();
   const verseKeys = new Set();
-  const { parts } = readBookMeta(bookId);
+  const { parts, files, docs, version } = readBookMeta(bookId);
+  const metaFile = `content/scripture/${bookId}/book.json`;
+
+  // ビューアは book.json の files を読むので、text/ の中身と一致している必要がある。
+  if (files) {
+    const actual = readChapterFiles(bookId).map((file) => file.name);
+    for (const name of actual) if (!files.includes(name)) errors.push(`${metaFile}: files に ${name} がありません`);
+    for (const name of files) if (!actual.includes(name)) errors.push(`${metaFile}: files の ${name} が text/ にありません`);
+  }
+  // 版の記録（versions.json）の最後の版は、book.json の version と一致している必要がある。
+  const versionsPath = path.join(scriptureDir, bookId, "versions.json");
+  if (version && fs.existsSync(versionsPath)) {
+    const last = JSON.parse(fs.readFileSync(versionsPath, "utf8")).at(-1);
+    if (last?.version !== version) errors.push(`${metaFile}: version ${version} が versions.json の最後の版 ${last?.version} と一致しません`);
+  }
+  for (const name of docs ?? []) {
+    if (!fs.existsSync(path.join(scriptureDir, bookId, name))) errors.push(`${metaFile}: docs の ${name} がありません`);
+  }
 
   for (const chapterFile of readChapterFiles(bookId)) {
     const file = path.relative(rootDir, chapterFile.path).replaceAll("\\", "/");

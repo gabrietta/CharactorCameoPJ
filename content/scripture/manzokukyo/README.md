@@ -11,6 +11,25 @@
 
 > 編纂責任者の不在中に進めた作業のまとめは [handoff.md](handoff.md) にある。
 
+## 見る
+
+```bash
+npm.cmd run scripture:view
+```
+
+表示されたURLをブラウザで開く。ビルドは不要で、Markdownを直したら再読み込みするだけで反映される。
+
+- **編集者向け** `/manzokukyo/viewer/`: 版と文字量（原稿用紙の枚数、版ごとの伸び）、章ごとの状態、未決定・仮決定、募集中の章、本文（編纂注つき）、資料。
+- **読者向け** `/manzokukyo/viewer/book.html`: 表紙・目次・1章1頁の本。矢印キー、端のタップ、スワイプで頁をめくる。「今日の満足」ボタンあり。
+- **PDF**: `npm.cmd run scripture:pdf` で、読者向けの本をA5のPDFにする（`output/scripture/manzokukyo.pdf`。EdgeかChromeを使う。追加のインストール不要）。
+
+## 版
+
+- いまの版は [book.json](book.json) の `version`、版ごとの記録（文字数、原稿用紙の枚数、節数）は [versions.json](versions.json)。
+- 開発版の付け方: `0.<章の追加・構成の変更>.<文言の修正>`。正式な第1版を出すときに `1.0.0` にする。
+- 版を上げる: `npm.cmd run scripture:version -- bump minor "第20章を追加"`（文言の修正なら `patch`）。book.json と versions.json が更新されるので、そのままコミットする。
+- 現在の文字量の確認: `npm.cmd run scripture:version`
+
 ## はじめて参加する方へ
 
 1. [参加ガイド](CONTRIBUTING.md)を読む
@@ -33,7 +52,9 @@ content/scripture/manzokukyo/
   lexicon.md         # 作中用語の登録簿
   mysteries.md       # 解かれていない謎の登録簿
   fragments.md       # 章に入る前の断片置き場
-  book.json          # 書名、部の名前、満足暦の祝祭日
+  book.json          # 書名、版、章ファイルと資料の一覧、部の名前、満足暦の祝祭日
+  versions.json      # 版の記録（文字量つき）
+  viewer/            # ビルド不要のビューア（編集者向け index.html、読者向け book.html）
   cross-references.json # 引照（節から関連する節への参照）
   handoff.md         # 引き継ぎメモ
   source-index.md    # 既存設定・素材の棚卸し

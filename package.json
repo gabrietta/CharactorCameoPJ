@@ -9,6 +9,9 @@
     "dev": "node scripts/dev-server.mjs",
     "check": "node scripts/check-encoding.mjs && node scripts/check-scripture.mjs && node scripts/build.mjs --check",
     "check:scripture": "node scripts/check-scripture.mjs",
+    "scripture:view": "node scripts/serve-scripture.mjs",
+    "scripture:pdf": "node scripts/print-scripture.mjs",
+    "scripture:version": "node scripts/scripture-version.mjs",
     "check:encoding": "node scripts/check-encoding.mjs",
     "import:drive-visuals": "node scripts/import-drive-visuals.mjs",
     "import:drive-videos": "node scripts/import-drive-videos.mjs"

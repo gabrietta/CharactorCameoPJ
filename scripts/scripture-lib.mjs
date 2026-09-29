@@ -67,3 +67,37 @@ export function parseChapter(text) {
   }
   return { ...front.data, body: body.join("\n").trim(), verses };
 }
+
+// 本文の文字量。編纂注・Markdown記号・節番号・空白を除いて数える。
+// viewer/scripture.js の countCharacters と同じ数え方にしておくこと。
+export function countCharacters(chapterText) {
+  const body = chapterText
+    .replace(/\r\n/g, "\n")
+    .replace(/^---\n[\s\S]*?\n---\n/, "")
+    .split(/^##\s*編纂注\s*$/m)[0];
+  const text = body
+    .split("\n")
+    .map((line) =>
+      line
+        .replace(/^#{1,6}\s+/, "")
+        .replace(/^\*\*\d+\*\*　/, "")
+        .replace(/^>\s?/, "")
+        .replace(/^\|?[\s:|-]+\|?$/, "")
+        .replace(/\|/g, "")
+        .replace(/\*\*|`|\*/g, ""),
+    )
+    .join("");
+  return [...text.replace(/[\s　]/g, "")].length;
+}
+
+// 文字数と、原稿用紙（400字詰め）・文庫本（1頁およそ600字）での目安。
+export function bookStats(chapters) {
+  const characters = chapters.reduce((sum, chapter) => sum + countCharacters(chapter.text), 0);
+  return {
+    characters,
+    manuscriptSheets: Math.ceil(characters / 400),
+    bunkoPages: Math.ceil(characters / 600),
+    verses: chapters.reduce((sum, chapter) => sum + (parseChapter(chapter.text)?.verses.length ?? 0), 0),
+    chapters: chapters.filter((chapter) => parseFrontMatter(chapter.text)?.data.chapter !== "0").length,
+  };
+}

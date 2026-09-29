@@ -1,0 +1,170 @@
+[
+  {
+    "version": "0.1.0",
+    "date": "2026-09-29",
+    "commit": "91cbb60",
+    "tag": "scripture-m1",
+    "summary": "共同編纂の仕組み、序、第1〜5章",
+    "stats": {
+      "characters": 2390,
+      "manuscriptSheets": 6,
+      "bunkoPages": 4,
+      "verses": 56,
+      "chapters": 5
+    }
+  },
+  {
+    "version": "0.2.0",
+    "date": "2026-09-29",
+    "commit": "fcd76f1",
+    "tag": "scripture-m2",
+    "summary": "満足連祷。書名・部の名前などを仮決定",
+    "stats": {
+      "characters": 2774,
+      "manuscriptSheets": 7,
+      "bunkoPages": 5,
+      "verses": 81,
+      "chapters": 5
+    }
+  },
+  {
+    "version": "0.3.0",
+    "date": "2026-09-29",
+    "commit": "ae1bef8",
+    "tag": "scripture-m3",
+    "summary": "第6章 終わりの日",
+    "stats": {
+      "characters": 3763,
+      "manuscriptSheets": 10,
+      "bunkoPages": 7,
+      "verses": 106,
+      "chapters": 6
+    }
+  },
+  {
+    "version": "0.4.0",
+    "date": "2026-09-29",
+    "commit": "3c31df0",
+    "tag": "scripture-m4",
+    "summary": "第7〜9章（九つの戒め、食卓の祈り、聖歌）",
+    "stats": {
+      "characters": 5339,
+      "manuscriptSheets": 14,
+      "bunkoPages": 9,
+      "verses": 151,
+      "chapters": 9
+    }
+  },
+  {
+    "version": "0.5.0",
+    "date": "2026-09-29",
+    "commit": "036523c",
+    "tag": "scripture-m5",
+    "summary": "第10〜12章（懺悔、事務規程抄、装いの定め）",
+    "stats": {
+      "characters": 7218,
+      "manuscriptSheets": 19,
+      "bunkoPages": 13,
+      "verses": 193,
+      "chapters": 12
+    }
+  },
+  {
+    "version": "0.6.0",
+    "date": "2026-09-29",
+    "commit": "7e09a29",
+    "tag": "scripture-m6",
+    "summary": "第13〜15章（霧の国の生誕、ネオサイタマ、姉の家）",
+    "stats": {
+      "characters": 9066,
+      "manuscriptSheets": 23,
+      "bunkoPages": 16,
+      "verses": 236,
+      "chapters": 15
+    }
+  },
+  {
+    "version": "0.7.0",
+    "date": "2026-09-29",
+    "commit": "b38336e",
+    "tag": "scripture-m7",
+    "summary": "英字の者たち、教理問答。本文の初稿がそろう",
+    "stats": {
+      "characters": 10297,
+      "manuscriptSheets": 26,
+      "bunkoPages": 18,
+      "verses": 275,
+      "chapters": 17
+    }
+  },
+  {
+    "version": "0.8.0",
+    "date": "2026-09-29",
+    "commit": "bbdd1a7",
+    "tag": "scripture-m8",
+    "summary": "付録（満足暦、奥付）",
+    "stats": {
+      "characters": 11015,
+      "manuscriptSheets": 28,
+      "bunkoPages": 19,
+      "verses": 285,
+      "chapters": 17
+    }
+  },
+  {
+    "version": "0.8.1",
+    "date": "2026-09-29",
+    "commit": "69b4f26",
+    "tag": "scripture-m9",
+    "summary": "通し読みによる文語の修正",
+    "stats": {
+      "characters": 11013,
+      "manuscriptSheets": 28,
+      "bunkoPages": 19,
+      "verses": 285,
+      "chapters": 17
+    }
+  },
+  {
+    "version": "0.9.0",
+    "date": "2026-09-29",
+    "commit": "9bb1ae6",
+    "tag": "scripture-m12",
+    "summary": "章の梗概と引照",
+    "stats": {
+      "characters": 11013,
+      "manuscriptSheets": 28,
+      "bunkoPages": 19,
+      "verses": 285,
+      "chapters": 17
+    }
+  },
+  {
+    "version": "0.10.0",
+    "date": "2026-09-29",
+    "commit": "d3be8e4",
+    "tag": "scripture-m13",
+    "summary": "第16章 教祖の武具、第17章 第二の季節",
+    "stats": {
+      "characters": 12121,
+      "manuscriptSheets": 31,
+      "bunkoPages": 21,
+      "verses": 311,
+      "chapters": 19
+    }
+  },
+  {
+    "version": "0.10.1",
+    "date": "2026-09-29",
+    "commit": "7a2c8b1",
+    "tag": "scripture-m14",
+    "summary": "第16章の文語修正",
+    "stats": {
+      "characters": 12121,
+      "manuscriptSheets": 31,
+      "bunkoPages": 21,
+      "verses": 311,
+      "chapters": 19
+    }
+  }
+]

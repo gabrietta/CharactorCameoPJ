@@ -70,6 +70,11 @@ status: draft           # draft / review / adopted
 - `## 編纂注` は制作用のメモ。書籍・Wikiに載せるときは外す。
 - 別の章の節とつながる節を書いたら、[cross-references.json](cross-references.json) に引照を足す（例: `"hunger:6": ["litany:8"]`）。書き出した本では、章末に「引照」として表示される。存在しない節を指すと検査で止まる。
 
+## 章ファイルを足したとき
+
+- [book.json](book.json) の `files` にファイル名を足す（ビューアはこの一覧を読む）。足し忘れると検査で止まる。
+- 本文を変えたPRでは、版を上げる（`npm.cmd run scripture:version -- bump patch "概要"`。章の追加は `minor`）。複数のPRをまとめて版を上げてもよい。
+
 ## 採否の流れ
 
 1. **draft**: 誰でも書き足し・書き換えできる。
