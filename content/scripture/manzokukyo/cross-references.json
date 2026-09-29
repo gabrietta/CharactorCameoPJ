@@ -1102,5 +1102,67 @@
   ],
   "lament:9": [
     "founder-day:11"
+  ],
+  "neighbor:2": [
+    "counting:3",
+    "confession:15"
+  ],
+  "neighbor:4": [
+    "gathering:4"
+  ],
+  "neighbor:6": [
+    "vessel:4"
+  ],
+  "neighbor:7": [
+    "the-lettered:13"
+  ],
+  "neighbor:9": [
+    "the-lettered:6"
+  ],
+  "neighbor:10": [
+    "parables:3"
+  ],
+  "meeting-house:2": [
+    "gathering:1"
+  ],
+  "meeting-house:3": [
+    "hunger:9"
+  ],
+  "meeting-house:4": [
+    "table-prayers:11"
+  ],
+  "meeting-house:5": [
+    "sleep:8"
+  ],
+  "meeting-house:7": [
+    "proverbs:40"
+  ],
+  "meeting-house:8": [
+    "regulations:8"
+  ],
+  "meeting-house:9": [
+    "song-of-the-waiting:1"
+  ],
+  "mist-journey:1": [
+    "birth-in-the-mist:12"
+  ],
+  "mist-journey:2": [
+    "journeys:1",
+    "journeys:2"
+  ],
+  "mist-journey:4": [
+    "birth-in-the-mist:5"
+  ],
+  "mist-journey:7": [
+    "journeys:6"
+  ],
+  "mist-journey:9": [
+    "birth-in-the-mist:12"
+  ],
+  "mist-journey:10": [
+    "birth-in-the-mist:13"
+  ],
+  "mist-journey:12": [
+    "the-last-day:10"
   ]
 }

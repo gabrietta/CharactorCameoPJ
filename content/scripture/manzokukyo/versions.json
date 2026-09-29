@@ -504,5 +504,18 @@
       "verses": 958,
       "chapters": 60
     }
+  },
+  {
+    "version": "0.35.0",
+    "date": "2026-09-29",
+    "base": "42c7f4e",
+    "summary": "隣人の書、集会所、霧の国へ行きし信女を差し込み",
+    "stats": {
+      "characters": 37766,
+      "manuscriptSheets": 95,
+      "bunkoPages": 63,
+      "verses": 993,
+      "chapters": 63
+    }
   }
 ]
