@@ -647,5 +647,18 @@
       "verses": 1054,
       "chapters": 68
     }
+  },
+  {
+    "version": "0.42.0",
+    "date": "2026-09-30",
+    "base": "b175170",
+    "summary": "第46章「遺失物の帳」を追加（孤立した謎7つに手がかり）",
+    "stats": {
+      "characters": 42401,
+      "manuscriptSheets": 107,
+      "bunkoPages": 71,
+      "verses": 1071,
+      "chapters": 69
+    }
   }
 ]

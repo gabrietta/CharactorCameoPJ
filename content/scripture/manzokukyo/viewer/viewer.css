@@ -62,10 +62,11 @@ a { color: var(--gold); }
 .brand-title { font-family: var(--serif); font-size: 22px; font-weight: 700; letter-spacing: 0.12em; }
 .brand-sub { color: var(--desk-muted); font-size: 13px; letter-spacing: 0.2em; }
 
-.tabs { display: flex; gap: 4px; flex: 1; }
+.tabs { display: flex; flex-wrap: wrap; gap: 4px; flex: 1 1 320px; min-width: 0; }
 
 .tabs a {
   padding: 6px 14px;
+  white-space: nowrap;
   border-radius: 999px;
   color: var(--desk-muted);
   text-decoration: none;

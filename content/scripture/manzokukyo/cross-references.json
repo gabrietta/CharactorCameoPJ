@@ -1353,5 +1353,28 @@
     "night-psalm:4",
     "calendar:2",
     "forbidden-words:4"
+  ],
+  "lost-and-found:5": [
+    "vestments:7"
+  ],
+  "lost-and-found:7": [
+    "vestments:13"
+  ],
+  "lost-and-found:8": [
+    "birth-in-the-mist:13"
+  ],
+  "lost-and-found:9": [
+    "sleep:8",
+    "sleep:9"
+  ],
+  "lost-and-found:10": [
+    "gathering:3"
+  ],
+  "lost-and-found:11": [
+    "confession:12",
+    "confession:13"
+  ],
+  "lost-and-found:13": [
+    "fragment-catalog:7"
   ]
 }

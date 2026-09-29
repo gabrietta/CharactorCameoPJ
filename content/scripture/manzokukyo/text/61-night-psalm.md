@@ -1,7 +1,7 @@
 ---
 id: night-psalm
 part: 5
-chapter: 60
+chapter: 61
 title: 夜の詩
 summary: 眠る前に独り唱うる詩。枕辺に並ぶものに向けて。
 status: draft
