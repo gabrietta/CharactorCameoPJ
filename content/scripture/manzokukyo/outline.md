@@ -76,6 +76,7 @@
 |---|---|---|---|---|---|
 | 26 | `proverbs` | [箴言](text/26-proverbs.md) | 満足の格言四十 | draft | 編纂責任者 |
 | 27 | `night-psalm` | [夜の詩](text/27-night-psalm.md) | 眠る前に独りで唱える詩 | draft | 編纂責任者 |
+| 28 | `short-prayers` | [短き祈り](text/28-short-prayers.md) | 目覚め、雨、替え玉、配信、眠れぬ夜などの短い祈り | draft | 編纂責任者 |
 
 ## 付録
 

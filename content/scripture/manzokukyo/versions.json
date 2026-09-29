@@ -244,5 +244,18 @@
       "verses": 465,
       "chapters": 27
     }
+  },
+  {
+    "version": "0.16.0",
+    "date": "2026-09-29",
+    "base": "0ee9d60",
+    "summary": "第28章 短き祈り",
+    "stats": {
+      "characters": 18747,
+      "manuscriptSheets": 47,
+      "bunkoPages": 32,
+      "verses": 481,
+      "chapters": 28
+    }
   }
 ]

@@ -1,6 +1,6 @@
 {
   "title": "満足聖典",
-  "version": "0.15.0",
+  "version": "0.16.0",
   "files": [
     "00-1-preface.md",
     "00-2-litany.md",
@@ -31,6 +31,7 @@
     "25-letter-to-the-reader.md",
     "26-proverbs.md",
     "27-night-psalm.md",
+    "28-short-prayers.md",
     "90-calendar.md",
     "99-colophon.md"
   ],
