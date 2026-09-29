@@ -78,6 +78,7 @@
 | 27 | `night-psalm` | [夜の詩](text/27-night-psalm.md) | 眠る前に独りで唱える詩 | draft | 編纂責任者 |
 | 28 | `short-prayers` | [短き祈り](text/28-short-prayers.md) | 目覚め、雨、替え玉、配信、眠れぬ夜などの短い祈り | draft | 編纂責任者 |
 | 29 | `closing-litany` | [結びの連祷](text/29-closing-litany.md) | 集いの終わりの呼びかけと応え。台本にない25の問い | draft | 編纂責任者 |
+| 30 | `prophecies` | [預言の断片](text/30-prophecies.md) | まだ外れていない預言だけを記した章 | draft | 編纂責任者 |
 
 ## 付録
 

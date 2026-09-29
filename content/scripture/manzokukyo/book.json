@@ -1,6 +1,6 @@
 {
   "title": "満足聖典",
-  "version": "0.20.0",
+  "version": "0.21.0",
   "files": [
     "00-1-preface.md",
     "00-2-litany.md",
@@ -33,6 +33,7 @@
     "27-night-psalm.md",
     "28-short-prayers.md",
     "29-closing-litany.md",
+    "30-prophecies.md",
     "90-calendar.md",
     "99-colophon.md"
   ],
@@ -109,6 +110,31 @@
         "date": "12-31",
         "verse": 8,
         "name": "名簿改めの日"
+      },
+      {
+        "date": "02-29",
+        "verse": 9,
+        "name": "閏の日"
+      },
+      {
+        "date": "07-11",
+        "verse": 10,
+        "name": "麺の日"
+      },
+      {
+        "date": "08-04",
+        "verse": 11,
+        "name": "箸の日"
+      },
+      {
+        "date": "10-10",
+        "verse": 12,
+        "name": "目の日"
+      },
+      {
+        "date": "11-11",
+        "verse": 13,
+        "name": "一の日"
       }
     ]
   }

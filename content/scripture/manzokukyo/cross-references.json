@@ -104,7 +104,7 @@
     "the-last-day:10"
   ],
   "neo-saitama:15": [
-    "calendar:10"
+    "calendar:15"
   ],
   "the-lettered:6": [
     "catechism:22"
@@ -486,5 +486,35 @@
   ],
   "closing-litany:27": [
     "litany:25"
+  ],
+  "prophecies:3": [
+    "be-not-sated:10"
+  ],
+  "prophecies:5": [
+    "be-not-sated:8"
+  ],
+  "prophecies:7": [
+    "the-lettered:14"
+  ],
+  "prophecies:9": [
+    "preface:2"
+  ],
+  "prophecies:11": [
+    "preface:3"
+  ],
+  "prophecies:13": [
+    "catechism:22"
+  ],
+  "prophecies:16": [
+    "parables:21"
+  ],
+  "calendar:10": [
+    "short-prayers:6"
+  ],
+  "calendar:11": [
+    "table-prayers:11"
+  ],
+  "calendar:12": [
+    "light-of-the-brow:5"
   ]
 }

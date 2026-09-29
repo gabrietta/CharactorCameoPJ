@@ -309,5 +309,18 @@
       "verses": 566,
       "chapters": 29
     }
+  },
+  {
+    "version": "0.21.0",
+    "date": "2026-09-29",
+    "base": "becb16d",
+    "summary": "第30章 預言の断片。満足暦に祝祭日を追加",
+    "stats": {
+      "characters": 21607,
+      "manuscriptSheets": 55,
+      "bunkoPages": 37,
+      "verses": 587,
+      "chapters": 30
+    }
   }
 ]
