@@ -1,7 +1,7 @@
 ---
 id: counting
 part: 1
-chapter: 4
+chapter: 5
 title: 数うること
 summary: 指にて数うる作法。隣人の手。一は正しき数なること。
 status: draft

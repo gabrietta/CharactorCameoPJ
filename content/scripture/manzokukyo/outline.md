@@ -28,34 +28,35 @@
 | 1 | `hunger` | [はじめに空腹ありき](text/01-hunger.md) | 創世。三分と四分目 | draft | 編纂責任者 |
 | 2 | `fragments-of-salvation` | [救済の欠片](text/02-fragments-of-salvation.md) | 小さき満足、枕辺の欠片 | draft | 編纂責任者 |
 | 3 | `be-not-sated` | [満ち足りるなかれ](text/03-be-not-sated.md) | 根本の聖句、完了者、名簿 | draft | 編纂責任者 |
-| 4 | `counting` | [数うること](text/04-counting.md) | 指で数える作法 | draft | 編纂責任者 |
-| 5 | `light-of-the-brow` | [額の光](text/05-light-of-the-brow.md) | おでこ、光る目 | draft | 編纂責任者 |
-| 6 | `the-last-day` | [終わりの日](text/06-the-last-day.md) | 遠き理想郷の終わり、延べられし二日、MEDの影、五つのしるし | draft | 編纂責任者 |
+| 4 | `vessel` | [器](text/04-vessel.md) | 縁の欠けた丼、欠く器と割る器、器の大きさ | draft | 編纂責任者 |
+| 5 | `counting` | [数うること](text/05-counting.md) | 指で数える作法 | draft | 編纂責任者 |
+| 6 | `light-of-the-brow` | [額の光](text/06-light-of-the-brow.md) | おでこ、光る目 | draft | 編纂責任者 |
+| 7 | `the-last-day` | [終わりの日](text/07-the-last-day.md) | 遠き理想郷の終わり、延べられし二日、MEDの影、五つのしるし | draft | 編纂責任者 |
 
 ## 第二部　戒律
 
 | 章 | ID | 題 | 中身 | 状態 | 担当 |
 |---|---|---|---|---|---|
-| 7 | `precepts` | [九つの戒め](text/07-precepts.md) | 九つの戒めと書かれない十番目、貪る者 | draft | 編纂責任者 |
-| 8 | `table-prayers` | [食卓の祈り](text/08-table-prayers.md) | 食前・食後の言葉、好物ごとの作法 | draft | 編纂責任者 |
-| 9 | `hymns` | [聖歌](text/09-hymns.md) | 数え歌、器の歌、恵みの歌 | draft | 編纂責任者 |
-| 10 | `confession` | [懺悔](text/10-confession.md) | 赤き帳の作法、返されざりし手の話 | draft | 編纂責任者 |
-| 11 | `regulations` | [事務規程抄](text/11-regulations.md) | 規程の抜粋。内部文書調だけの章 | draft | 編纂責任者 |
-| 12 | `vestments` | [装いの定め](text/12-vestments.md) | 黒と金、菱形の留め金、白い肩掛け、古着 | draft | 編纂責任者 |
+| 8 | `precepts` | [九つの戒め](text/08-precepts.md) | 九つの戒めと書かれない十番目、貪る者 | draft | 編纂責任者 |
+| 9 | `table-prayers` | [食卓の祈り](text/09-table-prayers.md) | 食前・食後の言葉、好物ごとの作法 | draft | 編纂責任者 |
+| 10 | `hymns` | [聖歌](text/10-hymns.md) | 数え歌、器の歌、恵みの歌 | draft | 編纂責任者 |
+| 11 | `confession` | [懺悔](text/11-confession.md) | 赤き帳の作法、返されざりし手の話 | draft | 編纂責任者 |
+| 12 | `regulations` | [事務規程抄](text/12-regulations.md) | 規程の抜粋。内部文書調だけの章 | draft | 編纂責任者 |
+| 13 | `vestments` | [装いの定め](text/13-vestments.md) | 黒と金、菱形の留め金、白い肩掛け、古着 | draft | 編纂責任者 |
 
 ## 第三部　列伝
 
 | 章 | ID | 題 | 中身 | 状態 | 担当 |
 |---|---|---|---|---|---|
-| 13 | `birth-in-the-mist` | [霧の国の生誕](text/13-birth-in-the-mist.md) | 食い違う三つの伝え | draft | 編纂責任者 |
-| 14 | `neo-saitama` | [ネオサイタマ](text/14-neo-saitama.md) | ひとり満足修道女、隣の棟の声、名簿の最初の欄 | draft | 編纂責任者 |
-| 15 | `house-of-the-sister` | [姉の家](text/15-house-of-the-sister.md) | 感謝、礼節、暴、救済。継がれなかった一つ | draft | 編纂責任者 |
-| 16 | `armaments` | [教祖の武具](text/16-armaments.md) | 概念兵器とキューピーたらこ。武具より箸 | draft | 編纂責任者 |
-| 17 | `the-second-season` | [第二の季節](text/17-the-second-season.md) | 門の閉ざされしのちの三つの地。生き残ること | draft | 編纂責任者 |
-| 18 | `the-lettered` | [英字の者たち](text/18-the-lettered.md) | ALPHACLAVE。B、F、Z、二十三の空席、Aの椅子 | draft | 編纂責任者 |
-| 19 | `catechism` | [教理問答](text/19-catechism.md) | 信者Bの問いと教祖の答え | draft | 編纂責任者 |
-| 20 | `testimonies` | [証言](text/20-testimonies.md) | 名を伏せた信女らの証言。十一の証言と十人の証言者 | draft | 編纂責任者 |
-| 21 | `parables` | [譬え](text/21-parables.md) | 教祖の五つの譬え。どれも終わりまで語られない | draft | 編纂責任者 |
+| 14 | `birth-in-the-mist` | [霧の国の生誕](text/14-birth-in-the-mist.md) | 食い違う三つの伝え | draft | 編纂責任者 |
+| 15 | `neo-saitama` | [ネオサイタマ](text/15-neo-saitama.md) | ひとり満足修道女、隣の棟の声、名簿の最初の欄 | draft | 編纂責任者 |
+| 16 | `house-of-the-sister` | [姉の家](text/16-house-of-the-sister.md) | 感謝、礼節、暴、救済。継がれなかった一つ | draft | 編纂責任者 |
+| 17 | `armaments` | [教祖の武具](text/17-armaments.md) | 概念兵器とキューピーたらこ。武具より箸 | draft | 編纂責任者 |
+| 18 | `the-second-season` | [第二の季節](text/18-the-second-season.md) | 門の閉ざされしのちの三つの地。生き残ること | draft | 編纂責任者 |
+| 19 | `the-lettered` | [英字の者たち](text/19-the-lettered.md) | ALPHACLAVE。B、F、Z、二十三の空席、Aの椅子 | draft | 編纂責任者 |
+| 20 | `catechism` | [教理問答](text/20-catechism.md) | 信者Bの問いと教祖の答え | draft | 編纂責任者 |
+| 21 | `testimonies` | [証言](text/21-testimonies.md) | 名を伏せた信女らの証言。十一の証言と十人の証言者 | draft | 編纂責任者 |
+| 22 | `parables` | [譬え](text/22-parables.md) | 教祖の五つの譬え。どれも終わりまで語られない | draft | 編纂責任者 |
 
 ## 第四部　書簡
 
@@ -63,10 +64,10 @@
 
 | 章 | ID | 題 | 中身 | 状態 | 担当 |
 |---|---|---|---|---|---|
-| 22 | `letter-to-b` | [信者Bへの書簡](text/22-letter-to-b.md) | 問う者への感謝、なぞられた名、二枚の券 | draft | 編纂責任者 |
-| 23 | `letter-to-fuuka` | [風花への書簡](text/23-letter-to-fuuka.md) | 踏み外す二歩、来ていなかった日 | draft | 編纂責任者 |
-| 24 | `letter-to-the-sister` | [姉への書簡](text/24-letter-to-the-sister.md) | 私的な「あたし」の手紙。差し出されないまま | draft | 編纂責任者 |
-| 25 | `letter-to-the-reader` | [まだ見ぬ信女への書簡](text/25-letter-to-the-reader.md) | 読者に宛てた手紙 | draft | 編纂責任者 |
+| 23 | `letter-to-b` | [信者Bへの書簡](text/23-letter-to-b.md) | 問う者への感謝、なぞられた名、二枚の券 | draft | 編纂責任者 |
+| 24 | `letter-to-fuuka` | [風花への書簡](text/24-letter-to-fuuka.md) | 踏み外す二歩、来ていなかった日 | draft | 編纂責任者 |
+| 25 | `letter-to-the-sister` | [姉への書簡](text/25-letter-to-the-sister.md) | 私的な「あたし」の手紙。差し出されないまま | draft | 編纂責任者 |
+| 26 | `letter-to-the-reader` | [まだ見ぬ信女への書簡](text/26-letter-to-the-reader.md) | 読者に宛てた手紙 | draft | 編纂責任者 |
 
 ## 第五部　箴言と祈り
 
@@ -74,13 +75,13 @@
 
 | 章 | ID | 題 | 中身 | 状態 | 担当 |
 |---|---|---|---|---|---|
-| 26 | `proverbs` | [箴言](text/26-proverbs.md) | 満足の格言四十 | draft | 編纂責任者 |
-| 27 | `night-psalm` | [夜の詩](text/27-night-psalm.md) | 眠る前に独りで唱える詩 | draft | 編纂責任者 |
-| 28 | `short-prayers` | [短き祈り](text/28-short-prayers.md) | 目覚め、雨、替え玉、配信、眠れぬ夜などの短い祈り | draft | 編纂責任者 |
-| 29 | `closing-litany` | [結びの連祷](text/29-closing-litany.md) | 集いの終わりの呼びかけと応え。台本にない25の問い | draft | 編纂責任者 |
-| 30 | `prophecies` | [預言の断片](text/30-prophecies.md) | まだ外れていない預言だけを記した章 | draft | 編纂責任者 |
-| 31 | `notice-board` | [掲示板の箴言](text/31-notice-board.md) | 四十一番目以降の、箴言ではない言葉 | draft | 編纂責任者 |
-| 32 | `song-of-the-waiting` | [待つ者の詩](text/32-song-of-the-waiting.md) | 記録室の扉の前に並ぶ者たちの詩 | draft | 編纂責任者 |
+| 27 | `proverbs` | [箴言](text/27-proverbs.md) | 満足の格言四十 | draft | 編纂責任者 |
+| 28 | `night-psalm` | [夜の詩](text/28-night-psalm.md) | 眠る前に独りで唱える詩 | draft | 編纂責任者 |
+| 29 | `short-prayers` | [短き祈り](text/29-short-prayers.md) | 目覚め、雨、替え玉、配信、眠れぬ夜などの短い祈り | draft | 編纂責任者 |
+| 30 | `closing-litany` | [結びの連祷](text/30-closing-litany.md) | 集いの終わりの呼びかけと応え。台本にない25の問い | draft | 編纂責任者 |
+| 31 | `prophecies` | [預言の断片](text/31-prophecies.md) | まだ外れていない預言だけを記した章 | draft | 編纂責任者 |
+| 32 | `notice-board` | [掲示板の箴言](text/32-notice-board.md) | 四十一番目以降の、箴言ではない言葉 | draft | 編纂責任者 |
+| 33 | `song-of-the-waiting` | [待つ者の詩](text/33-song-of-the-waiting.md) | 記録室の扉の前に並ぶ者たちの詩 | draft | 編纂責任者 |
 
 ## 付録
 

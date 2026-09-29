@@ -1,7 +1,7 @@
 ---
 id: hymns
 part: 2
-chapter: 9
+chapter: 10
 title: 聖歌
 summary: 数え歌、器の歌、恵みの歌、帳の歌。
 voice: colloquial

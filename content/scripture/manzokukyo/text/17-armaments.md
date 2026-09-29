@@ -1,7 +1,7 @@
 ---
 id: armaments
 part: 3
-chapter: 16
+chapter: 17
 title: 教祖の武具
 summary: 概念兵器とキューピーたらこ。我らは武具を持たず、箸を持つこと。
 status: draft

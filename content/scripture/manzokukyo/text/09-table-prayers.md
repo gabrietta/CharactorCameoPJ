@@ -1,7 +1,7 @@
 ---
 id: table-prayers
 part: 2
-chapter: 8
+chapter: 9
 title: 食卓の祈り
 summary: 食前と食後の言葉。湯気、丼の底、菊の花びら、向かいの箸。
 status: draft

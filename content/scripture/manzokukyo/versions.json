@@ -335,5 +335,18 @@
       "verses": 619,
       "chapters": 32
     }
+  },
+  {
+    "version": "0.23.0",
+    "date": "2026-09-29",
+    "base": "8fb17bd",
+    "summary": "第4章 器を差し込み、以降の章を振り直し",
+    "stats": {
+      "characters": 23308,
+      "manuscriptSheets": 59,
+      "bunkoPages": 39,
+      "verses": 633,
+      "chapters": 33
+    }
   }
 ]

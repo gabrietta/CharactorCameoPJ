@@ -77,6 +77,15 @@ status: draft           # draft / review / adopted
 - `## 編纂注` は制作用のメモ。書籍・Wikiに載せるときは外す。
 - 別の章の節とつながる節を書いたら、[cross-references.json](cross-references.json) に引照を足す（例: `"hunger:6": ["litany:8"]`）。書き出した本では、章末に「引照」として表示される。存在しない節を指すと検査で止まる。
 
+## 章を途中に差し込むとき
+
+1. 新しい章ファイルを `text/` に作る。ファイル名の番号は仮でよい（例: `03a-vessel.md`）。front matter の `chapter` は `new` と書く。
+2. [book.json](book.json) の `files` の、差し込みたい位置にファイル名を書く。
+3. `node scripts/scripture-renumber.mjs` で変わる内容を確かめ、`--write` を付けて実行する。後ろの章の番号、ファイル名、登録簿や本文中の章の参照（「3章」「第三章」）がまとめて振り直される。
+4. [outline.md](outline.md) に新しい章の行を足す。
+
+採用済み（adopted）の章の番号が変わる差し込みは、ツールが止める。
+
 ## 章ファイルを足したとき
 
 - [book.json](book.json) の `files` にファイル名を足す（ビューアはこの一覧を読む）。足し忘れると検査で止まる。
