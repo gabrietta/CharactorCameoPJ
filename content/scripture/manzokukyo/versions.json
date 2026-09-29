@@ -569,5 +569,18 @@
       "verses": 1050,
       "chapters": 68
     }
+  },
+  {
+    "version": "0.38.2",
+    "date": "2026-09-29",
+    "base": "b8c2dcb",
+    "summary": "校正: 童の問答の分かち書きと規程見出しの空白を全角に",
+    "stats": {
+      "characters": 40557,
+      "manuscriptSheets": 102,
+      "bunkoPages": 68,
+      "verses": 1050,
+      "chapters": 68
+    }
   }
 ]
