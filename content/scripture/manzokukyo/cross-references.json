@@ -1433,5 +1433,14 @@
   "sleep:14": [
     "fragment-catalog:9",
     "fragment-catalog:10"
+  ],
+  "way-home:1": [
+    "gathering:11"
+  ],
+  "way-home:6": [
+    "sleep:8"
+  ],
+  "way-home:16": [
+    "hunger:4"
   ]
 }

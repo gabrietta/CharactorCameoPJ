@@ -725,5 +725,18 @@
       "verses": 1123,
       "chapters": 72
     }
+  },
+  {
+    "version": "0.46.0",
+    "date": "2026-09-30",
+    "base": "5dfa1bd",
+    "summary": "第49章「雨の帰り道」を追加",
+    "stats": {
+      "characters": 46023,
+      "manuscriptSheets": 116,
+      "bunkoPages": 77,
+      "verses": 1139,
+      "chapters": 73
+    }
   }
 ]
