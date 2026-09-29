@@ -751,5 +751,18 @@
       "verses": 1156,
       "chapters": 74
     }
+  },
+  {
+    "version": "0.48.0",
+    "date": "2026-09-30",
+    "base": "e172740",
+    "summary": "第13章「湯気の書」を追加（匂いと湯気の怖さ）",
+    "stats": {
+      "characters": 47584,
+      "manuscriptSheets": 119,
+      "bunkoPages": 80,
+      "verses": 1171,
+      "chapters": 75
+    }
   }
 ]
