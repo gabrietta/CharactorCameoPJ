@@ -72,10 +72,10 @@
 | 35 | `the-second-season` | [第二の季節](text/35-the-second-season.md) | 門の閉ざされしのちの三つの地。生き残ること | draft | 編纂責任者 |
 | 36 | `false-images` | [偽りの像の祭り](text/36-false-images.md) | 教祖の似姿を切り貼りする祭り。千と一の像 | draft | 編纂責任者 |
 | 37 | `founder-day` | [教祖の一日](text/37-founder-day.md) | 学び舎、古着、アイスティー、集い、夜の数 | draft | 編纂責任者 |
-| 38 | `the-lettered` | [英字の者たち](text/38-the-lettered.md) | ALPHACLAVE。B、F、Z、二十三の空席、Aの椅子 | draft | 編纂責任者 |
-| 39 | `fuuka` | [風花の逸話](text/39-fuuka.md) | 信者F風花の悪ノリの逸話五つ（第五は記さず） | draft | 編纂責任者 |
-| 40 | `catechism` | [教理問答](text/40-catechism.md) | 信者Bの問いと教祖の答え | draft | 編纂責任者 |
-| 41 | `b-questions` | [Bの問い](text/41-b-questions.md) | 答えの記されなかった信者Bの問い | draft | 編纂責任者 |
+| 38 | `the-lettered` | [英字の者たち](text/38-the-lettered.md) | 英字の制度。教祖（Z）、問いの侍者、戯れの侍者、二十三の空席、Aの椅子 | draft | 編纂責任者 |
+| 39 | `jester` | [戯れの侍者の逸話](text/39-jester.md) | 戯れの侍者の逸話五つ（第五は記さず） | draft | 編纂責任者 |
+| 40 | `catechism` | [教理問答](text/40-catechism.md) | 問いの侍者の問いと教祖の答え | draft | 編纂責任者 |
+| 41 | `unanswered-questions` | [答えられざる問い](text/41-unanswered-questions.md) | 答えの記されなかった問いの侍者の問い | draft | 編纂責任者 |
 | 42 | `silences` | [沈黙の伝](text/42-silences.md) | 教祖が答えなかった七つの場面と、記されない八つ目 | draft | 編纂責任者 |
 | 43 | `testimonies` | [証言](text/43-testimonies.md) | 名を伏せた信女らの証言。十一の証言と十人の証言者 | draft | 編纂責任者 |
 | 44 | `nameless-believers` | [信女らの伝](text/44-nameless-believers.md) | 名もない信女たちの伝五つ | draft | 編纂責任者 |
@@ -89,8 +89,8 @@
 
 | 章 | ID | 題 | 中身 | 状態 | 担当 |
 |---|---|---|---|---|---|
-| 48 | `letter-to-b` | [信者Bへの書簡](text/48-letter-to-b.md) | 問う者への感謝、なぞられた名、二枚の券 | draft | 編纂責任者 |
-| 49 | `letter-to-fuuka` | [風花への書簡](text/49-letter-to-fuuka.md) | 踏み外す二歩、来ていなかった日 | draft | 編纂責任者 |
+| 48 | `letter-to-the-questioner` | [問いの侍者への書簡](text/48-letter-to-the-questioner.md) | 問う者への感謝、なぞられた名、二枚の券 | draft | 編纂責任者 |
+| 49 | `letter-to-the-jester` | [戯れの侍者への書簡](text/49-letter-to-the-jester.md) | 踏み外す二歩、来ていなかった日 | draft | 編纂責任者 |
 | 50 | `letter-to-the-sister` | [姉への書簡](text/50-letter-to-the-sister.md) | 私的な「あたし」の手紙。差し出されないまま | draft | 編纂責任者 |
 | 51 | `letter-to-med` | [MEDへの書簡](text/51-letter-to-med.md) | 追いつかないように追いかける影への、出されない手紙 | draft | 編纂責任者 |
 | 52 | `letter-to-the-far-utopia` | [遠き理想郷への書簡](text/52-letter-to-the-far-utopia.md) | 閉ざされた理想郷へ。投函され、戻ってきた手紙 | draft | 編纂責任者 |

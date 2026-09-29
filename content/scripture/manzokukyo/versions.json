@@ -621,5 +621,18 @@
       "verses": 1054,
       "chapters": 68
     }
+  },
+  {
+    "version": "0.41.0",
+    "date": "2026-09-30",
+    "base": "7ce3f44",
+    "summary": "英字の信者を務めの名に（問いの侍者・戯れの侍者）",
+    "stats": {
+      "characters": 41021,
+      "manuscriptSheets": 103,
+      "bunkoPages": 69,
+      "verses": 1054,
+      "chapters": 68
+    }
   }
 ]

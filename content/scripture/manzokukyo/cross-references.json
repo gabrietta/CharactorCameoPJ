@@ -187,28 +187,28 @@
     "be-not-sated:3",
     "precepts:4"
   ],
-  "letter-to-b:3": [
+  "letter-to-the-questioner:3": [
     "be-not-sated:3"
   ],
-  "letter-to-b:4": [
+  "letter-to-the-questioner:4": [
     "the-lettered:13"
   ],
-  "letter-to-b:6": [
+  "letter-to-the-questioner:6": [
     "the-lettered:6"
   ],
-  "letter-to-b:7": [
+  "letter-to-the-questioner:7": [
     "regulations:10"
   ],
-  "letter-to-b:9": [
+  "letter-to-the-questioner:9": [
     "litany:1"
   ],
-  "letter-to-fuuka:3": [
+  "letter-to-the-jester:3": [
     "the-lettered:10"
   ],
-  "letter-to-fuuka:7": [
+  "letter-to-the-jester:7": [
     "the-lettered:9"
   ],
-  "letter-to-fuuka:12": [
+  "letter-to-the-jester:12": [
     "fragments-of-salvation:5"
   ],
   "letter-to-the-sister:4": [
@@ -757,23 +757,23 @@
   "forbidden-words:10": [
     "short-prayers:15"
   ],
-  "fuuka:2": [
+  "jester:2": [
     "litany:11",
     "litany:12"
   ],
-  "fuuka:3": [
+  "jester:3": [
     "the-lettered:9"
   ],
-  "fuuka:4": [
+  "jester:4": [
     "parables:20"
   ],
-  "fuuka:5": [
+  "jester:5": [
     "regulations:8"
   ],
-  "fuuka:6": [
+  "jester:6": [
     "light-of-the-brow:6"
   ],
-  "fuuka:10": [
+  "jester:10": [
     "the-lettered:9",
     "the-lettered:10"
   ],
@@ -796,7 +796,7 @@
     "neo-saitama:15"
   ],
   "letter-to-the-archive:8": [
-    "fuuka:5"
+    "jester:5"
   ],
   "forgiveness:1": [
     "confession:5"
@@ -1068,29 +1068,29 @@
   "fragment-catalog:13": [
     "fragments-of-salvation:7"
   ],
-  "b-questions:1": [
+  "unanswered-questions:1": [
     "preface:4"
   ],
-  "b-questions:2": [
+  "unanswered-questions:2": [
     "catechism:11"
   ],
-  "b-questions:3": [
+  "unanswered-questions:3": [
     "song-of-the-waiting:1"
   ],
-  "b-questions:4": [
+  "unanswered-questions:4": [
     "neo-saitama:15"
   ],
-  "b-questions:6": [
+  "unanswered-questions:6": [
     "the-lettered:14"
   ],
-  "b-questions:8": [
+  "unanswered-questions:8": [
     "hunger:6"
   ],
-  "b-questions:9": [
+  "unanswered-questions:9": [
     "preface:8"
   ],
-  "b-questions:11": [
-    "letter-to-b:7"
+  "unanswered-questions:11": [
+    "letter-to-the-questioner:7"
   ],
   "lament:2": [
     "be-not-sated:16"
@@ -1105,7 +1105,7 @@
     "the-lettered:13"
   ],
   "lament:7": [
-    "letter-to-fuuka:11"
+    "letter-to-the-jester:11"
   ],
   "lament:9": [
     "founder-day:11"
@@ -1243,7 +1243,7 @@
     "parables:21"
   ],
   "archive-log:4": [
-    "fuuka:5"
+    "jester:5"
   ],
   "archive-log:5": [
     "notice-board:1"
@@ -1296,10 +1296,10 @@
     "false-images:1"
   ],
   "catechism:24": [
-    "b-questions:1"
+    "unanswered-questions:1"
   ],
   "the-lettered:7": [
-    "b-questions:1"
+    "unanswered-questions:1"
   ],
   "catechism:18": [
     "silences:3"
@@ -1347,7 +1347,7 @@
   ],
   "gathering:13": [
     "the-lettered:6",
-    "b-questions:1"
+    "unanswered-questions:1"
   ],
   "archive-log:6": [
     "confession:2"
