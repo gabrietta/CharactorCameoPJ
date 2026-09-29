@@ -1,7 +1,7 @@
 ---
 id: childrens-catechism
 part: 5
-chapter: 76
+chapter: 77
 title: 童の問答
 summary: 子らのための問答。やさしく、すこしこわく。
 voice: colloquial

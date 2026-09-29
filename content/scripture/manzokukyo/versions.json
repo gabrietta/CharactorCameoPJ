@@ -777,5 +777,18 @@
       "verses": 1185,
       "chapters": 76
     }
+  },
+  {
+    "version": "0.50.0",
+    "date": "2026-09-30",
+    "base": "c18b3fb",
+    "summary": "第62章「受付への書簡」を追加",
+    "stats": {
+      "characters": 48742,
+      "manuscriptSheets": 122,
+      "bunkoPages": 82,
+      "verses": 1198,
+      "chapters": 77
+    }
   }
 ]
