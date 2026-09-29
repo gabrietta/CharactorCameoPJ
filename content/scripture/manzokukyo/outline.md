@@ -42,7 +42,7 @@
 |---|---|---|---|---|---|
 | 11 | `precepts` | [九つの戒め](text/11-precepts.md) | 九つの戒めと書かれない十番目、貪る者 | draft | 編纂責任者 |
 | 12 | `table-prayers` | [食卓の祈り](text/12-table-prayers.md) | 食前・食後の言葉、好物ごとの作法 | draft | 編纂責任者 |
-| 13 | `hymns` | [聖歌](text/13-hymns.md) | 数え歌、器の歌、恵みの歌 | draft | 編纂責任者 |
+| 13 | `hymns` | [聖歌](text/13-hymns.md) | 数え歌、器の歌、恵みの歌、帳の歌 | draft | 編纂責任者 |
 | 14 | `confession` | [懺悔](text/14-confession.md) | 赤き帳の作法、返されざりし手の話 | draft | 編纂責任者 |
 | 15 | `regulations` | [事務規程抄](text/15-regulations.md) | 規程の抜粋。内部文書調だけの章 | draft | 編纂責任者 |
 | 16 | `vestments` | [装いの定め](text/16-vestments.md) | 黒と金、菱形の留め金、白い肩掛け、古着 | draft | 編纂責任者 |
