@@ -10,6 +10,8 @@ import { listBookIds, parseChapter, readChapterFiles, scriptureDir } from "./scr
 // - 黒塗りが一章に二か所以上ないか（文体ガイドの目安）
 // - 書いてはいけない語（実在の宗教の名、教祖の本名、献金の呼びかけなど）が本文にないか
 // - 同じ文が二つの章に重なっていないか
+// - 「第12章（時の書）」のように章の名を添えた参照で、番号と章の名が食い違っていないか
+//   （章の差し込みで番号がずれたのに名だけ古いまま、またはその逆）
 
 const kanjiDigits = "〇一二三四五六七八九";
 const fromKanji = (text) => {
@@ -37,14 +39,17 @@ for (const bookId of listBookIds()) {
   const byNumber = new Map(chapters.filter((c) => c.chapter !== "0").map((c) => [Number(c.chapter), c]));
   const named = { 連祷: chapters.find((c) => c.id === "litany"), 満足暦: chapters.find((c) => c.id === "calendar"), 序: chapters.find((c) => c.id === "preface") };
   const verseCount = (chapter) => Math.max(0, ...chapter.verses.map((v) => v.number));
+  const byTitle = new Map(chapters.filter((c) => c.chapter !== "0").map((c) => [c.title, c]));
 
   const checkRefs = (text, where) => {
-    for (const match of text.matchAll(/(?:第)?(\d+)章(?:(\d+)(?:〜(\d+))?節)?/g)) {
+    for (const match of text.matchAll(/(?:第)?(\d+)章(?:(\d+)(?:〜(\d+))?節)?(?:（([^）]+)）)?/g)) {
       const chapter = byNumber.get(Number(match[1]));
       if (!chapter) {
         report(`${where}: 「${match[0]}」の章がありません`);
         continue;
       }
+      const titled = match[4] && byTitle.get(match[4]);
+      if (titled && titled !== chapter) report(`${where}: 「${match[0]}」の第${match[1]}章は『${chapter.title}』。『${match[4]}』は第${titled.chapter}章`);
       const last = Number(match[3] ?? match[2] ?? 0);
       if (last > verseCount(chapter)) report(`${where}: 「${match[0]}」は『${chapter.title}』（${verseCount(chapter)}節まで）を超えています`);
     }
