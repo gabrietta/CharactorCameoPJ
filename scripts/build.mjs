@@ -10287,6 +10287,7 @@ function renderSitemap(characters) {
   const urls = [
     { loc: absoluteUrl(""), priority: "0.8" },
     { loc: absoluteUrl("docs/codex-beginner-manual.html"), priority: "0.5" },
+    { loc: absoluteUrl("scripture/"), priority: "0.7" },
     ...characters.flatMap((character) => [
       { loc: absoluteUrl(`${character.id}/`), priority: "1.0" },
       ...(character.id === "zannenin" ? [

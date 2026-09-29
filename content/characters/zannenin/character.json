@@ -150,6 +150,15 @@
       "description": "カルトでダークな満足教サイト"
     },
     {
+      "label": "満足聖典",
+      "url": "../scripture/",
+      "canonicalUrl": "scripture/",
+      "type": "reference",
+      "icon": "assets/links/scripture-icon.webp",
+      "displayUrl": "満足教 教典 総合入口",
+      "description": "教典を読む・唱える・学ぶ。初等部の冊子やPDFも"
+    },
+    {
       "label": "満足教大聖堂・懺悔室",
       "url": "./stream-world/",
       "canonicalUrl": "zannenin/stream-world/",

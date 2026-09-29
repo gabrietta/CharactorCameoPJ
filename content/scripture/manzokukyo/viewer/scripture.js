@@ -7,8 +7,8 @@ export function esc(text) {
   return String(text).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 }
 
-async function fetchText(file) {
-  const response = await fetch(`${BASE}/${file}`, { cache: "no-store" });
+async function fetchText(file, base = BASE) {
+  const response = await fetch(`${base}/${file}`, { cache: "no-store" });
   if (!response.ok) throw new Error(`${file} を読めませんでした（${response.status}）`);
   return response.text();
 }
@@ -37,19 +37,20 @@ function parseChapter(file, text) {
 }
 
 // 教典一式を読む。book.json の files と docs に載っているものだけを読む。
-export async function loadBook() {
-  const meta = JSON.parse(await fetchText("book.json"));
-  const texts = await Promise.all(meta.files.map((file) => fetchText(`text/${file}`)));
+// base はその教典のフォルダ（ビューアの中からなら ".."、総合入口からなら "./manzokukyo" など）。
+export async function loadBook(base = BASE) {
+  const meta = JSON.parse(await fetchText("book.json", base));
+  const texts = await Promise.all(meta.files.map((file) => fetchText(`text/${file}`, base)));
   const chapters = meta.files.map((file, index) => parseChapter(file, texts[index]));
   let crossReferences = {};
   try {
-    crossReferences = JSON.parse(await fetchText("cross-references.json"));
+    crossReferences = JSON.parse(await fetchText("cross-references.json", base));
   } catch {
     crossReferences = {};
   }
   let versions = [];
   try {
-    versions = JSON.parse(await fetchText("versions.json"));
+    versions = JSON.parse(await fetchText("versions.json", base));
   } catch {
     versions = [];
   }

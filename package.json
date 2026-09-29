@@ -14,6 +14,7 @@
     "scripture:version": "node scripts/scripture-version.mjs",
     "scripture:lint": "node scripts/lint-scripture-style.mjs",
     "scripture:audit": "node scripts/audit-scripture.mjs",
+    "scripture:images": "node scripts/render-scripture-images.mjs",
     "check:encoding": "node scripts/check-encoding.mjs",
     "import:drive-visuals": "node scripts/import-drive-visuals.mjs",
     "import:drive-videos": "node scripts/import-drive-videos.mjs"

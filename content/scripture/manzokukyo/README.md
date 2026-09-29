@@ -19,6 +19,7 @@ npm.cmd run scripture:view
 
 表示されたURLをブラウザで開く。ビルドは不要で、Markdownを直したら再読み込みするだけで反映される。
 
+- **総合入口** `/`（公開サイトでは `scripture/`）: 読む・初等部・体験・PDF・編纂室・参加への入口と、はじめての方への順路（章IDで持つので、章番号が振り直されても崩れない。`content/scripture/portal.js` の `route`）。残念院さんの公式ページのリンク欄からここへ来る（`character.json` の `contentLinks`）。OGP画像・ファビコン・正方形サムネイルは `content/scripture/assets/`。版下 `assets/src/card.html` を直したら `npm.cmd run scripture:images` で作り直す（EdgeかChromeが要る。Windowsでは PowerShell から実行する）。
 - **編集者向け** `/manzokukyo/viewer/`: 版と文字量（原稿用紙の枚数、版ごとの伸び）、章ごとの状態、未決定・仮決定、募集中の章、本文（編纂注つき）、謎の地図（どの謎がどの章に出てくるか、手がかりが一か所しかない謎）、資料。
 - **読者向け** `/manzokukyo/viewer/book.html`: 表紙のあと、本文を頁の大きさで区切った本。広い画面では見開き、狭い画面では1頁ずつ。矢印キー、端のタップ、スワイプで頁をめくる。目次の頁番号は自動で振られる。特定の章へのリンクは `book.html#c-章ID`（例: `#c-litany`）。頁番号は画面の大きさと文字量で変わるので、外からのリンクには章IDを使う。「今日の満足」ボタンあり。
 - **体験** `/manzokukyo/viewer/rite.html`: 満足連祷を会衆として唱える体験と、赤き帳の前での懺悔の体験（「懺悔」の章）。懺悔で告げた言葉はページの外へ送らず、保存もしない。連祷の本文は連祷の章から読む。誤りの応答と反応は `viewer/rite.js` の `branches` にある（連祷の節番号を変えたら合わせて直す）。

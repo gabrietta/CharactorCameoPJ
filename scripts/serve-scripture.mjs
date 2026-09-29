@@ -20,6 +20,9 @@ const types = {
   ".png": "image/png",
   ".svg": "image/svg+xml",
   ".pdf": "application/pdf",
+  ".webp": "image/webp",
+  ".ico": "image/x-icon",
+  ".webmanifest": "application/manifest+json",
 };
 
 export function startScriptureServer({ port = Number(process.env.PORT) || 4717, host = "127.0.0.1" } = {}) {
@@ -52,6 +55,7 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
   const bookIndex = args.indexOf("--book");
   const bookId = bookIndex >= 0 ? args[bookIndex + 1] : "manzokukyo";
   const { origin } = await startScriptureServer();
+  console.log(`総合入口: ${origin}/`);
   console.log(`教典ビューア: ${origin}/${bookId}/viewer/`);
   console.log("Markdownを直したら、ブラウザを再読み込みしてください。止めるときは Ctrl+C。");
 }
