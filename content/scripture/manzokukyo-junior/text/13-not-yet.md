@@ -1,7 +1,7 @@
 ---
 id: not-yet
 part: 1
-chapter: 10
+chapter: 13
 title: まんぞく　していますか
 summary: さいごの　おはなし。
 voice: colloquial

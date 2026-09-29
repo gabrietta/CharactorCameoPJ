@@ -62,13 +62,16 @@ function story(id) {
   const index = list.findIndex((c) => c.id === id);
   const next = list[index + 1];
   const isStory = chapter.part === "1";
+  // 同じ節が二度以上出てくる（歌の繰り返しなど）ときは、繰り返しとして字下げする
+  const seen = new Set();
+  const repeated = new Set(chapter.verses.map((v) => v.text).filter((t) => seen.has(t) || !seen.add(t)));
   const notes = [...chapter.main.matchAll(/^> 【保護者の方へ】\s*(.+)$/gm)].map((m) => m[1]);
   app.innerHTML = `
     <article class="story" style="--card:${colors[Math.max(0, index) % colors.length]}">
       <p class="story-no">${isStory ? `おはなし　${esc(chapter.chapter)}` : "おやくそく"}</p>
       <h2 class="story-title">${esc(chapter.title)}</h2>
       <div class="story-body">
-        ${isStory ? chapter.verses.map((v) => `<p>${inline(v.text)}</p>`).join("") : `<ol class="promises">${chapter.verses.map((v) => `<li>${inline(v.text)}</li>`).join("")}</ol>`}
+        ${isStory ? chapter.verses.map((v) => `<p${repeated.has(v.text) ? ' class="refrain"' : ""}>${inline(v.text)}</p>`).join("") : `<ol class="promises">${chapter.verses.map((v) => `<li>${inline(v.text)}</li>`).join("")}</ol>`}
       </div>
       ${notes.length ? `<aside class="parents"><h3>保護者の方へ</h3>${notes.map((n) => `<p>${inline(n)}</p>`).join("")}</aside>` : ""}
       ${isStory ? `<button type="button" class="stamp-button" id="stamp">よみおわった！</button><p class="stamp-result" id="stamp-result" hidden></p>` : ""}

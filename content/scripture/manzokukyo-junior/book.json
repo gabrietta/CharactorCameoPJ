@@ -1,6 +1,6 @@
 {
   "title": "よいこの まんぞく",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "files": [
     "00-preface.md",
     "01-ramen.md",
@@ -12,7 +12,10 @@
     "07-neighbor.md",
     "08-founder.md",
     "09-names.md",
-    "10-not-yet.md",
+    "10-lost.md",
+    "11-pillow.md",
+    "12-song.md",
+    "13-not-yet.md",
     "90-promises.md"
   ],
   "parts": {

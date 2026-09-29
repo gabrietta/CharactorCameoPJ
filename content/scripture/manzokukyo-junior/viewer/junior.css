@@ -206,3 +206,5 @@ a { color: #b46f1c; }
   .story { padding: 22px 18px; }
   .story-body p, .promises { font-size: 18px; }
 }
+
+.story-body p.refrain { padding-left: 1.6em; color: #b46f1c; font-weight: 700; }

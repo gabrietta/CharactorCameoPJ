@@ -11,5 +11,18 @@
       "verses": 78,
       "chapters": 10
     }
+  },
+  {
+    "version": "0.2.0",
+    "date": "2026-09-30",
+    "base": "fb1c505",
+    "summary": "おはなしを3つ追加（おとしもの、まくらの くぼみ、まんぞくの うた）",
+    "stats": {
+      "characters": 3054,
+      "manuscriptSheets": 8,
+      "bunkoPages": 6,
+      "verses": 100,
+      "chapters": 13
+    }
   }
 ]
