@@ -231,5 +231,18 @@
       "verses": 444,
       "chapters": 27
     }
+  },
+  {
+    "version": "0.15.0",
+    "date": "2026-09-29",
+    "base": "53130d7",
+    "summary": "第1・2・4・5・11章に節を追加",
+    "stats": {
+      "characters": 18107,
+      "manuscriptSheets": 46,
+      "bunkoPages": 31,
+      "verses": 465,
+      "chapters": 27
+    }
   }
 ]

@@ -330,5 +330,31 @@
   ],
   "night-psalm:13": [
     "counting:8"
+  ],
+  "hunger:11": [
+    "be-not-sated:2"
+  ],
+  "hunger:13": [
+    "fragments-of-salvation:7"
+  ],
+  "fragments-of-salvation:12": [
+    "house-of-the-sister:7"
+  ],
+  "counting:12": [
+    "confession:14",
+    "proverbs:30"
+  ],
+  "light-of-the-brow:8": [
+    "regulations:16"
+  ],
+  "regulations:13": [
+    "proverbs:40"
+  ],
+  "regulations:14": [
+    "litany:8",
+    "proverbs:38"
+  ],
+  "regulations:15": [
+    "fragments-of-salvation:7"
   ]
 }
