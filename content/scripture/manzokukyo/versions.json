@@ -166,5 +166,18 @@
       "verses": 311,
       "chapters": 19
     }
+  },
+  {
+    "version": "0.11.0",
+    "date": "2026-09-29",
+    "base": "156257c",
+    "summary": "第20章 証言",
+    "stats": {
+      "characters": 12888,
+      "manuscriptSheets": 33,
+      "bunkoPages": 22,
+      "verses": 323,
+      "chapters": 20
+    }
   }
 ]

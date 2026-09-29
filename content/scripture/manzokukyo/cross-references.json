@@ -130,5 +130,39 @@
   "the-second-season:13": [
     "the-last-day:6",
     "the-last-day:25"
+  ],
+  "testimonies:1": [
+    "hunger:9"
+  ],
+  "testimonies:2": [
+    "fragments-of-salvation:7"
+  ],
+  "testimonies:3": [
+    "confession:5",
+    "confession:6"
+  ],
+  "testimonies:4": [
+    "litany:8",
+    "the-lettered:13"
+  ],
+  "testimonies:5": [
+    "confession:15"
+  ],
+  "testimonies:6": [
+    "vestments:13"
+  ],
+  "testimonies:7": [
+    "precepts:15"
+  ],
+  "testimonies:8": [
+    "light-of-the-brow:3"
+  ],
+  "testimonies:9": [
+    "litany:2",
+    "table-prayers:11"
+  ],
+  "testimonies:10": [
+    "regulations:8",
+    "be-not-sated:5"
   ]
 }
