@@ -142,6 +142,7 @@ async function build() {
       await buildAnimeTeaserCute();
       await buildManzokukyoPreview();
       await copyPublishedDocs();
+      await copyScripture();
       await writeFile(path.join(distDir, "robots.txt"), renderRobotsTxt(), "utf8");
       await writeFile(path.join(distDir, "sitemap.xml"), renderSitemap(characters), "utf8");
       await writeFile(path.join(distDir, ".nojekyll"), "", "utf8");
@@ -339,6 +340,18 @@ async function copySharedAssets() {
 
   await mkdir(path.join(distDir, "assets"), { recursive: true });
   await cp(guestbookDir, path.join(distDir, "assets", "guestbook"), { recursive: true });
+}
+
+// 教典（content/scripture/）は、ビルドなしで動くビューアごとそのまま公開する。
+// dist/scripture/{id}/viewer/ が編集者向け、viewer/book.html が読者向け、viewer/rite.html が体験。
+async function copyScripture() {
+  const sourceDir = path.join(rootDir, "content", "scripture");
+  try {
+    await stat(sourceDir);
+  } catch {
+    return;
+  }
+  await cp(sourceDir, path.join(distDir, "scripture"), { recursive: true });
 }
 
 async function copyPublishedDocs() {

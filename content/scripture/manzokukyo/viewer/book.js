@@ -63,7 +63,14 @@ async function renderPrint() {
   ];
   stage.innerHTML = pages.join("");
   await document.fonts.ready;
+  // 保存するPDFのファイル名の既定値になるので、版を入れておく。
+  document.title = book.meta.version ? `${book.meta.title} v${book.meta.version}` : book.meta.title;
   document.documentElement.dataset.ready = "true";
+  // 「PDFで保存」ボタンから開かれたときは、印刷ダイアログを出す（保存先に「PDFに保存」を選ぶ）。
+  if (new URLSearchParams(location.search).has("autoprint")) {
+    await Promise.all([...document.images].map((image) => (image.complete ? null : new Promise((resolve) => { image.onload = image.onerror = resolve; }))));
+    setTimeout(() => window.print(), 300);
+  }
 }
 
 // ---------- 画面用（頁を区切ってめくる） ----------
@@ -274,6 +281,7 @@ function relayout() {
 try {
   book = await loadBook();
   document.title = book.meta.title;
+  document.getElementById("pdf-button")?.addEventListener("click", () => window.open("book.html?print&autoprint", "_blank"));
   if (printMode) {
     await renderPrint();
   } else {
