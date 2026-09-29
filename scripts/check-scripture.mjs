@@ -54,7 +54,8 @@ function checkBook(bookId) {
       if (ids.has(data.id)) errors.push(`${file}: id ${data.id} が ${ids.get(data.id)} と重複しています`);
       ids.set(data.id, file);
     }
-    if (data.chapter) {
+    // 章番号0は前付（序、連祷など）で、複数あってよい。
+    if (data.chapter && data.chapter !== "0") {
       if (chapters.has(data.chapter)) errors.push(`${file}: 章番号 ${data.chapter} が ${chapters.get(data.chapter)} と重複しています`);
       chapters.set(data.chapter, file);
     }
@@ -100,7 +101,8 @@ if (errors.length > 0) {
 
 if (process.argv.includes("--random") && verses.length > 0) {
   const v = verses[Math.floor(Math.random() * verses.length)];
-  console.log(`${v.text}\n　——『${v.title}』${v.chapter}章${v.number}節`);
+  const where = v.chapter === "0" ? `『${v.title}』${v.number}節` : `『${v.title}』${v.chapter}章${v.number}節`;
+  console.log(`${v.text}\n　——${where}`);
 } else {
   console.log(`Scripture check passed. (${verses.length} verses)`);
 }
